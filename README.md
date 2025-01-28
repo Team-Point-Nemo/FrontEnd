@@ -1,6 +1,6 @@
 # WeatherApp 
 
-We are making a weather app for the course Software Project 2. The user can see the current and future weather. The Read me-file for the whole project will be stored in the Front End repository.
+We are making a weather app for the course Software Project 2. The user can see the current and future weather.
 
 ## Technologies
 
