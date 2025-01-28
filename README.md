@@ -14,7 +14,22 @@ Additionally, we will practise using branches in Git.
 
 ## How to get started
 
-Coming soon ;)
+Clone repository 
+```bash
+git clone https://github.com/Team-Point-Nemo/FrontEnd.git
+```
+
+Change directory to WeatherApp and install dependencies
+```bash
+cd WeatherApp
+npm install  expo
+```
+
+Start expo
+```bash
+npx expo start --tunnel
+```
+
 
 ## Creators
 
