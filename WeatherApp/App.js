@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Welcome to WeatherApp!</Text>
+      <Text>We will update this App as time goes on</Text>
       <StatusBar style="auto" />
     </View>
   );
