@@ -4,25 +4,25 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import IndexScreen from "./screens/IndexScreen";
 import MapScreen from "./screens/MapScreen";
 
-const Tab = createBottomTabNavigator(); // Palauttaa React Native -komponentteja, joten iso alkukirjain selkeyttää
+const Tab = createBottomTabNavigator(); // Returns React Native components, so preferably use capital letter on first one
 
 export default function App() {
   return (
     <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-          headerShown: false, // Piilottaa sivun otsikon
+          headerShown: false, // Hides header of the page
           tabBarLabelStyle: { color: 'black' },
           tabBarIcon: ({ focused, color, size }) => { 
 
             let iconName;
 
             if (route.name === 'Index') {
-              // iconName = 'sunny';
-              iconName = focused ? 'sunny' : 'sunny-outline'; // Ikoni vaihtuu klikatessa (focused = true)
+              iconName = focused ? 'sunny' : 'sunny-outline'; // Icon changes when clicked (focused = true)
               color= 'black';
             } else if (route.name === 'Map') {
-              iconName = 'settings';
+              iconName = focused ? 'map' : 'map-outline'; // Icon changes when clicked (focused = true)
+              color= 'black';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
