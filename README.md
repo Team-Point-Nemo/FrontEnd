@@ -21,7 +21,7 @@ git clone https://github.com/Team-Point-Nemo/FrontEnd.git
 
 Change directory to WeatherApp and install dependencies
 ```bash
-cd WeatherApp
+cd \FrontEnd\WeatherApp
 npm install expo
 ```
 
