@@ -7,4 +7,4 @@ export default function App() {
       <StackNavigator />
     </NavigationContainer>
   );
-} // Testaus branchissa
+}
