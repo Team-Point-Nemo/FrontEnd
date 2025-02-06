@@ -10,7 +10,7 @@ export default function IndexScreen() {
 
   useEffect(() => {
     handleFetch();
-  });
+  }, []);
 
   const handleFetch = () => {
     getWeatherInHelsinki()
