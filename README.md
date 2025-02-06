@@ -42,3 +42,6 @@ Mattila Anna - anmattila
 Virolainen Jukka - Jukalekvi
 
 Wong Huang - Tiriele
+
+#### Link to the project's backend repository
+https://github.com/Team-Point-Nemo/BackEnd
