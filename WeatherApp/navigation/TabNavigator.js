@@ -15,7 +15,7 @@ export default function TabNavigator() {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === "Index") {
+                    if (route.name === "Weather") {
                         iconName = focused ? "sunny" : "sunny-outline";
                         color = 'black';
                     } else if (route.name === "Map") {
@@ -27,7 +27,7 @@ export default function TabNavigator() {
                 },
             })}
         >
-            <Tab.Screen name="Index" component={IndexScreen} />
+            <Tab.Screen name="Weather" component={IndexScreen} />
             <Tab.Screen name="Map" component={MapScreen} />
         </Tab.Navigator>
     )
