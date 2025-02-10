@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { getWeatherData } from '../weatherapi';
 
@@ -17,10 +18,11 @@ export default function IndexScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Index</Text>
+    <SafeAreaView style={styles.container}>
+      <Text>Temperature: {temperature} celsius</Text>
+      <Text>Feels like: {feelsLike} celsius</Text>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
