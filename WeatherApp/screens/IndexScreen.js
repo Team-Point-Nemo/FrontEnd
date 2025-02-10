@@ -1,22 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { getWeatherData } from '../weatherapi';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { getWeatherInHelsinki } from '../api';
 
 export default function IndexScreen() {
-  const [weatherData, setWeatherData] = useState("");
+  const [temperature, setTemperature] = useState(0);
+  const [feelsLike, setFeelsLike] = useState(0);
 
   useEffect(() => {
     handleFetch();
   }, []);
 
   const handleFetch = () => {
-    getWeatherData()
-      .then(data => console.log("Haettu säädata:", JSON.stringify(data, null, 2)))
-      .catch(error => console.error("Virhe haettaessa säätietoa:", error));
+    getWeatherInHelsinki()
+    .then(data => {
+      setTemperature(Number(data.main.temp) - 273.15);
+      setFeelsLike(Number(data.main.feels_like) - 273.15);
+    })
+    .catch(err => console.error(err))
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text>Temperature: {temperature} celsius</Text>
