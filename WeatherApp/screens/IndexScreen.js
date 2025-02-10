@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import { getWeatherInHelsinki } from '../api';
 
 export default function IndexScreen() {
@@ -8,7 +8,7 @@ export default function IndexScreen() {
   const [feelsLike, setFeelsLike] = useState(0);
   const [weather, setWeather] = useState({
     main: {
-      temp: 1, feels_like: 2
+      temp: 280, feels_like: 282
     },
     wind: {speed: 4},
   })
@@ -25,11 +25,15 @@ export default function IndexScreen() {
   
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text>Temperature: {temperature} celsius</Text>
-      <Text>Feels like: {feelsLike} celsius</Text> */}
-      <Text>Temperature: {(weather.main.temp - 273.15).toFixed(1)}</Text>
-      <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(1)}</Text>
+      <Text>Temperature: {(weather.main.temp - 273.15).toFixed(1)} °C</Text>
+      <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(1)} °C</Text>
       <Text>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
+      <Image 
+        style={styles.weatherIcon}
+        source={{
+          uri: weather.weather ? `http://openweathermap.org/img/wn/${weather.weather[0].icon}.png` : ''
+        }}
+      />
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -41,5 +45,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  weatherIcon: {
+    width: 70,
+    height: 70,
+    marginTop: 20,
   },
 });
