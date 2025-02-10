@@ -14,8 +14,8 @@ export default function IndexScreen() {
   const handleFetch = () => {
     getWeatherInHelsinki()
     .then(data => {
-      setTemperature(Number(data.main.temp) - 273.15);
-      setFeelsLike(Number(data.main.feels_like) - 273.15);
+      setTemperature((Number(data.main.temp) - 273.15).toFixed(1));
+      setFeelsLike((Number(data.main.feels_like) - 273.15).toFixed(1));
     })
     .catch(err => console.error(err))
   };
