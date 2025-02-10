@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
-export default function App() {
+export default function MapScreen() {
+
   const [mapRegion, setMapRegion] = useState({
     latitude: 65, // Oletussijainti (Suomi)
     longitude: 26,
@@ -48,14 +50,20 @@ export default function App() {
     }
   };
 
-  const resetMap = () => {
+  const resetMap = useCallback(() => {
     setMapRegion({
       latitude: 65,
       longitude: 26,
       latitudeDelta: 10.5,
       longitudeDelta: 10.5,
     });
-  };
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+        resetMap();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -70,7 +78,7 @@ export default function App() {
         )}
       </MapView>
 
-      {/* Painikkeet */}
+      {/* Painikkeet
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button} onPress={getUserLocation}>
           {loading ? (
@@ -87,7 +95,7 @@ export default function App() {
           <MaterialIcons name="zoom-out-map" size={20} color="white" />
           <Text style={styles.buttonText}>Reset</Text>
         </Pressable>
-      </View>
+      </View> */}
 
       {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
     </View>
