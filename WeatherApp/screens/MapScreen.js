@@ -4,7 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function App() {
+export default function Map() {
   const [mapRegion, setMapRegion] = useState({
     latitude: 65, // Oletussijainti (Suomi)
     longitude: 26,
