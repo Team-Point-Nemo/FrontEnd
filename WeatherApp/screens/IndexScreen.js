@@ -2,10 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import { getWeatherInHelsinki } from '../api';
+import LocationFetch from '../components/map/LocationFetch'
 
 export default function IndexScreen() {
-  const [temperature, setTemperature] = useState(0);
-  const [feelsLike, setFeelsLike] = useState(0);
+
+  const [locationName, setLocationName] = useState(null);
+
+  const handleLocationFetched = (name) => {
+    console.log("Location fetched:", name); 
+    setLocationName(name); // Päivitetään sijaintinimi
+  };
+
   const [weather, setWeather] = useState({
     main: {
       temp: 280, feels_like: 282
@@ -25,6 +32,8 @@ export default function IndexScreen() {
   
   return (
     <SafeAreaView style={styles.container}>
+      <Text>Location: {locationName}</Text>
+      <LocationFetch onLocationFetched={handleLocationFetched} />
       <Text>Temperature: {(weather.main.temp - 273.15).toFixed(0)} °C</Text>
       <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(0)} °C</Text>
       <Text>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
