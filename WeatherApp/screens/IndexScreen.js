@@ -25,8 +25,8 @@ export default function IndexScreen() {
   
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Temperature: {(weather.main.temp - 273.15).toFixed(1)} °C</Text>
-      <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(1)} °C</Text>
+      <Text>Temperature: {(weather.main.temp - 273.15).toFixed(0)} °C</Text>
+      <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(0)} °C</Text>
       <Text>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
       <Image 
         style={styles.weatherIcon}
