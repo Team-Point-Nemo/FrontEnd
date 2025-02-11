@@ -30,6 +30,7 @@ export default function IndexScreen() {
     .catch(err => console.error(err))
   };
   
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text>Location: {locationName}</Text>
