@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'
+import UserLocation from '../Location/UserLocation';
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -13,26 +14,11 @@ export default function MapDefaultView() {
   });
 
   const [userLocation, setUserLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getUserLocation(); // Haetaan sijainti automaattisesti sovelluksen käynnistyessä
-  }, []);
-
-  const getUserLocation = async () => {
-    setLoading(true);
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Sijaintioikeudet evätty');
-      setLoading(false);
-      return;
-    }
-
+  const handleLocationFetched = (location) => { // 'location'-object is passed from UserLocation-component
+    setUserLocation(location);
     try {
-      let location = await Location.getCurrentPositionAsync({});
-      setUserLocation(location.coords);
-
       // Zoomataan käyttäjän sijaintiin
       setMapRegion({
         latitude: location.coords.latitude,
@@ -40,11 +26,10 @@ export default function MapDefaultView() {
         latitudeDelta: 0.05, // Kaupunkitaso
         longitudeDelta: 0.05,
       });
-
-    } catch (error) {
-      setErrorMsg('Sijainnin hakeminen epäonnistui');
+    } catch (err) {
+        console.error("Error: ", err);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
@@ -59,6 +44,7 @@ export default function MapDefaultView() {
 
   return (
     <View style={styles.container}>
+      <UserLocation onLocationFetched={handleLocationFetched} />
       <MapView
         style={styles.map}
         region={mapRegion}
@@ -72,7 +58,7 @@ export default function MapDefaultView() {
 
       {/* Painikkeet */}
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={getUserLocation}>
+        <Pressable style={styles.button} onPress={handleLocationFetched}>
           {loading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
@@ -88,8 +74,6 @@ export default function MapDefaultView() {
           <Text style={styles.buttonText}>Reset</Text>
         </Pressable>
       </View>
-
-      {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
     </View>
   );
 }
@@ -129,13 +113,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 5,
   },
-  errorText: {
-    position: 'absolute',
-    bottom: 60,
-    alignSelf: 'center',
-    backgroundColor: 'red',
-    color: 'white',
-    padding: 5,
-    borderRadius: 5,
-  },
+  // errorText: {
+  //   position: 'absolute',
+  //   bottom: 60,
+  //   alignSelf: 'center',
+  //   backgroundColor: 'red',
+  //   color: 'white',
+  //   padding: 5,
+  //   borderRadius: 5,
+  // },
 });
