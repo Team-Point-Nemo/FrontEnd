@@ -26,7 +26,8 @@ export default function LocationFetch({ onLocationFetched }) {
         });
 
         if (address.length > 0) {
-          const newLocationName = address[0].district || address[0].city || 'Location unknown';
+          console.log("Reverse geocode data:", JSON.stringify(address, null, 2));
+          const newLocationName =  address[0].city || 'Location unknown';
           setLocationName(newLocationName);
           console.log("Location name set:", newLocationName);
           onLocationFetched(newLocationName); // Välitetään sijainti IndexScreenille

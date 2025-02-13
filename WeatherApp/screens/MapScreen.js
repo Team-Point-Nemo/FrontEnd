@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Map() {
   const [mapRegion, setMapRegion] = useState({
-    latitude: 65, // Oletussijainti (Suomi)
+    latitude: 65, // Default (Finland)
     longitude: 26,
     latitudeDelta: 10.5, // Laaja zoom (koko Suomi)
     longitudeDelta: 10.5,
@@ -66,7 +66,7 @@ export default function Map() {
         followsUserLocation={true}
       >
         {userLocation && (
-          <Marker coordinate={userLocation} title="Oma sijainti" />
+          <Marker coordinate={userLocation} title="Oma sijainti" /> //zooms to user's location
         )}
       </MapView>
 
