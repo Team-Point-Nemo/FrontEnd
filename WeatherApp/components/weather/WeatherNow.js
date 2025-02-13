@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
-import { getWeatherInHelsinki } from '../api';
-import LocationFetch from '../components/map/LocationFetch'
+import { StyleSheet, Text, SafeAreaView, Image } from 'react-native';
+import { getWeatherInHelsinki } from '../../api';
+import LocationFetch from '../Location/CityFetch';
 
 export default function WeatherNow(){
 

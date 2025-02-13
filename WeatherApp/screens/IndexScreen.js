@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
-import WeatherNow from '../components/WeatherNow';
+import WeatherNow from '../components/weather/WeatherNow';
 
 export default function IndexScreen() {
   
