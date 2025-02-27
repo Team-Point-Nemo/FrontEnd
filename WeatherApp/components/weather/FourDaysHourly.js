@@ -11,7 +11,7 @@ export function FourDaysHourly({ hourlyForecast }) {
                     <Text>{date}</Text>
                     <FlatList
                         data={hourlyForecast[date]}
-                        // horizontal
+                        horizontal
                         renderItem={({ item }) => (
                             <View>
                                 <Text>{item.time}</Text>
