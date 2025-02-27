@@ -51,9 +51,15 @@ export default function MapDefaultView() {
         showsUserLocation={true}
         followsUserLocation={true}
       >
-        {userLocation && (
-          <Marker coordinate={userLocation} title="Oma sijainti" /> //zooms to user's location
-        )}
+      {userLocation && userLocation.coords && (   // Zoom's to user's location when userLocation and userLocation.coords are true.
+        <Marker 
+          coordinate={{
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude
+          }} 
+          title="Oma sijainti" 
+        />
+      )}
       </MapView>
 
       {/* Painikkeet */}
