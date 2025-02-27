@@ -17,8 +17,7 @@ export function getWeatherInHelsinki() {
 
 
 export function getForecastForFourDays() {
-    return fetch(`${FOUR_DAYS_API_URL}/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=3160e87e946ae433ae6bd60d17de5edd&units=metric`)
-    // return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}&units=metric`)
+return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}&units=metric`)
     .then(response => {
         if(!response.ok)
             throw new Error("Error in fetch", response.statusText);
