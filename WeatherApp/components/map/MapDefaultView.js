@@ -17,7 +17,9 @@ export default function MapDefaultView() {
   const [loading, setLoading] = useState(false);
 
   const handleLocationFetched = (location) => { // 'location'-object is passed from UserLocation-component
+
     setUserLocation(location);
+    console.log("handleLocationFetched received:", location);
     try {
       // Zoomataan käyttäjän sijaintiin
       setMapRegion({
@@ -27,9 +29,9 @@ export default function MapDefaultView() {
         longitudeDelta: 0.05,
       });
     } catch (err) {
-        console.error("Error: ", err);
+      console.error("Error: ", err);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -51,8 +53,14 @@ export default function MapDefaultView() {
         showsUserLocation={true}
         followsUserLocation={true}
       >
-        {userLocation && (
-          <Marker coordinate={userLocation} title="Oma sijainti" /> //zooms to user's location
+        {userLocation && userLocation.coords && (
+          <Marker
+            coordinate={{
+              latitude: userLocation.coords.latitude,
+              longitude: userLocation.coords.longitude
+            }}
+            title="Oma sijainti"
+          />
         )}
       </MapView>
 

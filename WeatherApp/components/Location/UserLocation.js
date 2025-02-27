@@ -15,6 +15,7 @@ export default function UserLocation({ onLocationFetched }) {
 
         try {
             let location = await Location.getCurrentPositionAsync({}); // Get location as object 'coords'
+            console.log("Fetched location:", location);
             onLocationFetched(location); // Passes object to parent component
         } catch (err) {
             console.error("Error in fetching location: ", err);

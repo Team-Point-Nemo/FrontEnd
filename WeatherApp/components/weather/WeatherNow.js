@@ -13,7 +13,7 @@ const [location, setLocation] = useState(null);
 const handleLocationFetched = (location) => { // 'location'-object is passed from UserLocation-component
   setLocation(location);
 }
-
+//default data if fetch is not working
 const [weather, setWeather] = useState({
   main: {
     temp: 280, feels_like: 282
