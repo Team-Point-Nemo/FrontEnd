@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, TextInput, Button } from "react-native";
+import { SafeAreaView, TextInput, Button, StyleSheet , Styl} from "react-native";
 import { getWeatherData } from "../../weatherapi";
 import WeatherLayout from "./WeatherLayout";
 
@@ -32,14 +32,14 @@ export default function WeatherSearch() {
     <SafeAreaView>
       <TextInput
         style={styles.input}
-        placeholder="Type city name"
+        placeholder="Type city name to search weather"
         value={city}
         onChangeText={setCity}
       />
       <Button 
-        style={styles.button} 
         title="Search" 
         onPress={handleSearch} 
+        color='#808080'
         />
       {weather && <WeatherLayout weather={weather} />}
     </SafeAreaView>
@@ -48,9 +48,10 @@ export default function WeatherSearch() {
 
 const styles = StyleSheet.create({
   input: {
-
+    height: 40,
+    width: 200,
+    borderWidth: 0.5,
+    padding: 10,
+    marginBottom: 10,
   },
-  button: {
-
-  }
 })

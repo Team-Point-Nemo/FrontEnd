@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, Image, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-
 export default function WeatherLayout({weather}) {
 
     if(!weather) {

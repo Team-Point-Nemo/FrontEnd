@@ -1,6 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, SafeAreaView, Image } from "react-native";
+import { SafeAreaView } from "react-native";
 import { getWeatherInHelsinki } from "../../api";
 import UserLocation from "../Location/UserLocation";
 import CityFetch from "../Location/CityFetch";

@@ -17,9 +17,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  weatherIcon: {
-    width: 70,
-    height: 70,
-    marginTop: 20,
-  },
 });
