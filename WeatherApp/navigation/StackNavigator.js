@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 import SettingsScreen from "../screens/SettingsScreen";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -22,23 +22,24 @@ export default function StackNavigator() {
                     ),
                     headerRight: () => (
                         <View style={styles.headerRightView}>
-                            <Ionicons 
-                                name="location-sharp" 
-                                size={24} 
-                                color="black" 
-                                style={styles.iconsTopRight} />
-                            <Ionicons 
-                                name="search" 
-                                size={24} 
-                                color="black" 
-                                style={styles.iconsTopRight} />
                             <Ionicons
-                                name="settings"
+                                name="location-sharp"
                                 size={24}
                                 color="black"
-                                style={styles.iconsTopRight}
-                                onPress={() => navigation.navigate("Settings")}
-                            />
+                                style={styles.iconsTopRight} />
+                            <Ionicons
+                                name="search"
+                                size={24}
+                                color="black"
+                                style={styles.iconsTopRight} />
+                            <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+                                <Ionicons
+                                    name="settings"
+                                    size={24}
+                                    color="black"
+                                    style={styles.iconsTopRight}
+                                />
+                            </TouchableOpacity>
                         </View>
                     ),
                 })}
