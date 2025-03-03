@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 import SettingsScreen from "../screens/SettingsScreen";
+import SearchScreen from "../screens/SearchScreen";
 import { View, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -31,7 +32,8 @@ export default function StackNavigator() {
                                 name="search" 
                                 size={24} 
                                 color="black" 
-                                style={styles.iconsTopRight} />
+                                style={styles.iconsTopRight}
+                                onPress={() => navigation.navigate("Search")} />
                             <Ionicons
                                 name="settings"
                                 size={24}
@@ -43,6 +45,7 @@ export default function StackNavigator() {
                     ),
                 })}
             />
+            <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
     )
