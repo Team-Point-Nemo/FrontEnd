@@ -69,7 +69,7 @@ export default function FourDaysForecast() {
             .catch(err => console.log(err));
     };
 
-    //("2024-02-27" → "27.2.")
+    //example ("2024-02-27" → "27.2.")
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
         return `${date.getDate()}.${date.getMonth() +1}.`;
@@ -79,18 +79,6 @@ export default function FourDaysForecast() {
         <SafeAreaView style={styles.container}>
             <FourDaysHourly hourlyForecast={hourlyForeCast} />
             <FourDaysDaily dailyForecast={dailyForecast}/>
-            <FourDaysHourly hourlyForecast={hourlyForeCast} />
-            {/* <FlatList
-                data={dailyForecast}
-                renderItem={({ item }) => (
-                    <View style={styles.forecast}>
-                        <Text>{item.date}</Text>
-                        <Text>{item.temp}</Text>
-                        <Text>{item.wind}</Text>
-                    </View>
-                )}
-            /> */}
-            
         </SafeAreaView>
     )
 }

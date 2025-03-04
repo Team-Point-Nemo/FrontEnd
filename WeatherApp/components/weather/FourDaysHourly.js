@@ -11,9 +11,9 @@ export function FourDaysHourly({ hourlyForecast }) {
                     <Text>{date}</Text>
                     <FlatList
                         data={hourlyForecast[date]}
-                        horizontal
+                        // horizontal
                         renderItem={({ item }) => (
-                            <View>
+                            <View style={styles.hours}>
                                 <Text>{item.time}</Text>
                                 <Text>{item.temp}</Text>
                                 <Text>{item.wind}</Text>
@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 10
     },
-    dayContainer: {
-        marginBottom: 15
-    },
     forecast: {
         marginHorizontal: 5,
         padding: 10,
         alignItems: "center"
+    },
+    hours: {
+        flexDirection: "row",
+        justifyContent: 'space-between'
     }
 });
