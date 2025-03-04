@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 import SettingsScreen from "../screens/SettingsScreen";
 import SearchScreen from "../screens/SearchScreen";
-import { View, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import IndexScreen from "../screens/IndexScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -23,19 +24,21 @@ export default function StackNavigator() {
                     ),
                     headerRight: () => (
                         <View style={styles.headerRightView}>
+                            <TouchableOpacity onPress={() => navigation.navigate("LocationWeather")}>
                                 <Ionicons
                                     name="location-sharp"
                                     size={24}
                                     color="black"
-                                    style={styles.iconsTopRight} 
-                                    />
-                            <Pressable onPress={() => navigation.navigate("Search")}>
+                                    style={styles.iconsTopRight}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
                                 <Ionicons
                                     name="search"
                                     size={24}
                                     color="black"
                                     style={styles.iconsTopRight} />
-                            </Pressable>
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={() => navigation.navigate("Settings")} >
                                 <Ionicons
                                     name="settings"
@@ -48,6 +51,7 @@ export default function StackNavigator() {
                     ),
                 })}
             />
+            <Stack.Screen name="LocationWeather" component={IndexScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>

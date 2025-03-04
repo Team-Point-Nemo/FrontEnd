@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { SafeAreaView, TextInput, Button, StyleSheet , Styl} from "react-native";
+import { SafeAreaView, TextInput, Button, StyleSheet } from "react-native";
 import { getWeatherData } from "../../weatherapi";
-import WeatherLayout from "./WeatherLayout";
+import WeatherNow from "../weather/WeatherNow";
 
 export default function WeatherSearch() {
+
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,6 +23,7 @@ export default function WeatherSearch() {
   const handleSearch = () => {
     if (city.trim().length > 0) {
       fetchWeatherData(city);
+      navigator.navigate('WeatherNow', weather)
     } else {
       console.log("Error in city input" + error)
       Alert.alert("Input error")
@@ -41,7 +43,7 @@ export default function WeatherSearch() {
         onPress={handleSearch} 
         color='#808080'
         />
-      {weather && <WeatherLayout weather={weather} />}
+      {weather && <WeatherNow weather={weather} />}
     </SafeAreaView>
   );
 }
@@ -55,3 +57,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 })
+
+/*
+lista kaupungeista -> muuttaa koordinaateiksi mitä käyttää tässä
+navigointi takaisin index, muotoiluhaku weathernow tiedostosta
+*/
