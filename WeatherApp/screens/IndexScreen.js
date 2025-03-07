@@ -2,14 +2,13 @@ import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-n
 import WeatherNow from '../components/weather/WeatherNow';
 import FourDaysForecast from '../components/weather/FourDaysForecast';
 
+
 export default function IndexScreen() {
   
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
      <WeatherNow />
      <FourDaysForecast />
-     </ScrollView>
     </SafeAreaView>
   );
 }

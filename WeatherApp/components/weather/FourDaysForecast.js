@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
-import { Text, StyleSheet, FlatList, View } from "react-native";
+import { Text, StyleSheet, FlatList, View, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getForecastForFourDays } from "../../api";
-import { FourDaysDaily } from "./FourDaysDaily";
-import { FourDaysHourly } from "./FourDaysHourly";
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 export default function FourDaysForecast() {
 
-    const [forecast, setForecast] = useState([]);
-    const [dailyForecast, setDailyForecast] = useState(
-        [ { date: "27.2.", temp: "+3°", wind: "5 m/s" },
-            { date: "28.2.", temp: "+2°", wind: "4 m/s" },
-            { date: "29.2.", temp: "+1°", wind: "3 m/s" },
-            { date: "1.3.", temp: "0°", wind: "2 m/s" }
-        ]);
-
-
-    const [hourlyForeCast, setHourlyForecast] = useState([
-    ]);
+    const [dailyForecast, setDailyForecast] = useState([]);
+    const [hourlyForeCast, setHourlyForecast] = useState([]);
+    const [expandedDays, setExpandedDays] = useState({});
 
     useEffect(() => {
         handleFetch();
@@ -56,10 +47,11 @@ export default function FourDaysForecast() {
                 });
 
                 //rounding result
-                const formattedData = Object.keys(dailyData).map(date => ({
-                    date: formatDate(date),
-                    temp: `${Math.round(dailyData[date].maxTemp)} °C`,
-                    wind: `${Math.round(dailyData[date].maxWind)} m/s`
+                const formattedData = Object.keys(dailyData).map(rawDate => ({ //rawdate "2024-02-27"
+                    rawDate,
+                    date: formatDate(rawDate), //formatted 27.2.
+                    temp: `${Math.round(dailyData[rawDate].maxTemp)} °C`,
+                    wind: `${Math.round(dailyData[rawDate].maxWind)} m/s`
                 }))
 
                 setDailyForecast(formattedData);
@@ -75,10 +67,49 @@ export default function FourDaysForecast() {
         return `${date.getDate()}.${date.getMonth() +1}.`;
     };
 
+    const toggleExpand = (rawDate) => {
+        setExpandedDays(prev => ({
+            ...prev,
+            [rawDate] : !prev[rawDate]
+        }));
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <FourDaysHourly hourlyForecast={hourlyForeCast} />
-            <FourDaysDaily dailyForecast={dailyForecast}/>
+            <FlatList
+                data={dailyForecast}
+                keyExtractor={(item) => item.rawDate}
+                renderItem={({ item }) => (
+                    <View>
+                        <TouchableOpacity
+                        onPress={() => toggleExpand(item.rawDate)}
+                        style={styles.daily}
+                        >
+                        <Text>{item.date}</Text>
+                        <Text>{item.temp}</Text>
+                        <Text>{item.wind}</Text>
+                        <MaterialIcons 
+                            name={expandedDays[item.rawDate] ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                            size={24}
+                            color='black'
+                        />
+                        </TouchableOpacity>
+                        {expandedDays[item.rawDate] && (
+                            <FlatList 
+                                data={hourlyForeCast[item.rawDate] || []}
+                                keyExtractor={(hour) => hour.time}
+                                renderItem={({ item }) => (
+                                    <View style={styles.hourly}>
+                                        <Text>{item.time}</Text>
+                                        <Text>{item.temp}</Text>
+                                        <Text>{item.wind}</Text>
+                                    </View>
+                                )}
+                            />
+                        )}
+                    </View>
+                )}
+            />
         </SafeAreaView>
     )
 }
@@ -86,11 +117,28 @@ export default function FourDaysForecast() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: '80%'
     },
     forecast: {
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center'
-    }
+    },
+    daily: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
+    },
+    hourly: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 5,
+        paddingLeft: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: "#eee",
+    },
 })
