@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, TextInput, Button, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, Button, Image } from "react-native";
 import { getWeatherByCity } from "../../api";
 
 export default function WeatherSearch() {
@@ -9,17 +9,16 @@ export default function WeatherSearch() {
   
   const handleSearch = async () => {
     if (!city.trim().length > 0) {
-      console.log("Error in city input" + error)
-      Alert.alert("Error in city input" + error)
-      return;
+      console.log("Error in city input " + error)
+      Alert.alert("Error in city input " + error)
+      return
     }
     try {
-      const data = await getWeatherByCity(city)
-      console.log("Weather data ", data)
-      setWeather(data)
+      const weatherData = await getWeatherByCity(city)
+      setWeather(weatherData)
     } catch (error) {
-      console.log("Error in fetching weather data" + error)
-      Alert.alert("Error in fetching weather data" + error)
+      console.log("Error in fetching weather data " + error)
+      Alert.alert("Error in fetching weather data " + error)
     }
   }
 
