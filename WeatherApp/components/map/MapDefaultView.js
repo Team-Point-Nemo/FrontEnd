@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons'
 import UserLocation from '../Location/UserLocation';
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
-    latitude: 65, // Default (Finland)
+    latitude: 65,   // Default (Finland)
     longitude: 26,
-    latitudeDelta: 10.5, // Laaja zoom (koko Suomi)
+    latitudeDelta: 10.5,  // Wide zoom (whole Finland)
     longitudeDelta: 10.5,
   });
 
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLocationFetched = (location) => { // 'location'-object is passed from UserLocation-component
+  const handleLocationFetched = (location) => {   // 'location'-object is passed from UserLocation-component
     setUserLocation(location);
     try {
-      // Zoomataan käyttäjän sijaintiin
+      // Zoom to user's location
       setMapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.05, // Kaupunkitaso
+        latitudeDelta: 0.05,  // Zoom set to city level
         longitudeDelta: 0.05,
       });
     } catch (err) {
@@ -51,12 +50,18 @@ export default function MapDefaultView() {
         showsUserLocation={true}
         followsUserLocation={true}
       >
-        {userLocation && (
-          <Marker coordinate={userLocation} title="Oma sijainti" /> //zooms to user's location
-        )}
+      {userLocation && userLocation.coords && (   // Zoom's to user's location when userLocation and userLocation.coords are true.
+        <Marker 
+          coordinate={{
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude
+          }} 
+          title="Oma sijainti" 
+        />
+      )}
       </MapView>
 
-      {/* Painikkeet */}
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button} onPress={handleLocationFetched}>
           {loading ? (
@@ -112,14 +117,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     marginLeft: 5,
-  },
-  // errorText: {
-  //   position: 'absolute',
-  //   bottom: 60,
-  //   alignSelf: 'center',
-  //   backgroundColor: 'red',
-  //   color: 'white',
-  //   padding: 5,
-  //   borderRadius: 5,
-  // },
+  }
 });
