@@ -55,7 +55,6 @@ return (
     <StatusBar style="auto" />
   </SafeAreaView>
 );
->>>>>>> main
 }
 
 const styles = StyleSheet.create({
