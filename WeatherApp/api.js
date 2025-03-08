@@ -9,3 +9,13 @@ export function getCurrentWeatherInLocation(location) {
         return response.json();
     });
 }
+
+export function getWeatherByCity(city) {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}`)
+    .then(response => {
+        if(!response.ok) {
+            throw new Error("Error in fetch", response.statusText);
+        }
+        return response.json();
+    })
+}
