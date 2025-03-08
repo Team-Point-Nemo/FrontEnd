@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import { Text, ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator, Alert } from 'react-native';
 
 export default function CityFetch({ location }) {
 
@@ -8,7 +8,7 @@ export default function CityFetch({ location }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (location) {
+    if (location.coords) {  // Ensures, that location.coords has a value
       getCity(location);
     }
   }, [location]);
@@ -21,10 +21,8 @@ export default function CityFetch({ location }) {
       });
 
       if (address.length > 0) {
-        // console.log("Reverse geocode data:", JSON.stringify(address, null, 2));
         const newCity = address[0].city || 'Location unknown';
         setCity(newCity);
-        // console.log("Location city set:", newCity);
       }
     } catch (err) {
         console.error("Error in fetching city: ", err);
