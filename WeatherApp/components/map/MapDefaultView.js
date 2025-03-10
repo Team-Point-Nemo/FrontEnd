@@ -11,46 +11,68 @@ export default function MapDefaultView() {
     latitudeDelta: 10.5,  // Wide zoom (whole Finland)
     longitudeDelta: 10.5,
   });
-
   const [userLocation, setUserLocation] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingUserLocation, setLoadingUserLocation] = useState(false);
+  const [loadingReset, setLoadingReset] = useState(false);
 
-  const handleLocationFetched = (location) => {   // 'location'-object is passed from UserLocation-component
+  const handleLocationFetched = async (location) => {   // 'location'-object is passed from UserLocation-component
     setUserLocation(location);
-    try {
-      // Zoom to user's location
-      setMapRegion({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.05,  // Zoom set to city level
-        longitudeDelta: 0.05,
-      });
-    } catch (err) {
-        console.error("Error: ", err);
-    } finally {
-        setLoading(false);
+  };
+
+  useEffect(() => {
+    if (userLocation) {
+      resetToUserLocation();
+    }
+  }, [userLocation]);
+
+  const resetToUserLocation = () => {
+    if (userLocation) {
+      setLoadingUserLocation(true);
+      try {
+        // Zoom to user's location
+        setMapRegion({
+          latitude: userLocation.coords.latitude,
+          longitude: userLocation.coords.longitude,
+          latitudeDelta: 0.05,  // Zoom set to city level
+          longitudeDelta: 0.05,
+        });
+      } catch (err) {
+          console.error("Error: ", err);
+      } finally {
+          setLoadingUserLocation(false);
+      }
     }
   };
 
   const resetMap = () => {
-    setMapRegion({
-      latitude: 65,
-      longitude: 26,
-      latitudeDelta: 10.5,
-      longitudeDelta: 10.5,
-    });
+    setLoadingReset(true)
+    try {
+      setMapRegion({
+        latitude: 65,   // Default (Finland)
+        longitude: 26,
+        latitudeDelta: 10.5,  // Wide zoom (whole Finland)
+        longitudeDelta: 10.5,
+      });
+    } catch (err) {
+        console.error("Error: ", err);
+    } finally {
+        setLoadingReset(false);
+    }
   };
 
   return (
     <View style={styles.container}>
       <UserLocation onLocationFetched={handleLocationFetched} />
       <MapView
-        style={styles.map}
         region={mapRegion}
+        onRegionChangeComplete={(region) => setMapRegion(region)}
+        style={styles.map}
         showsUserLocation={true}
         followsUserLocation={true}
       >
-      {userLocation && userLocation.coords && (   // Zoom's to user's location when userLocation and userLocation.coords are true.
+
+      {/* Add marker to user's location */}
+      {userLocation && userLocation.coords && (
         <Marker 
           coordinate={{
             latitude: userLocation.coords.latitude,
@@ -63,20 +85,25 @@ export default function MapDefaultView() {
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={handleLocationFetched}>
-          {loading ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <>
-              <MaterialIcons name="my-location" size={20} color="white" />
-              <Text style={styles.buttonText}>Sijainti</Text>
-            </>
-          )}
+        <Pressable style={styles.button} onPress={resetToUserLocation}>
+        {loadingUserLocation ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <>
+            <MaterialIcons name="my-location" size={20} color="white" />
+            <Text style={styles.buttonText}>Location</Text>
+          </>
+        )}
         </Pressable>
-
         <Pressable style={[styles.button, styles.resetButton]} onPress={resetMap}>
+        {loadingReset ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <>
           <MaterialIcons name="zoom-out-map" size={20} color="white" />
           <Text style={styles.buttonText}>Reset</Text>
+          </>
+        )}
         </Pressable>
       </View>
     </View>

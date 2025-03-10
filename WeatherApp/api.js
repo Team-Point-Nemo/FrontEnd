@@ -11,7 +11,7 @@ export function getCurrentWeatherInLocation(location) {
 }
 
 export function getWeatherByCity(city) {
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}`)
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=b74779bdf87fc91c8f995e35e0437ec8`)
     .then(response => {
         if(!response.ok) {
             throw new Error("Error in fetch", response.statusText);
