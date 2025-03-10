@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getForecastForFourDays } from "../../api";
 import { MaterialIcons } from '@expo/vector-icons';
 import { forecastMockupData } from "./ForecastMockupData";
-
+import UserLocation from "../Location/UserLocation";
 
 export default function FourDaysForecast() {
 
@@ -12,14 +12,23 @@ export default function FourDaysForecast() {
     const [hourlyForeCast, setHourlyForecast] = useState([]);
     const [expandedDays, setExpandedDays] = useState({});
     const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [location, setLocation] = useState(null);
+
+    //sets location, when it'll be received
+    const handleLocationFetched = (location) => {
+        setLocation(location);
+    };
 
     useEffect(() => {
-        handleFetch();
-    }, []);
+        if(location){
+            handleFetch();
+        }
+    }, [location]); //ensures that location is downloaded before the fetch
 
     const handleFetch = () => {
+        
         //from api.js, returns the hourly weather forecast for four days
-        getForecastForFourDays()
+        getForecastForFourDays(location)
             .then((data) => {
                 console.log("Fetched data:", data);
                 //processed data for four days 
@@ -107,6 +116,7 @@ export default function FourDaysForecast() {
 
     return (
         <SafeAreaView style={styles.container}>
+             <UserLocation onLocationFetched={handleLocationFetched} />
             {isDataLoaded ? (
                 <FlatList
                     data={dailyForecast}
