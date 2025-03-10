@@ -15,7 +15,6 @@ export default function MapDefaultView() {
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
 
-<<<<<<< HEAD
   const handleLocationFetched = async (location) => {   // 'location'-object is passed from UserLocation-component
     setUserLocation(location);
   };
@@ -42,24 +41,6 @@ export default function MapDefaultView() {
       } finally {
           setLoadingUserLocation(false);
       }
-=======
-  const handleLocationFetched = (location) => { // 'location'-object is passed from UserLocation-component
-
-    setUserLocation(location);
-    console.log("handleLocationFetched received:", location);
-    try {
-      // Zoomataan käyttäjän sijaintiin
-      setMapRegion({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.05, // Kaupunkitaso
-        longitudeDelta: 0.05,
-      });
-    } catch (err) {
-      console.error("Error: ", err);
-    } finally {
-      setLoading(false);
->>>>>>> forecast
     }
   };
 
@@ -89,7 +70,6 @@ export default function MapDefaultView() {
         showsUserLocation={true}
         followsUserLocation={true}
       >
-<<<<<<< HEAD
 
       {/* Add marker to user's location */}
       {userLocation && userLocation.coords && (
@@ -101,17 +81,6 @@ export default function MapDefaultView() {
           title="Oma sijainti" 
         />
       )}
-=======
-        {userLocation && userLocation.coords && (
-          <Marker
-            coordinate={{
-              latitude: userLocation.coords.latitude,
-              longitude: userLocation.coords.longitude
-            }}
-            title="Oma sijainti"
-          />
-        )}
->>>>>>> forecast
       </MapView>
 
       {/* Buttons */}
