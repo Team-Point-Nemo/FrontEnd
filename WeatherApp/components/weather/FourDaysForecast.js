@@ -11,6 +11,7 @@ export default function FourDaysForecast() {
     const [dailyForecast, setDailyForecast] = useState([]);
     const [hourlyForeCast, setHourlyForecast] = useState([]);
     const [expandedDays, setExpandedDays] = useState({});
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     useEffect(() => {
         handleFetch();
@@ -62,8 +63,32 @@ export default function FourDaysForecast() {
                 setDailyForecast(formattedData);
                 console.log("Processed hourly data:", hourlyData);
                 setHourlyForecast(hourlyData);
+                setIsDataLoaded(true); 
             })
-            .catch(err => console.log(err));
+            .catch((err) => {
+                console.error("Fetch error: ", err);
+                // if fetch fails, uses mockup data
+                console.log('Using mockup data...');
+                const dailyData = Object.keys(forecastMockupData).map(date => {
+
+                    const dayData = forecastMockupData[date];
+                    console.log(`Day data for ${date}:`, dayData);
+            
+                    const maxTemp = Math.max(...dayData.map(item => parseFloat(item.temp)));
+                    const maxWind = Math.max(...dayData.map(item => parseFloat(item.wind)));
+            
+                    // returns a new object with maximum values
+                    return {
+                        rawDate: date,
+                        date: formatDate(date),
+                        temp: `${Math.round(maxTemp)} °C`,
+                        wind: `${Math.round(maxWind)} m/s`
+                    };
+                });
+                setDailyForecast(dailyData);
+                setHourlyForecast(forecastMockupData);
+                setIsDataLoaded(true);
+            });
     };
 
     //example ("2024-02-27" → "27.2.")
@@ -82,40 +107,44 @@ export default function FourDaysForecast() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList
-                data={dailyForecast}
-                keyExtractor={(item) => item.rawDate}
-                renderItem={({ item }) => (
-                    <View>
-                        <TouchableOpacity
-                            onPress={() => toggleExpand(item.rawDate)}
-                            style={styles.daily}
-                        >
-                            <Text>{item.date}</Text>
-                            <Text>{item.temp}</Text>
-                            <Text>{item.wind}</Text>
-                            <MaterialIcons
-                                name={expandedDays[item.rawDate] ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                                size={24}
-                                color='black'
-                            />
-                        </TouchableOpacity>
-                        {expandedDays[item.rawDate] && (
-                            <FlatList
-                                data={hourlyForeCast[item.rawDate] || []}
-                                keyExtractor={(hour) => hour.time}
-                                renderItem={({ item }) => (
-                                    <View style={styles.hourly}>
-                                        <Text>{item.time}</Text>
-                                        <Text>{item.temp}</Text>
-                                        <Text>{item.wind}</Text>
-                                    </View>
-                                )}
-                            />
-                        )}
-                    </View>
-                )}
-            />
+            {isDataLoaded ? (
+                <FlatList
+                    data={dailyForecast}
+                    keyExtractor={(item) => item.rawDate}
+                    renderItem={({ item }) => (
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => toggleExpand(item.rawDate)}
+                                style={styles.daily}
+                            >
+                                <Text>{item.date}</Text>
+                                <Text>{item.temp}</Text>
+                                <Text>{item.wind}</Text>
+                                <MaterialIcons
+                                    name={expandedDays[item.rawDate] ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                                    size={24}
+                                    color='black'
+                                />
+                            </TouchableOpacity>
+                            {expandedDays[item.rawDate] && (
+                                <FlatList
+                                    data={hourlyForeCast[item.rawDate] || []}
+                                    keyExtractor={(hour) => hour.time}
+                                    renderItem={({ item }) => (
+                                        <View style={styles.hourly}>
+                                            <Text>{item.time}</Text>
+                                            <Text>{item.temp}</Text>
+                                            <Text>{item.wind}</Text>
+                                        </View>
+                                    )}
+                                />
+                            )}
+                        </View>
+                    )}
+                />
+            ) : (
+                <Text>Loading data...</Text> 
+            )}
         </SafeAreaView>
     )
 }
@@ -137,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
+        borderBottomColor: "#565254",
     },
     hourly: {
         flexDirection: "row",
