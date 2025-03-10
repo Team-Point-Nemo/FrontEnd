@@ -3,6 +3,7 @@ import { Text, StyleSheet, FlatList, View, TouchableOpacity } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getForecastForFourDays } from "../../api";
 import { MaterialIcons } from '@expo/vector-icons';
+import { forecastMockupData } from "./ForecastMockupData";
 
 
 export default function FourDaysForecast() {
@@ -16,28 +17,32 @@ export default function FourDaysForecast() {
     }, []);
 
     const handleFetch = () => {
+        //from api.js, returns the hourly weather forecast for four days
         getForecastForFourDays()
             .then((data) => {
                 console.log("Fetched data:", data);
-
                 //processed data for four days 
                 const dailyData = {};
                 const hourlyData = {};
 
-                //loop through every item and saves the maximum
+                //loops through every item and saves the maximum
                 data.list.forEach(item => {
                     const date = item.dt_txt.split(" ")[0];
-                    const time = item.dt_txt.split(" ")[1].slice(0, 5); // Ota vain tunnit ja minuutit
+                    const time = item.dt_txt.split(" ")[1].slice(0, 5); // takes only hours and minutes
                     if (!dailyData[date]) {
+                        //initialize with infinity since the temperature can be negative
                         dailyData[date] = { maxTemp: -Infinity, maxWind: -Infinity };
                     }
 
+                    //updates the maximum temperature and wind speed for the date
                     dailyData[date].maxTemp = Math.max(dailyData[date].maxTemp, item.main.temp_max);
                     dailyData[date].maxWind = Math.max(dailyData[date].maxWind, item.wind.speed);
+
 
                     if (!hourlyData[date]) {
                         hourlyData[date] = [];
                     }
+
                     hourlyData[date].push({
                         time: time,
                         temp: `${Math.round(item.main.temp)} °C`,
@@ -46,7 +51,7 @@ export default function FourDaysForecast() {
                     console.log("Hourly data: ", hourlyData)
                 });
 
-                //rounding result
+                //returns an array of dates (keys) and maps each date to the correct format
                 const formattedData = Object.keys(dailyData).map(rawDate => ({ //rawdate "2024-02-27"
                     rawDate,
                     date: formatDate(rawDate), //formatted 27.2.
@@ -55,7 +60,7 @@ export default function FourDaysForecast() {
                 }))
 
                 setDailyForecast(formattedData);
-                  console.log("Processed hourly data:", hourlyData); // Tulostetaan, mitä tallennetaan
+                console.log("Processed hourly data:", hourlyData);
                 setHourlyForecast(hourlyData);
             })
             .catch(err => console.log(err));
@@ -64,13 +69,14 @@ export default function FourDaysForecast() {
     //example ("2024-02-27" → "27.2.")
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
-        return `${date.getDate()}.${date.getMonth() +1}.`;
+        return `${date.getDate()}.${date.getMonth() + 1}.`;
     };
 
+    //called when a user click a date. prev = state before updating (includes state for expandedDays)
     const toggleExpand = (rawDate) => {
         setExpandedDays(prev => ({
             ...prev,
-            [rawDate] : !prev[rawDate]
+            [rawDate]: !prev[rawDate] //toggles the state of the date that the user has selected. If it was true (expanded), it changes to false (collapsed)
         }));
     };
 
@@ -82,20 +88,20 @@ export default function FourDaysForecast() {
                 renderItem={({ item }) => (
                     <View>
                         <TouchableOpacity
-                        onPress={() => toggleExpand(item.rawDate)}
-                        style={styles.daily}
+                            onPress={() => toggleExpand(item.rawDate)}
+                            style={styles.daily}
                         >
-                        <Text>{item.date}</Text>
-                        <Text>{item.temp}</Text>
-                        <Text>{item.wind}</Text>
-                        <MaterialIcons 
-                            name={expandedDays[item.rawDate] ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                            size={24}
-                            color='black'
-                        />
+                            <Text>{item.date}</Text>
+                            <Text>{item.temp}</Text>
+                            <Text>{item.wind}</Text>
+                            <MaterialIcons
+                                name={expandedDays[item.rawDate] ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                                size={24}
+                                color='black'
+                            />
                         </TouchableOpacity>
                         {expandedDays[item.rawDate] && (
-                            <FlatList 
+                            <FlatList
                                 data={hourlyForeCast[item.rawDate] || []}
                                 keyExtractor={(hour) => hour.time}
                                 renderItem={({ item }) => (

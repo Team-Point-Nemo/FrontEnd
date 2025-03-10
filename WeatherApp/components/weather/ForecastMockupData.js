@@ -1,4 +1,4 @@
-const forecastMockupData = {
+export const forecastMockupData = {
     "2025-03-07": [
         {"temp": "6 °C", "time": "12:00", "wind": "3 m/s"}, 
         {"temp": "5 °C", "time": "13:00", "wind": "3 m/s"}, 
