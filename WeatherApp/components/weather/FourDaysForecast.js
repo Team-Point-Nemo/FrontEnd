@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Text, StyleSheet, FlatList, View, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getForecastForFourDays } from "../../api";
+import { getForecastFor16Days, getForecastForFourDays } from "../../api";
 import { MaterialIcons } from '@expo/vector-icons';
 import { forecastMockupData } from "./ForecastMockupData";
 import UserLocation from "../Location/UserLocation";
@@ -13,6 +13,11 @@ export default function FourDaysForecast() {
     const [expandedDays, setExpandedDays] = useState({});
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [location, setLocation] = useState(null);
+    const [sixteenDaysForecast, setSixteenDaysForecast] = useState({
+        day: "",
+        temp: "",
+        wind: "",
+    });
 
     //sets location, when it'll be received
     const handleLocationFetched = (location) => {
@@ -22,6 +27,7 @@ export default function FourDaysForecast() {
     useEffect(() => {
         if(location){
             handleFetch();
+            forecastFor16Days();
         }
     }, [location]); //ensures that location is downloaded before the fetch
 
@@ -97,11 +103,41 @@ export default function FourDaysForecast() {
             });
     };
 
+    const forecastFor16Days = () => {
+        getForecastFor16Days(location)
+            .then(data => {
+            const today = new Date();
+  
+            today.setDate(today.getDate() + 5);
+
+            // startDate to Unix TimeStamp
+            const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() / 1000;
+
+            // filters days that are 5 days later from the start date
+            const filteredList = data.list.filter(day => day.dt >= startDate);
+
+                const formattedForecast = filteredList.map(item => ({
+                    day: formatUnixtoDate(item.dt),
+                    temp: `${Math.round(item.temp.day)} °C`,
+                    wind: `${Math.round(item.speed)} m/s`
+                }));
+                setSixteenDaysForecast(formattedForecast);
+                console.log(formattedForecast); 
+            })
+            .catch(err => console.error("Fetch error: " + err))
+    }
+
     //example ("2024-02-27" → "27.2.")
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
         return `${date.getDate()}.${date.getMonth() + 1}.`;
     };
+
+    //"1741600800" => "15.3."
+    const formatUnixtoDate = (unixDt) => {
+        const date = new Date(unixDt*1000);
+        return date.toLocaleDateString("fi-FI", {day: "numeric", month:"numeric"});
+    }
 
     //called when a user click a date. prev = state before updating (includes state for expandedDays)
     const toggleExpand = (rawDate) => {
@@ -145,6 +181,20 @@ export default function FourDaysForecast() {
                                         </View>
                                     )}
                                 />
+            //                     <View>
+            // <FlatList
+            //                 data={sixteenDaysForecast}
+            //                 keyExtractor={(item) => item.day}
+            //                 renderItem={({item}) => (
+            //                     <View style={styles.daily}>
+            //                         <Text>{item.day}</Text>
+            //                         <Text>{item.temp}</Text>
+            //                         <Text>{item.wind}</Text>
+            //                     </View>
+            //                 )}
+                            
+            //                 />
+            //                 </View>
                             )}
                         </View>
                     )}

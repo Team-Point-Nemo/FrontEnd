@@ -20,6 +20,7 @@ export function getWeatherByCity(city) {
     })
 }
 
+//Forecast for 4 days https://openweathermap.org/api/hourly-forecast
 export function getForecastForFourDays(location) {
 return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
     .then(response => {
@@ -27,5 +28,17 @@ return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${loca
             throw new Error("Error in fetch", response.statusText);
 
         return response.json();
+    })
+}
+
+
+//forecast for 16 days https://openweathermap.org/forecast16
+export function getForecastFor16Days(location){
+return fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${location.coords.latitude}&lon=${location.coords.longitude}&cnt=16&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
+    .then(response => {
+        if(!response.ok)
+                throw new Error("Error in fetch ", response.statusText);
+
+        return response.json()
     })
 }
