@@ -5,8 +5,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import UserLocation from '../Location/UserLocation';
 
 
-const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
-console.log("Weather API Key:", WEATHER_API_KEY);
+const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
+console.log("Weather API Key:", EXPO_PUBLIC_WEATHER_API_KEY);
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -89,7 +89,7 @@ export default function MapDefaultView() {
         {/* Sadekartta (jos näkyvyys on päällä) */}
         {showRainMap && (
           <UrlTile
-            urlTemplate={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=b74779bdf87fc91c8f995e35e0437ec8`}
+            urlTemplate={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
             zIndex={5}
             onError={(e) => {
               console.error("Error loading rain map tile: ", e);
