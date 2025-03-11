@@ -31,8 +31,8 @@ export default function MapDefaultView() {
         setMapRegion({
           latitude: userLocation.coords.latitude,
           longitude: userLocation.coords.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 1.5,
+          longitudeDelta: 1.5,
         });
       } catch (err) {
         console.error("Error: ", err);
