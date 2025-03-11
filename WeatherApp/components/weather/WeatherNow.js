@@ -39,8 +39,8 @@ return (
     {location && <CityFetch location={location} />}
     {weather?.main && (   // Checks, that weather (and main-array in it's data) has value, before rendering.
     <>
-      <Text>Temperature: {(weather.main.temp - 273.15).toFixed(0)} °C</Text>
-      <Text>Feels like: {(weather.main.feels_like - 273.15).toFixed(0)} °C</Text>
+      <Text>Temperature: {weather.main.temp.toFixed(0)} °C</Text>
+      <Text>Feels like: {weather.main.feels_like.toFixed(0)} °C</Text>
       <Text>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
     </>
   )}

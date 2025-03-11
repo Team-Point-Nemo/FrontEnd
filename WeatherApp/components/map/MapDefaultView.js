@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,7 +6,6 @@ import UserLocation from '../Location/UserLocation';
 
 
 const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
-console.log("Weather API Key:", EXPO_PUBLIC_WEATHER_API_KEY);
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -24,12 +23,6 @@ export default function MapDefaultView() {
   const handleLocationFetched = async (location) => {
     setUserLocation(location);
   };
-
-  useEffect(() => {
-    if (userLocation) {
-      resetToUserLocation();
-    }
-  }, [userLocation]);
 
   const resetToUserLocation = () => {
     if (userLocation) {
@@ -73,7 +66,6 @@ export default function MapDefaultView() {
         onRegionChangeComplete={(region) => setMapRegion(region)}
         style={styles.map}
         showsUserLocation={true}
-        followsUserLocation={true}
       >
         {/* Käyttäjän sijaintimarkkeri */}
         {userLocation && userLocation.coords && (
