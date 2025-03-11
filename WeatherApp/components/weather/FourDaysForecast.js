@@ -30,7 +30,6 @@ export default function FourDaysForecast() {
         //from api.js, returns the hourly weather forecast for four days
         getForecastForFourDays(location)
             .then((data) => {
-                console.log("Fetched data:", data);
                 //processed data for four days 
                 const dailyData = {};
                 const hourlyData = {};
@@ -58,7 +57,6 @@ export default function FourDaysForecast() {
                         temp: `${Math.round(item.main.temp)} °C`,
                         wind: `${Math.round(item.wind.speed)} m/s`
                     });
-                    console.log("Hourly data: ", hourlyData)
                 });
 
                 //returns an array of dates (keys) and maps each date to the correct format
@@ -70,7 +68,7 @@ export default function FourDaysForecast() {
                 }))
 
                 setDailyForecast(formattedData);
-                console.log("Processed hourly data:", hourlyData);
+               // console.log("Processed hourly data:", hourlyData);
                 setHourlyForecast(hourlyData);
                 setIsDataLoaded(true); 
             })
@@ -81,7 +79,6 @@ export default function FourDaysForecast() {
                 const dailyData = Object.keys(forecastMockupData).map(date => {
 
                     const dayData = forecastMockupData[date];
-                    console.log(`Day data for ${date}:`, dayData);
             
                     const maxTemp = Math.max(...dayData.map(item => parseFloat(item.temp)));
                     const maxWind = Math.max(...dayData.map(item => parseFloat(item.wind)));
