@@ -4,7 +4,6 @@ import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import UserLocation from '../Location/UserLocation';
 
-
 const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
 export default function MapDefaultView() {
@@ -20,7 +19,7 @@ export default function MapDefaultView() {
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
 
-  const handleLocationFetched = async (location) => {
+  const handleLocationFetched = location => {
     setUserLocation(location);
   };
 
