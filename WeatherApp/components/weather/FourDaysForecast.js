@@ -57,6 +57,7 @@ export default function FourDaysForecast() {
                         temp: `${Math.round(item.main.temp)} °C`,
                         wind: `${Math.round(item.wind.speed)} m/s`
                     });
+                    //console.log("Hourly data: ", hourlyData)
                 });
 
                 //returns an array of dates (keys) and maps each date to the correct format
@@ -68,7 +69,7 @@ export default function FourDaysForecast() {
                 }))
 
                 setDailyForecast(formattedData);
-               // console.log("Processed hourly data:", hourlyData);
+                //console.log("Processed hourly data:", hourlyData);
                 setHourlyForecast(hourlyData);
                 setIsDataLoaded(true); 
             })
