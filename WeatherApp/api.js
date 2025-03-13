@@ -29,3 +29,4 @@ return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${loca
         return response.json();
     })
 }
+
