@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, Image } from 'react-native';
 import { getCurrentWeatherInLocation } from '../../api';
-import UserLocation from '../Location/UserLocation';
-import CityFetch from '../Location/CityFetch';
+import UserLocation from '../location/UserLocation';
+import CityFetch from '../location/CityFetch';
 
 export default function WeatherNow(){
 const [location, setLocation] = useState({});

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons'
-import UserLocation from '../Location/UserLocation';
+import UserLocation from '../location/UserLocation';
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({

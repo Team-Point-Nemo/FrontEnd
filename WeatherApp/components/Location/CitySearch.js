@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TextInput, Button, Image, View } from "react-native";
 import { getWeatherByCity } from "../../api";
+import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 export default function WeatherSearch() {
 
@@ -8,30 +10,32 @@ export default function WeatherSearch() {
   const [weather, setWeather] = useState(null);
   const [searchedCity, setSearchedCity] = useState('');
   const [cityNotFound, setCityNotFound] = useState(false);
+  const navigation = useNavigation();
 
   const handleSearch = async () => {
-    if (city.trim().length === 0) {
+    if (city.trim().length === 0) {     // if searching without any text
       console.log("No city input ", error)
       Alert.alert("No city input ", error)
       return
     }
-    setWeather(null);
+    setWeather(null);     // making sure there's not any data left from last search
     setCityNotFound(false);
 
     try {
-      const weatherData = await getWeatherByCity(city)
-      setWeather(weatherData)
+      const weatherData = await getWeatherByCity(city)  // fetch weather data, updating state and saving city
       setSearchedCity(city)
+      setWeather(weatherData)
+      setCityNotFound(false)
+
+      navigation.navigate('Home', { screen: 'Weather', params: { searchedCity: city, weather: weatherData } });
+    
     } catch (error) {
-      setCityNotFound(true)
+      setCityNotFound(true)    // if the city name is incorrect or there's no data for any reason
       console.log("Error in fetching weather data ", error)
       Alert.alert("Error in fetching weather data ", error)
     }
   }
 
-  // if (weatherData.cod === 404) {
-  //   setCityNotFound(true)
-  // }
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
@@ -50,7 +54,7 @@ export default function WeatherSearch() {
         <Text style={styles.cityText}>City not found</Text>
       ) : ''}
 
-      {searchedCity && !cityNotFound ? (
+      {searchedCity && !cityNotFound ? (    // show city name saved when error state was false
         <Text style={styles.cityText}>Weather in {searchedCity}</Text>
       ) : ''}
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
-import SearchCity from "../components/Location/SearchCity";
+import CitySearch from "../components/location/CitySearch";
 
 export default function SearchScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <SearchCity />
+      <CitySearch />
     </SafeAreaView>
   );
 }
