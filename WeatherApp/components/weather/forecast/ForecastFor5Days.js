@@ -12,8 +12,8 @@ import ForecastFlatList5 from "./ForecastFlatList5days";
 export default function ForecastForFiveDays() {
 
     const [forecastFiveDays, setForecastFiveDays] = useState([]);
-    const [dailyForecast, setDailyForecast] = useState([])
-    const [hourlyForecast, setHourlyForecast] = useState([]);
+    const [dailyForecast, setDailyForecast] = useState([{}])
+    const [hourlyForecast, setHourlyForecast] = useState([{}]);
     const [location, setLocation] = useState('');
 
     const handleLocationFetched = (location) => {
@@ -34,21 +34,37 @@ export default function ForecastForFiveDays() {
                     date: item.dt_txt,
                     temp: Math.round(item.main.temp),
                     feelsLike: Math.round(item.main.feels_like),
-                    weatherIcon: Math.round(item.weather[0].icon),
+                    weatherIcon: item.weather[0].icon,
                     wind: Math.round(item.wind.speed),
                 }))
                 setHourlyForecast(hourlyData);
-                console.log("TÄmä on hourlyData: ", hourlyForecast)
+                //console.log("HourlyData: ", hourlyForecast)
+            
+                const dailyData = hourlyData
+                    .filter(item => item.date.includes("15:00:00"))
+                    .map(item => ({
+                        ...item,
+                        date: formatDate(item.date)
+                    }))
 
+                setDailyForecast(dailyData);
+                //console.log("Daily forecast: ", dailyForecast)
             })
             .catch(err => console.error("Error in fetch: ", err));
     }
+    console.log("Daily forecast: ", dailyForecast)
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        return `${date.getDate()}.${date.getMonth() + 1}.`;
+    };
+
+    
 
     return (
         <View style={styles.container}>
             <UserLocation onLocationFetched={handleLocationFetched} />
-            <Text>5 day Forecast</Text>
-            <ForecastFlatList5 />
+            <ForecastFlatList5 dailyForecast={dailyForecast}/>
 
             {/* <Text>Loading...</Text> */}
 

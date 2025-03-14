@@ -24,7 +24,7 @@ export const getDailyForecast = (data) => {
             dailyForecast[formattedDate] = {
                 dt: formattedDate, 
                 tempDay: Math.round(item.main.temp),
-                feelsLikeDay: Math.round(item.main.feels_like),
+                feelsLike: Math.round(item.main.feels_like),
                 wind: Math.round(item.wind.speed),
                 weatherIcon: item.weather[0].icon
             };
