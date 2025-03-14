@@ -23,7 +23,7 @@ export function getWeatherByCity(city) {
 }
 
 // Weather data for 5 day / 3 hour forecast data: https://openweathermap.org/forecast5#data
-export function getWeatherForFiveDays(location){
+export function getForecastForFiveDays(location){
     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/forecast?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
     // return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/forecast/daily?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${process.env.WEATHER_API_KEY}&units=metric`)
     .then(response => {
