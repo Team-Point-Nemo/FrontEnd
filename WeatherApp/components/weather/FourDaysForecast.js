@@ -5,6 +5,7 @@ import { getForecastForFourDays } from "../../api";
 import { MaterialIcons } from '@expo/vector-icons';
 import { forecastMockupData } from "./ForecastMockupData";
 import UserLocation from "../Location/UserLocation";
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function FourDaysForecast() {
 

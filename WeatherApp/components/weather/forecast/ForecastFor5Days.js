@@ -29,7 +29,7 @@ export default function ForecastForFiveDays() {
     const handleFetch = () => {
         getForecastForFiveDays(location)
             .then(data => {
-                //TO DO: continue working on daily weather and use Flatlist to show (daily) and (hourly) weather data on Forecast.js
+             
                 const hourlyData = data.list.map(item => ({
                     date: item.dt_txt,
                     temp: Math.round(item.main.temp),
@@ -38,7 +38,7 @@ export default function ForecastForFiveDays() {
                     wind: Math.round(item.wind.speed),
                 }))
                 setHourlyForecast(hourlyData);
-                //console.log("HourlyData: ", hourlyForecast)
+               
             
                 const dailyData = hourlyData
                     .filter(item => item.date.includes("15:00:00"))
@@ -48,11 +48,11 @@ export default function ForecastForFiveDays() {
                     }))
 
                 setDailyForecast(dailyData);
-                //console.log("Daily forecast: ", dailyForecast)
             })
             .catch(err => console.error("Error in fetch: ", err));
     }
-    console.log("Daily forecast: ", dailyForecast)
+    console.log("HourlyData: ", hourlyForecast)
+   console.log("Daily forecast: ", dailyForecast)
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);

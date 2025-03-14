@@ -1,14 +1,34 @@
-import { FlatList, View, StyleSheet, Image } from "react-native";
+import { useState } from "react";
+import { FlatList, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
 export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
+
+    const [selectedDate, setSelectedDate] = useState("");
+
+    const handleDatePress = (date) => {
+        if (selectedDate === date) {
+            setSelectedDate("");
+        } else {
+            setSelectedDate(date);
+        }
+    };
+
+    const getHourlyData = (date) => {
+        const hourlyDataForDate = hourlyForecast.filter((hour) => hour.date.includes(date));
+        console.log("Flatlist: ", hourlyDataForDate);
+        return hourlyDataForDate;
+    };
+
     return (
         <View>
-            <FlatList 
+            <FlatList
                 data={dailyForecast}
                 renderItem={({ item }) => (
                     <View style={styles.daily}>
-                        <Text variant="labelMedium">{item.date}</Text>
+                        <TouchableOpacity onPress={() => handleDatePress(item.date)}>
+                            <Text variant="labelMedium">{item.date}</Text>
+                        </TouchableOpacity>
                         <View>
                             <Text variant="labelMedium">Temp</Text>
                             <Text variant="labelMedium">{item.temp} °C</Text>
@@ -22,6 +42,29 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
                             style={styles.weatherIcon}
                             source={{ uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png` }}
                         />
+
+
+                        {/* TODO: Make hourly weather to be seen when clicked  */}
+
+
+                        {selectedDate === item.date && (
+                            <FlatList
+                                data={getHourlyData(item.date)}
+                                keyExtractor={(hourItem) => hourItem.date}
+                                renderItem={({ item: hour }) => (
+                                    <View style={styles.hourly}>
+                                        <Text variant="labelMedium">{hour.date}</Text>
+                                        <Text variant="labelMedium">Temp: {hour.temp} °C</Text>
+                                        <Text variant="labelMedium">Feels like: {hour.feelsLike} °C</Text>
+                                        <Text variant="labelMedium">Wind: {hour.wind} m/s</Text>
+                                        <Image
+                                            style={styles.weatherIcon}
+                                            source={{ uri: `http://openweathermap.org/img/wn/${hour.weatherIcon}.png` }}
+                                        />
+                                    </View>
+                                )}
+                            />
+                        )}
                     </View>
                 )}
             />
@@ -32,7 +75,7 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:20,
+        marginTop: 20,
     },
     daily: {
         flexDirection: "row",
@@ -45,5 +88,13 @@ const styles = StyleSheet.create({
     weatherIcon: {
         width: 50,
         height: 50,
-    }
+    },
+    hourly: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 5,
+        paddingLeft: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: "#eee",
+    },
 })
