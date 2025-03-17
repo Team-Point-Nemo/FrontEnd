@@ -10,16 +10,16 @@ export default function ForecastFlatList({ forecast }) {
                 data={forecast}
                 renderItem={({ item }) => (
                     <View style={styles.daily}>
-                        <Text variant="labelMedium">{item.dt}</Text>
+                        <Text variant="titleSmall">{item.dt}</Text>
                         <View>
-                            <Text variant="labelMedium">Temp</Text>
-                            <Text variant="labelMedium">{item.tempDay} °C</Text>
+                            <Text variant="titleSmall">Temp</Text>
+                            <Text variant="titleSmall">{item.tempDay} °C</Text>
                         </View>
                         <View>
-                            <Text variant="labelMedium">Feels like</Text>
-                            <Text variant="labelMedium">{item.feelsLikeDay} °C</Text>
+                            <Text variant="titleSmall">Feels like</Text>
+                            <Text variant="titleSmall">{item.feelsLikeDay} °C</Text>
                         </View>
-                        <Text variant="labelMedium">{item.wind} m/s</Text>
+                        <Text variant="titleSmall">{item.wind} m/s</Text>
                         <Image
                             style={styles.weatherIcon}
                             source={{ uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png` }}
@@ -41,8 +41,10 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "#565254",
+        backgroundColor: '#D4CBE5',
+        borderRadius: 20,
+        padding: 10,
+        margin: 10,
     },
     weatherIcon: {
         width: 50,
