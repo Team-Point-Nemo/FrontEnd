@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import WeatherNow from '../components/weather/WeatherNow';
-import FourDaysForecast from '../components/weather/FourDaysForecast';
+import Forecast from '../components/weather/forecast/Forecast';
 
 
 export default function IndexScreen() {
@@ -8,7 +8,7 @@ export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
      <WeatherNow />
-     <FourDaysForecast />
+     <Forecast />
     </SafeAreaView>
   );
 }
