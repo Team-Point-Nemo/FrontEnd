@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FlatList, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
 
@@ -41,6 +43,11 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
                         <Image
                             style={styles.weatherIcon}
                             source={{ uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png` }}
+                        />
+                        <MaterialIcons
+                            name= {selectedDate === item.date  ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                            size={24}
+                            color='black'
                         />
 
 
