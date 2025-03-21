@@ -1,14 +1,14 @@
 import { StyleSheet, SafeAreaView } from "react-native";
 import WeatherNow from "../components/weather/WeatherNow";
-import CitySearch from "../components/location/CitySearch";
+import CitySearch from "../components/Location/CitySearch";
 import { useRoute } from "@react-navigation/native";
+import { useEffect } from "react";
 
 export default function IndexScreen() {
 
   const route = useRoute();
   const { searchedCity, weather } = route.params || {};
-  
-  console.log("Params to index screen: ", searchedCity, weather)
+  console.log("Params received in index screen: ", route.params)
 
   return (
     <SafeAreaView style={styles.container}>

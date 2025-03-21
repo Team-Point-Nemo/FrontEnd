@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
-import CitySearch from "../components/location/CitySearch";
+import CitySearch from "../components/Location/CitySearch";
 
 export default function SearchScreen() {
   return (

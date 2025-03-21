@@ -4,7 +4,7 @@ import { getWeatherByCity } from "../../api";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 
-export default function WeatherSearch() {
+export default function CitySearch() {
 
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
@@ -26,9 +26,8 @@ export default function WeatherSearch() {
       setSearchedCity(city)
       setWeather(weatherData)
       setCityNotFound(false)
-
       navigation.navigate('Home', { screen: 'Weather', params: { searchedCity: city, weather: weatherData } });
-    
+
     } catch (error) {
       setCityNotFound(true)    // if the city name is incorrect or there's no data for any reason
       console.log("Error in fetching weather data ", error)
