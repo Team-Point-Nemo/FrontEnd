@@ -26,7 +26,6 @@ export default function Forecast() {
                 ]}
             />
             {value === '16' ? <ForecastFor16Days /> : <ForecastForFiveDays />}
-            {/* <ForecastFor16Days /> */}
         </SafeAreaView>
     )
 }

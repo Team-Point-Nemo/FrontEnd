@@ -5,36 +5,31 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
 
-    const [selectedDate, setSelectedDate] = useState(null);
     const [filteredHourlyData, setFilteredHourlyData] = useState([]);
+    const [expanded, setExpanded] = useState([]);
 
     useEffect(() => {
-        if (selectedDate) {
-            const filteredData = hourlyForecast.filter((item) => item.date === selectedDate);
+        if (expanded.length > 0) {
+            const filteredData = hourlyForecast.filter((item) => expanded.includes(item.date));
             setFilteredHourlyData(filteredData);
         }
-    }, [selectedDate, hourlyForecast]);
-
+    }, [expanded, hourlyForecast]);
 
 
     const handlePress = (date) => {
-        if (selectedDate === date) {
-            setSelectedDate(null);
+        if (expanded.includes(date)){
+            setExpanded(expanded.filter((day) => day !== date))
         } else {
-            setSelectedDate(date);
+            setExpanded([...expanded, date]);
         }
-    };
+    }
+
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
         return `${date.getDate()}.${date.getMonth() + 1}.`;
     };
 
-    //TODO: improve useEffect and handlePress logic
-    const filterHourlyData = () => {
-        const filteredData = hourlyForecast.filter((item) => item.date === selectedDate);
-        setFilteredHourlyData(filteredData)
-    }
 
     return (
         <View style={styles.container}>
@@ -59,7 +54,7 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
                                     source={{ uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png` }}
                                 />
                                 <MaterialIcons
-                                    name={selectedDate === item.date ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                                    name={expanded.includes(item.date) ? "keyboard-arrow-up" : "keyboard-arrow-down"}
                                     size={24}
                                     color='black'
                                 />
@@ -67,7 +62,7 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
                         </View>
 
 
-                        {selectedDate === item.date && (
+                        {expanded.includes(item.date) && (
                             <FlatList
                                 data={filteredHourlyData}
                                 renderItem={({ item }) => (
