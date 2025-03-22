@@ -5,6 +5,7 @@ import UserLocation from "../../Location/UserLocation";
 import { getLongTermForecast } from "../../../api";
 import ForecastFlatList from "./ForecastFlatList16days";
 import { mapForecastData } from "./DataEdit";
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function ForecastFor16Days() {
 
@@ -38,7 +39,7 @@ export default function ForecastFor16Days() {
             {forecast && forecast.length > 0 ? (
                 <ForecastFlatList forecast={forecast} />
             ) : (
-                <Text>Loading</Text>
+                <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
             )}
         </SafeAreaView>
     )
