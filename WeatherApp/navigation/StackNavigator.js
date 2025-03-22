@@ -13,7 +13,7 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Icon"
         component={TabNavigator}
         options={({ navigation }) => ({
           headerShown: true,

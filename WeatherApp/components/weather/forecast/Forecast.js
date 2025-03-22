@@ -34,6 +34,7 @@ export default function Forecast() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '80%'
+        width: '80%',
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
 })

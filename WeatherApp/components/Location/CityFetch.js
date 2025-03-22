@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import { Text, ActivityIndicator, Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
+import { Text } from 'react-native-paper';
 
 export default function CityFetch({ location }) {
 
@@ -37,7 +38,7 @@ export default function CityFetch({ location }) {
   }
 
   return (
-    <Text>Location: {city || 'Unknown'}</Text>
+    <Text variant="displaySmall">{city || 'Unknown'}</Text>
   );
 
 }
