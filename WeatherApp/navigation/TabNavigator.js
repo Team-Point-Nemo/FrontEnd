@@ -40,8 +40,8 @@ export default function TabNavigator() {
         }}
       />
     )}
-  >
-    <Tab.Screen
+    >
+      <Tab.Screen
         name="Home"
         component={IndexScreen}
         options={{

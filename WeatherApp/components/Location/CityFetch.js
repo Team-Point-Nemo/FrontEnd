@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import { ActivityIndicator, Alert } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 
 export default function CityFetch({ location }) {
@@ -38,7 +38,16 @@ export default function CityFetch({ location }) {
   }
 
   return (
-    <Text variant="displaySmall">{city || 'Unknown'}</Text>
+    <Text variant="displayMedium" style={styles.textWithShadow} >{city || 'Unknown'}</Text>
   );
-
 }
+
+const styles = StyleSheet.create({
+    textWithShadow: {
+      shadowOpacity: 0.4,
+      shadowOffset: {
+        width: 1,
+        height: 1
+      },
+    },
+});

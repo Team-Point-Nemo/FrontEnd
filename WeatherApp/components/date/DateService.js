@@ -17,11 +17,11 @@ export function setImageByTime() {
     try {
         if (hours >= 18 || hours <= 5) {
             return require("../../assets/galaxy.jpg");
-          } else if (hours >= 6 && hours <= 9) {
+        } else if (hours >= 6 && hours <= 9) {
             return require("../../assets/sunrise.jpg");
-          } else {
+        } else {
             return require("../../assets/cloudy.jpg");
-          }
+        }
     } catch (err) {
         console.error("Error in getting image", err);
     }
@@ -34,11 +34,11 @@ export function setThemeByTime() {
 
     try {
         if (hours >= 18 || hours <= 5) {
-            return (['#020015', '#050034']);
-            } else if (hours >= 6 && hours <= 9) {
-            return (['#F28500', '#FFBC90']);
-            } else {
-            return (['rgb(70, 109, 156)', '#C9DFFF']);
+            return (['#384556', '#202731']);
+        } else if (hours >= 6 && hours <= 9) {
+            return(['#E58124', '#E78C36', '#EEAB6D']);
+        } else {
+            return (['#5B7FAE', '#829DC1', '#92AAC9']);
             }
     } catch (err) {
         console.error("Error in getting theme", err);

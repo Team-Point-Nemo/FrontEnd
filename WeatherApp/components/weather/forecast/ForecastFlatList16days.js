@@ -1,11 +1,11 @@
-import { FlatList, SafeAreaView, StyleSheet, View, Image } from "react-native";
+import { FlatList, StyleSheet, View, Image } from "react-native";
 import { Text } from "react-native-paper";
 
 export default function ForecastFlatList({ forecast }) {
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <FlatList
                 data={forecast}
                 renderItem={({ item }) => (
@@ -27,24 +27,25 @@ export default function ForecastFlatList({ forecast }) {
                     </View>
                 )}
             />
-        </SafeAreaView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:20,
+        marginTop: -5,
     },
     daily: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: 10,
-        backgroundColor: '#D4CBE5',
-        borderRadius: 20,
         padding: 10,
         margin: 10,
+        marginTop: -6,
+        borderRadius: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: "white",
     },
     weatherIcon: {
         width: 50,

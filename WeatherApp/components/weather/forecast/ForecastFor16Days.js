@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { Text } from 'react-native-paper';
+import { View, StyleSheet } from "react-native";
 import UserLocation from "../../Location/UserLocation";
 import { getLongTermForecast } from "../../../api";
 import ForecastFlatList from "./ForecastFlatList16days";
@@ -20,7 +19,7 @@ export default function ForecastFor16Days() {
         if (location) {
             handleFetch();
         }
-    }, [location]); //ensures that location is downloaded before the fetch
+    }, [location]);     // Ensures that location is downloaded before the fetch.
 
     const handleFetch = () => {
         getLongTermForecast(location)
@@ -34,14 +33,14 @@ export default function ForecastFor16Days() {
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <UserLocation onLocationFetched={handleLocationFetched} />
-            {forecast && forecast.length > 0 ? (
+            {forecast ? (
                 <ForecastFlatList forecast={forecast} />
             ) : (
                 <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
             )}
-        </SafeAreaView>
+        </View>
     )
 }
 

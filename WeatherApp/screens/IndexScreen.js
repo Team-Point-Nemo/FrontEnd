@@ -40,10 +40,12 @@ export default function IndexScreen() {
       <ImageBackground 
       source={setImageByTime()}
       style={styles.image}>
-      <View style={styles.overlay}>
+        <View style={styles.flexContainer1}>
         <WeatherNow />
+        </View>
+        <View style={styles.flexContainer2}>
         <Forecast />
-      </View>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
@@ -59,13 +61,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 30,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject, // Covers all of background
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    justifyContent: "center",
-    alignItems: "center",
+  flexContainer1: {
+    flex: 1,
+    marginTop: 90,
+  },
+  flexContainer2: {
+    flex: 2,
+    width: '100%',
+    alignItems: 'center',
   },
 });

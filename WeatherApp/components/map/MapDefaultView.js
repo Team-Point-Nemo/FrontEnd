@@ -82,12 +82,15 @@ export default function MapDefaultView() {
           <UrlTile
             urlTemplate={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
             zIndex={5}
+            style={{ opacity: 8 }}
             onError={(e) => {
               console.error("Error loading rain map tile: ", e);
             }}
           />
         )}
       </MapView>
+
+      <View style={styles.overlay} />
 
       {/* Nappulat */}
       <View style={styles.buttonContainer}>
@@ -133,9 +136,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(118, 119, 170, 0.09)',
+    zIndex: 0,  // 0 = Overlay is over map, but under buttons
+    pointerEvents: 'none', // Allows user interaction with map
+  },
   map: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
   buttonContainer: {
     position: 'absolute',

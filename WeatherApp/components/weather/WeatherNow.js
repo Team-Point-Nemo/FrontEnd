@@ -142,11 +142,11 @@ export default function WeatherNow() {
     <SafeAreaView style={styles.container}>
       <UserLocation onLocationFetched={handleLocationFetched} />
       {location && <CityFetch location={location} />}
-      <Text variant="titleLarge">{getCurrentDate()}</Text>
+      <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
       {weather?.main && (   // Checks, that weather (and main-array in it's data) has value, before rendering.
         <View style={styles.weatherContainer}>
           <View style={styles.columnLeft}>
-          <Text variant="displayMedium">{weather.main.temp.toFixed(0)}°</Text>
+          <Text variant="displayLarge" style={styles.textWithShadow}>{weather.main.temp.toFixed(0)}°</Text>
           {weather?.weather && weather.weather[0] ? (
               <Image 
                 style={styles.weatherIcon}
@@ -155,8 +155,8 @@ export default function WeatherNow() {
             ) : null}
           </View>
           <View style={styles.columnRight}>
-            <Text variant="titleMedium">Feels like: {weather.main.feels_like.toFixed(0)}°</Text>
-            <Text variant="titleMedium">Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
+            <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {weather.main.feels_like.toFixed(0)}°</Text>
+            <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
           </View>
         </View>
       )}
@@ -166,6 +166,13 @@ export default function WeatherNow() {
 }
 
 const styles = StyleSheet.create({
+textWithShadow: {
+  shadowOpacity: 0.4,
+  shadowOffset: {
+    width: 1,
+    height: 1
+  },
+},
 container: {
   flex: 1,
   width: '100%',
@@ -190,5 +197,10 @@ columnRight: {
 weatherIcon: {
   width: 70,
   height: 70,
+  shadowOpacity: 0.4,
+  shadowOffset: {
+    width: 1,
+    height: 1
+  },
 },
 });
