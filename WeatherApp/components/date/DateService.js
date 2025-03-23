@@ -34,11 +34,11 @@ export function setThemeByTime() {
 
     try {
         if (hours >= 18 || hours <= 5) {
-            return (['#384556', '#202731']);
+            return (['#0E1013', '#1A1D23', '#2B303B']);
         } else if (hours >= 6 && hours <= 9) {
-            return(['#E58124', '#E78C36', '#EEAB6D']);
+            return(['#E67A0F', '#F3993F']);
         } else {
-            return (['#5B7FAE', '#829DC1', '#92AAC9']);
+            return (['#172F4F', '#3872BC', '#5187CD', '#6192D1']);
             }
     } catch (err) {
         console.error("Error in getting theme", err);

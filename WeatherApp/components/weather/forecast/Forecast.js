@@ -35,21 +35,12 @@ export default function Forecast() {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-    },
     buttonContainer: {
         padding: 20,
     },
     container: {
         flex: 1,
-        width: '90%',
-        borderRadius: 15,
-        overflow: 'hidden',
+        width: '95%',
         marginBottom: 20,
     },
 })
