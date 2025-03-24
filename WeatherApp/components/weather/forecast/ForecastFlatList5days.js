@@ -61,6 +61,7 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
 
                     {selectedDate === item.date && (
                         <FlatList
+                            scrollEnabled={false}
                             data={filteredHourlyData}
                             renderItem={({ item }) => (
                                 <View style={styles.hourly}>

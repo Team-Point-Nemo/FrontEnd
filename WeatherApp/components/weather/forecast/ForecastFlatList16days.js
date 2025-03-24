@@ -7,6 +7,7 @@ export default function ForecastFlatList({ forecast }) {
     return (
         <View style={styles.container}>
             <FlatList
+                scrollEnabled={false}
                 data={forecast}
                 renderItem={({ item }) => (
                     <View style={styles.daily}>

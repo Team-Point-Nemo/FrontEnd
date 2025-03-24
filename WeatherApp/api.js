@@ -1,18 +1,31 @@
 /* Fetch calls from https://api.openweathermap.org*/
 
 export function getCurrentWeatherInLocation(location) {
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
-    // HUOM. API_KEY täytyy laittaa selkokielisenä (ei muuttujana, vaan suoraan tekstinä), koska avain on salainen.
-    // HUOM. EI SAA PUSHATA GITHUBIIN SELLAISENA VERSIONA!!!!! vaan muuttujan kanssa
-    .then(response => {
-        if(!response.ok)
-            throw new Error('Error in getting local weather', response.statusText);
-
-        return response.json();
-    });
+    console.log(location);
+    if (!location.coords) {
+        return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?lat=${location.coord.lat}&lon=${location.coord.lon}&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
+        // HUOM. API_KEY täytyy laittaa selkokielisenä (ei muuttujana, vaan suoraan tekstinä), koska avain on salainen.
+        // HUOM. EI SAA PUSHATA GITHUBIIN SELLAISENA VERSIONA!!!!! vaan muuttujan kanssa
+        .then(response => {
+            if(!response.ok)
+                throw new Error('Error in getting local weather1', response.statusText);
+    
+            return response.json();
+        });
+    } else {
+        return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric`)
+        // HUOM. API_KEY täytyy laittaa selkokielisenä (ei muuttujana, vaan suoraan tekstinä), koska avain on salainen.
+        // HUOM. EI SAA PUSHATA GITHUBIIN SELLAISENA VERSIONA!!!!! vaan muuttujan kanssa
+        .then(response => {
+            if(!response.ok)
+                throw new Error('Error in getting local weather', response.statusText);
+    
+            return response.json();
+        });
+    }
 }
 
-export function getWeatherByCity(city) {
+export function getCityCoords(city) {
     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
     .then(response => {
         if(!response.ok) {

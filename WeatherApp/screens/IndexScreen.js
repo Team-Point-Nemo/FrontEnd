@@ -7,8 +7,9 @@ import { setThemeByTime } from '../components/date/DateService';
 export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
       <LinearGradient colors={setThemeByTime()} style={styles.background} />
+      <ScrollView 
+      style={{ flex: 1, width: '100%', height: '100%' }}>
       <View style={styles.flexContainer1}>
         <WeatherNow />
         </View>
