@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
-import { Text, Searchbar } from 'react-native-paper';
+import { Text, Searchbar, IconButton } from 'react-native-paper';
 import { getCurrentWeatherInLocation } from '../../api';
 import { getCurrentDate, setImageByTime } from '../date/DateService';
 import { SearchCity } from '../Location/SearchCity';
 import UserLocation from '../Location/UserLocation';
 import CityFetch from '../Location/CityFetch';
+
+import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 
 export default function WeatherNow() {
   const [location, setLocation] = useState(null);
@@ -22,6 +25,22 @@ export default function WeatherNow() {
 
   const handleLocationFetched = (location) => {   // 'location'-object is passed from UserLocation-component
   setLocation(location);
+  };
+
+  const fetchLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();    // Checks if user has grant permissions for location.
+      if (status !== 'granted') {
+          Alert.alert('Location permissions denied');
+          return;
+      }
+
+      try {
+          let location = await Location.getCurrentPositionAsync({});    // Get location as object 'coords'.
+          setLocation(location);    // Passes object to parent component.
+      } catch (err) {
+          console.error("Error in fetching location: ", err);
+          Alert.alert('Error in fetching location');
+      }
   };
 
   const handleSearch = async () => {
@@ -56,6 +75,11 @@ export default function WeatherNow() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <IconButton
+      icon="camera"
+      size={20}
+      onPress={fetchLocation}
+    />
       <UserLocation onLocationFetched={handleLocationFetched} />
       <ImageBackground 
       source={setImageByTime()}
