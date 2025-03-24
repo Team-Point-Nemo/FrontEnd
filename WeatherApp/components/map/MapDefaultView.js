@@ -82,7 +82,7 @@ export default function MapDefaultView() {
           <UrlTile
             urlTemplate={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
             zIndex={5}
-            style={{ opacity: 8 }}
+            style={{ opacity: 1 }}
             onError={(e) => {
               console.error("Error loading rain map tile: ", e);
             }}
