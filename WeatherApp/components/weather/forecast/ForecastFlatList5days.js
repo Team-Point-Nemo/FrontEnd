@@ -29,14 +29,9 @@ export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
         return `${date.getDate()}.${date.getMonth() + 1}.`;
     };
 
-    //TODO: improve useEffect and handlePress logic
-    const filterHourlyData = () => {
-        const filteredData = hourlyForecast.filter((item) => item.date === selectedDate);
-        setFilteredHourlyData(filteredData)
-    }
-
     return (
         <FlatList
+            scrollEnabled={false}
             style={styles.container}
             data={dailyForecast}
             renderItem={({ item }) => (
