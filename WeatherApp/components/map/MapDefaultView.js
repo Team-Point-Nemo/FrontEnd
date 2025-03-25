@@ -19,6 +19,8 @@ export default function MapDefaultView() {
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
   const [showWindMap, setShowWindMap] = useState(false);
+  const [showTempMap, setShowTempMap] = useState(false);
+  const [showCloudMap, setShowCloudMap] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
   
   const locationFetchTimeout = useRef(null);
@@ -74,7 +76,7 @@ export default function MapDefaultView() {
 
         return isSameRegion ? prevRegion : region;
       });
-    }, 2000); // Päivitetään vain kerran sekunnissa
+    }, 2000);
   };
 
   return (
@@ -101,17 +103,33 @@ export default function MapDefaultView() {
               style={{ opacity: 1 }}
             />
           )}
+          {showTempMap && (
+            <UrlTile
+              urlTemplate={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+              zIndex={5}
+              style={{ opacity: 1 }}
+            />
+          )}
+          {showCloudMap && (
+            <UrlTile
+              urlTemplate={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+              zIndex={5}
+              style={{ opacity: 1 }}
+            />
+          )}
         </MapView>
 
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'menu'}
-          backdropColor='transparent'
+          backdropColor='rgba(255, 255, 255, 0.8)'
           actions={[
             { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
             { icon: 'restore', label: 'Finland  ', onPress: resetMap },
             { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
             { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
+            { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
+            { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
           ]}
           onStateChange={({ open }) => setFabOpen(open)}
         />
