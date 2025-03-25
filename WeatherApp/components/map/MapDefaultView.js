@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
-import MapView, { Marker, UrlTile } from 'react-native-maps';
-import { MaterialIcons } from '@expo/vector-icons';
+import { StyleSheet, View } from 'react-native';
+import MapView, { UrlTile } from 'react-native-maps';
 import UserLocation from '../Location/UserLocation';
 import { FAB, Provider as PaperProvider } from 'react-native-paper';
 
@@ -110,7 +109,7 @@ export default function MapDefaultView() {
           backdropColor='transparent'
           actions={[
             { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-            { icon: 'restore', label: 'Reset', onPress: resetMap },
+            { icon: 'restore', label: 'Finland  ', onPress: resetMap },
             { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
             { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
           ]}
