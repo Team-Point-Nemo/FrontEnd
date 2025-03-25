@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FlatList, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { MaterialIcons } from '@expo/vector-icons';
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ForecastFlatList5({ hourlyForecast, dailyForecast }) {
     const [selectedDate, setSelectedDate] = useState(null);

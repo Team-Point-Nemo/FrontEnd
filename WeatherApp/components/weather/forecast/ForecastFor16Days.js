@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import UserLocation from "../../Location/UserLocation";
 import { getLongTermForecast } from "../../../api";
 import ForecastFlatList from "./ForecastFlatList16days";
 import { mapForecastData } from "./DataEdit";
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
-export default function ForecastFor16Days() {
-
+export default function ForecastFor16Days({ location }) {
     const [forecast, setForecast] = useState(null);
-    const [location, setLocation] = useState('');
-
-    const handleLocationFetched = (location) => {
-        setLocation(location);
-    };
 
     useEffect(() => {
         if (location) {
@@ -31,10 +24,8 @@ export default function ForecastFor16Days() {
             .catch(err => console.error("Error in fetch: ", err));
     }
 
-
     return (
         <View style={styles.container}>
-            <UserLocation onLocationFetched={handleLocationFetched} />
             {forecast ? (
                 <ForecastFlatList forecast={forecast} />
             ) : (

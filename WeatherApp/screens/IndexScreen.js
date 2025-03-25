@@ -1,21 +1,14 @@
 import { StyleSheet, SafeAreaView, View, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import WeatherNow from '../components/weather/WeatherNow';
-import Forecast from '../components/weather/forecast/Forecast';
 import { setThemeByTime } from '../components/date/DateService';
 
 export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={setThemeByTime()} style={styles.background} />
-      <ScrollView 
-      style={{ flex: 1, width: '100%', height: '100%' }}>
-      <View style={styles.flexContainer1}>
+      <ScrollView style={{ flex: 1, width: '100%', height: '100%' }}>
         <WeatherNow />
-        </View>
-        <View style={styles.flexContainer2}>
-        <Forecast />
-        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -6,8 +6,7 @@ import ForecastFor16Days from "./ForecastFor16Days";
 import ForecastForFiveDays from "./ForecastFor5Days";
 import { setThemeByTime } from "../../date/DateService";
 
-
-export default function Forecast() {
+export default function Forecast({ location }) {
 
     const [value, setValue] = useState('5');
 
@@ -29,7 +28,7 @@ export default function Forecast() {
                     },
                 ]}
             />
-            {value === '16' ? <ForecastFor16Days /> : <ForecastForFiveDays />}
+            {value === '16' ? <ForecastFor16Days location={location} /> : <ForecastForFiveDays location={location} />}
         </SafeAreaView>
     )
 }

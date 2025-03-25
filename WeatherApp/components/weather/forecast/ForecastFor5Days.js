@@ -1,20 +1,14 @@
 import { StyleSheet } from "react-native";
 import { getForecastForFiveDays } from "../../../api";
 import { useEffect, useState } from "react";
-import UserLocation from "../../Location/UserLocation";
 import ForecastFlatList5 from "./ForecastFlatList5days";
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function ForecastForFiveDays() {
+export default function ForecastForFiveDays({ location }) {
 
     const [dailyForecast, setDailyForecast] = useState(null)
     const [hourlyForecast, setHourlyForecast] = useState(null);
-    const [location, setLocation] = useState('');
-
-    const handleLocationFetched = (location) => {
-        setLocation(location);
-    };
 
     useEffect(() => {
         if (location) {
@@ -55,7 +49,6 @@ export default function ForecastForFiveDays() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <UserLocation onLocationFetched={handleLocationFetched} />
             {dailyForecast && hourlyForecast ? ( 
                 <ForecastFlatList5 dailyForecast={dailyForecast} hourlyForecast={hourlyForecast} />
             ) : (

@@ -3,7 +3,6 @@ import { Text } from "react-native-paper";
 
 export default function ForecastFlatList({ forecast }) {
 
-
     return (
         <View style={styles.container}>
             <FlatList
