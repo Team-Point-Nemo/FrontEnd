@@ -3,8 +3,7 @@ import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-nati
 import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import UserLocation from '../Location/UserLocation';
-
-const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
+import { getRainTiles } from '../../api';
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -80,7 +79,7 @@ export default function MapDefaultView() {
         {/* Sadekartta (jos näkyvyys on päällä) */}
         {showRainMap && (
           <UrlTile
-            urlTemplate={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            urlTemplate={getRainTiles}
             zIndex={5}
             style={{ opacity: 1 }}
             onError={(e) => {
