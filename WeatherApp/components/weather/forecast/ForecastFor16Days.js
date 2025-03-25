@@ -9,7 +9,7 @@ export default function ForecastFor16Days({ location }) {
     const [forecast, setForecast] = useState(null);
 
     useEffect(() => {
-        if (location) {
+        if (location.latitude && location.longitude) {
             handleFetch();
         }
     }, [location]);     // Ensures that location is downloaded before the fetch.
@@ -19,7 +19,6 @@ export default function ForecastFor16Days({ location }) {
             .then(data => {
                 const mappedForecast = mapForecastData(data);
                 setForecast(mappedForecast);
-                //console.log("Mapped:", forecast);
             })
             .catch(err => console.error("Error in fetch: ", err));
     }

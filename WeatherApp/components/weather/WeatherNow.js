@@ -1,175 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { useEffect, useState } from 'react';
-// import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
-// import { Text, Searchbar, FAB  } from 'react-native-paper';
-// import { getCurrentWeatherInLocation } from '../../api';
-// import { getCurrentDate, setImageByTime } from '../date/DateService';
-// import { SearchCity } from '../Location/SearchCity';
-// import UserLocation from '../Location/UserLocation';
-// import CityFetch from '../Location/CityFetch';
-
-// import * as Location from 'expo-location';
-// import { Alert } from 'react-native';
-
-// export default function WeatherNow() {
-//   const [searchedLocation, setSearchedLocation] = useState(null);
-//   const [userLocation, setUserLocation] = useState(null);
-//   const [weather, setWeather] = useState([]);
-//   const [searchQuery, setSearchQuery] = useState('');
-//   const [searchedCity, setSearchedCity] = useState('');
-
-//   useEffect(() => {
-//     if (userLocation) {  // Ensures, that location.coords or location.coord has a value
-//       getWeather(userLocation)
-//     }
-//   }, [userLocation]);
-
-//   const handleLocationFetched = (location) => {   // 'location'-object is passed from UserLocation-component
-//     setUserLocation(location);
-//   };
-
-//   const fetchUserLocation = async () => {
-//       let { status } = await Location.requestForegroundPermissionsAsync();    // Checks if user has grant permissions for location.
-//       if (status !== 'granted') {
-//           Alert.alert('Location permissions denied');
-//           return;
-//       }
-
-//       try {
-//           let location = await Location.getCurrentPositionAsync({});    // Get location as object 'coords'.
-//           setUserLocation(location);    // Passes object to parent component.
-//       } catch (err) {
-//           console.error("Error in fetching location: ", err);
-//           Alert.alert('Error in fetching location');
-//       }
-//   };
-
-//   const handleSearchedLocation = async () => {
-//     try {
-//       const cityLocation = await SearchCity(searchQuery);
-//       if (cityLocation) {
-//         setSearchedCity(cityLocation.name);
-//         setSearchedLocation(cityLocation);
-//         getWeather(searchedLocation);
-//       } else {
-//         console.error("City location not found");
-//       }
-//     } catch (err) {
-//       console.error("Error in fetching location in searched city: ", err);
-//     }
-//   };
-
-//   const getWeather = async () => {
-//     try {
-//       const data = await getCurrentWeatherInLocation(location);
-//       if (data) {
-//         setWeather(data);
-//       } else {
-//         console.error("Weather data not found.");
-//         setWeather(null);
-//       }
-//     } catch (err) {
-//         console.error("Error in fetching location: ", err);
-//     }
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <FAB
-//         icon='map-marker'
-//         size={20}
-//         style={styles.fab}
-//         onPress={fetchUserLocation}
-//       />
-//       <UserLocation onLocationFetched={handleLocationFetched} />
-//       <ImageBackground 
-//       source={setImageByTime()}
-//       style={styles.image} >
-//         {userLocation ? (
-//           <CityFetch location={userLocation} />
-//         ) : ( <Text>{searchedCity}</Text>)}
-//         <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
-//       </ImageBackground>
-//       <Searchbar
-//         placeholder="Search city..."
-//         onChangeText={setSearchQuery}
-//         value={searchQuery}
-//         onIconPress={handleSearchedLocation}
-//       />
-//       {weather?.main && (   // Checks, that weather (and main-array in it's data) has value, before rendering.
-//         <View style={styles.weatherContainer}>
-//           <View style={styles.columnLeft}>
-//           <Text variant="displayLarge" style={styles.textWithShadow}>{weather.main.temp.toFixed(0)}°</Text>
-//           {weather?.weather && weather.weather[0] ? (
-//               <Image 
-//                 style={styles.weatherIcon}
-//                 source={{ uri: `http://openweathermap.org/img/wn/${weather.weather[0].icon}.png` }}
-//               />
-//             ) : null}
-//           </View>
-//           <View style={styles.columnRight}>
-//             <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {weather.main.feels_like.toFixed(0)}°</Text>
-//             <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
-//           </View>
-//         </View>
-//       )}
-//       <StatusBar style="auto" />
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-// textWithShadow: {
-//   shadowOpacity: 0.4,
-//   shadowOffset: {
-//     width: 1,
-//     height: 1
-//   },
-// },
-// fab: {
-//   position: 'absolute',
-//   margin: 16,
-//   right: 0,
-//   bottom: 0,
-// },
-// container: {
-//   flex: 2,
-//   width: '100%',
-//   height: '100%',
-// },
-// image: {
-//   flex: 1,
-//   width: '100%',
-//   alignItems: 'center',
-//   justifyContent: 'flex-end',
-//   paddingTop: 60,
-//   paddingBottom: 30,
-// },
-// weatherContainer: {
-//   padding: 50,
-//   width: '100%',
-//   flexDirection: 'row',
-//   alignItems: 'center',
-// },
-// columnLeft: {
-//   flex: 1,
-//   flexDirection: 'row',
-//   alignItems: 'center',
-// },
-// columnRight: {
-//   flex: 1,
-// },
-// weatherIcon: {
-//   width: 70,
-//   height: 70,
-//   shadowOpacity: 0.4,
-//   shadowOffset: {
-//     width: 1,
-//     height: 1
-//   },
-// },
-// });
-
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
@@ -209,11 +37,11 @@ export default function WeatherNow() {
       if (data) {
         setWeather(data);
       } else {
-        console.error("Error in WeatherNow.js. Weather data not found.");
+        console.error("Weather data not found.");
         setWeather(null);
       }
     } catch (err) {
-        console.error("Error in WeatherNow.js. Error in fetching weather: ", err);
+        console.error("Error in fetching weather: ", err);
     }
   };
 
@@ -227,10 +55,10 @@ export default function WeatherNow() {
         });
         setSearch(false);
       } else {
-        console.error("Error in WeatherNow.js. Error in fetching user location.");
+        console.error("Error in fetching user location.");
       }
     } catch (err) {
-      console.error("Error in WeatherNow.js. Error in fetching user location: ", err);
+      console.error("Error in fetching user location: ", err);
     }
   };
 
@@ -244,10 +72,10 @@ export default function WeatherNow() {
         });
         setSearch(true);
       } else {
-        console.error("Error in WeatherNow.js. City location not found.");
+        console.error("City location not found.");
       }
     } catch (err) {
-      console.error("Error in WeatherNow.js. Error in fetching location in searched city: ", err);
+      console.error("Error in fetching location in searched city: ", err);
     }
   }
 
