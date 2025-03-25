@@ -1,12 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import StackNavigator from "./navigation/StackNavigator";
+import { NavigationContainer } from "@react-navigation/native";
+import TabNavigator from './navigation/TabNavigator';
 
 export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <StackNavigator />
+        <TabNavigator />
       </NavigationContainer>
     </PaperProvider>
   );
