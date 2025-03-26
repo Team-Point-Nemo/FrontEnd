@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
-import UserLocation from '../Location/UserLocation';
+import { UserLocation } from '../Location/UserLocation';
 import { getRainTiles } from '../../api';
 
 export default function MapDefaultView() {
@@ -12,14 +12,32 @@ export default function MapDefaultView() {
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
   });
-
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState({
+    latitude: '',
+    longitude: '',
+  });
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
 
-  const handleLocationFetched = location => {
-    setUserLocation(location);
+  useEffect(() => {
+    getUserLocation()
+  });
+
+  const getUserLocation = async () => {
+    try {
+      const location = await UserLocation();
+      if (location) {
+        setUserLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } else {
+        console.error("Error in fetching user location");
+      }
+    } catch (err) {
+      console.error("Error in fetching user location: ", err);
+    }
   };
 
   const resetToUserLocation = () => {
@@ -27,8 +45,8 @@ export default function MapDefaultView() {
       setLoadingUserLocation(true);
       try {
         setMapRegion({
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
           latitudeDelta: 1.5,
           longitudeDelta: 1.5,
         });
@@ -58,7 +76,6 @@ export default function MapDefaultView() {
 
   return (
     <View style={styles.container}>
-      <UserLocation onLocationFetched={handleLocationFetched} />
       <MapView
         region={mapRegion}
         onRegionChangeComplete={(region) => setMapRegion(region)}
@@ -69,8 +86,8 @@ export default function MapDefaultView() {
         {userLocation && userLocation.coords && (
           <Marker
             coordinate={{
-              latitude: userLocation.coords.latitude,
-              longitude: userLocation.coords.longitude
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
             }}
             title="Oma sijainti"
           />

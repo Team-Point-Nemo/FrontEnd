@@ -38,7 +38,7 @@ export default function WeatherNow() {
       if (data) {
         setWeather(data);
       } else {
-        console.error("Weather data not found.");
+        console.error("Weather data not found");
         setWeather(null);
       }
     } catch (err) {
@@ -56,7 +56,7 @@ export default function WeatherNow() {
         });
         setSearch(false);
       } else {
-        console.error("Error in fetching user location.");
+        console.error("Error in fetching user location");
       }
     } catch (err) {
       console.error("Error in fetching user location: ", err);

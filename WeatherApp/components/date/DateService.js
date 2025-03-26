@@ -44,12 +44,3 @@ export function setThemeByTime() {
         console.error("Error in getting theme", err);
     }
 };
-
-// const [time, setTime] = useState('');
-
-// const minutes = currentDate.getMinutes();
-// if (minutes < 10) {
-//   setTime(`${currentDate.getHours()}:0${currentDate.getMinutes()}`);
-// } else {
-//   setTime(`${currentDate.getHours()}:${currentDate.getMinutes()}`);
-// }
