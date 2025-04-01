@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
-import { Text, Searchbar, IconButton } from 'react-native-paper';
+import { Text, Searchbar, IconButton, Button } from 'react-native-paper';
 import { getCurrentWeatherInLocation } from '../../api';
 import { getCurrentDate, setImageByTime } from '../date/DateService';
 import { SearchCity } from '../Location/SearchCity';
 import UserLocation from '../Location/UserLocation';
 import CityFetch from '../Location/CityFetch';
+import { hidingapi } from '../../api';
 
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
@@ -75,6 +76,9 @@ export default function WeatherNow() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Button onPress={hidingapi}>
+        Press me
+      </Button>
       <IconButton
       icon="camera"
       size={20}

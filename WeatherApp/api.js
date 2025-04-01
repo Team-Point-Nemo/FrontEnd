@@ -69,3 +69,15 @@ export function getRainTiles() {
         return response.json();
     })
 }
+
+export function hidingapi() {
+    return fetch(`https://valora.2.rahtiapp.fi/weather`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // käsittele säilytetty tieto (kuten kaupunki, lämpötila, jne.)
+    })
+    .catch(error => console.error('Virhe:', error));
+  
+}
+
