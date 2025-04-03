@@ -14,7 +14,7 @@ export default function WeatherNow() {
     latitude: '',
     longitude: '',
   });
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState({});
   const [city, setCity] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [search, setSearch] = useState(false);
@@ -37,6 +37,8 @@ export default function WeatherNow() {
       const data = await getCurrentWeatherInLocation(location);
       if (data) {
         setWeather(data);
+        console.log(weather);
+        console.log(data);
       } else {
         console.error("Weather data not found");
         setWeather(null);
@@ -93,20 +95,20 @@ export default function WeatherNow() {
           <SafeAreaView style={styles.image}>
           <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
           <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
-          {weather?.main && (   // Checks, that weather (and main-array in it's data) has value, before rendering.
+          {weather?.main && (   // Checks, that weather has values before rendering.
           <View style={styles.weatherContainer}>
             <View style={styles.columnLeft}>
-            <Text variant="displayLarge" style={styles.textWithShadow}>{weather.main.temp.toFixed(0)}°</Text>
-            {weather?.weather && weather.weather[0] ? (
+            <Text variant="displayLarge" style={styles.textWithShadow}>{Math.round(weather.main.temp)}°</Text>
+            {weather?.weather?.icon ? (
                 <Image 
                   style={styles.weatherIcon}
-                  source={{ uri: `http://openweathermap.org/img/wn/${weather.weather[0].icon}.png` }}
+                  source={{ uri: `http://openweathermap.org/img/wn/${weather.weather.icon}.png` }}
                 />
               ) : null}
             </View>
             <View style={styles.columnRight}>
-              <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {weather.main.feels_like.toFixed(0)}°</Text>
-              <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {weather.wind.speed.toFixed(0)} m/s</Text>
+              <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {Math.round(weather.main.feels_like)}°</Text>
+              <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {Math.round(weather.wind.speed)} m/s</Text>
             </View>
           </View>
         )}
