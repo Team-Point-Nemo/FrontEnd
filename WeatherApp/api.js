@@ -36,22 +36,18 @@ export function getForecastForFiveDays(location) {
 
 // Forecast for 16 days: https://openweathermap.org/forecast16
 export function getLongTermForecast(location) {
-    return fetch(`https://valora.2.rahtiapp.fi/data/2.5/forecast/daily?lat=${location.latitude}&lon=${location.longitude}`)
+    return fetch(`https://valora.2.rahtiapp.fi/forecast16?lat=${location.latitude}&lon=${location.longitude}`)
+    //https://api.openweathermap.org/data/2.5/forecast/daily?lat=44.34&lon=10.99&cnt=7&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric
     //return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/forecast/daily?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${process.env.WEATHER_API_KEY}&units=metric`)
         .then(response => {
             if(!response.ok)
-                throw new Error("Error in fetching forecast", response.statusText);
+                throw new Error(`Error in fetching forecast: ${response.statusText}`);
 
             return response.json();
         })
 }
 
-export function getRainTiles() {
-    return fetch(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}`)
-    .then(response => {
-        if(!response.ok)
-            throw new Error("Error in fetching rain tiles", response.statusText);
 
-        return response.json();
-    })
+export function getRainTiles() {
+    return `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}`;
 }

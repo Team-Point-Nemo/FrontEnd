@@ -35,6 +35,7 @@ export default function ForecastForFiveDays({ location }) {
                 })
                 setHourlyForecast(hourlyData);
 
+
                 const dailyData = hourlyData
                     .filter(item => item.hour === "15:00")
                     .map(item => ({
@@ -42,6 +43,9 @@ export default function ForecastForFiveDays({ location }) {
                     }))
 
                 setDailyForecast(dailyData);
+
+                const today = hourlyData
+                    .filter(item => item.hour === "18:00")
             })
             .catch(err => console.error("Error in fetch: ", err))
     }

@@ -96,7 +96,7 @@ export default function MapDefaultView() {
         {/* Sadekartta (jos näkyvyys on päällä) */}
         {showRainMap && (
           <UrlTile
-            urlTemplate={getRainTiles}
+            urlTemplate={getRainTiles()}
             zIndex={5}
             style={{ opacity: 1 }}
             onError={(e) => {
@@ -106,7 +106,7 @@ export default function MapDefaultView() {
         )}
       </MapView>
 
-      <View style={styles.overlay} />
+      {/* <View style={styles.overlay} /> */}
 
       {/* Nappulat */}
       <View style={styles.buttonContainer}>
@@ -190,5 +190,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     marginLeft: 5,
-  }
+  },
 });
