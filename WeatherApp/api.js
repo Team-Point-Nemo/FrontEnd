@@ -49,5 +49,5 @@ export function getLongTermForecast(location) {
 
 
 export function getRainTiles() {
-    return `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}`;
+    return `https://valora.2.rahtiapp.fi/{z}/{x}/{y}.png`;
 }

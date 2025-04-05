@@ -3,7 +3,7 @@ export function getCurrentDate() {
     const currentDate = new Date();
 
     try {
-        return `${currentDate.getDate()}.${currentDate.getMonth()}.${currentDate.getFullYear()}`;
+        return `${currentDate.getDate()}.${currentDate.getMonth() + 1 }.${currentDate.getFullYear()}`;
     } catch (err) {
         console.error("Error in getting date", err);
     }
