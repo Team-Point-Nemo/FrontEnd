@@ -26,7 +26,7 @@ export default function MapDefaultView() {
   const [showTempMap, setShowTempMap] = useState(false);
   const [showCloudMap, setShowCloudMap] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
-
+  
   const locationFetchTimeout = useRef(null);
 
   useEffect(() => {
@@ -144,23 +144,23 @@ export default function MapDefaultView() {
 
       <View style={styles.overlay} />
 
-      <FAB.Group
-        open={fabOpen}
-        icon={fabOpen ? 'close' : 'menu'}
-        backdropColor='rgba(255, 255, 255, 0.8)'
-        style={styles.FAB}
-        actions={[
-          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
-          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
-          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
-          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
-          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
-        ]}
-        onStateChange={({ open }) => setFabOpen(open)}
-      />
-    </View>
-
+        <FAB.Group
+          open={fabOpen}
+          icon={fabOpen ? 'close' : 'menu'}
+          backdropColor='rgba(255, 255, 255, 0.8)'
+          style={styles.FAB}
+          actions={[
+            { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
+            { icon: 'restore', label: 'Finland  ', onPress: resetMap },
+            { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
+            { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
+            { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
+            { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+          ]}
+          onStateChange={({ open }) => setFabOpen(open)}
+        />
+      </View>
+   
   );
 }
 
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   FAB: {
-    color: ""
+    color:""
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
