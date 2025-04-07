@@ -48,6 +48,11 @@ export function getLongTermForecast(location) {
 }
 
 
-export function getRainTiles() {
-    return `https://valora.2.rahtiapp.fi/{z}/{x}/{y}.png`;
+// export function getRainTiles() {
+//     return `https://valora.2.rahtiapp.fi/{z}/{x}/{y}.png`;
+// }
+
+export function getLayerTiles(layer) {
+    return `https://valora.2.rahtiapp.fi/tiles/${layer}/{z}/{x}/{y}.png`;
 }
+
