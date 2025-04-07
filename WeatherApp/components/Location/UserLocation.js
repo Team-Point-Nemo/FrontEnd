@@ -14,11 +14,11 @@ export async function UserLocation() {
             let location = await Location.getCurrentPositionAsync({});    // Get location as object 'coords'.
             return(location);
         } catch (err) {
-            console.error("Error in fetching location: ", err);
+            console.error("Error in fetching 1 location: ", err);
             Alert.alert('Error in fetching location');
         }
     } catch (err) {
-        console.error("Error in fetching location: ", err);
+        console.error("Error in fetching 2 location: ", err);
         Alert.alert('Error in fetching location');
     };
 }
