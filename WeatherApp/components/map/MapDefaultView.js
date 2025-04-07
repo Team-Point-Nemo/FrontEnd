@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Pressable, ActivityIndicator } from 'react-native';
-import MapView, { Marker, UrlTile } from 'react-native-maps';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import MapView, { UrlTile } from 'react-native-maps';
 import { UserLocation } from '../Location/UserLocation';
 import { getRainTiles } from '../../api';
+ 
+import { FAB } from 'react-native-paper';
+
+const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -19,6 +22,12 @@ export default function MapDefaultView() {
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
+  const [showWindMap, setShowWindMap] = useState(false);
+  const [showTempMap, setShowTempMap] = useState(false);
+  const [showCloudMap, setShowCloudMap] = useState(false);
+  const [fabOpen, setFabOpen] = useState(false);
+  
+  const locationFetchTimeout = useRef(null);
 
   useEffect(() => {
     getUserLocation()
@@ -74,25 +83,32 @@ export default function MapDefaultView() {
     }
   };
 
+  const handleRegionChange = (region) => {
+    if (locationFetchTimeout.current) {
+      clearTimeout(locationFetchTimeout.current);
+    }
+
+    locationFetchTimeout.current = setTimeout(() => {
+      setMapRegion((prevRegion) => {
+        const isSameRegion =
+          Math.abs(prevRegion.latitude - region.latitude) < 0.0001 &&
+          Math.abs(prevRegion.longitude - region.longitude) < 0.0001;
+
+        return isSameRegion ? prevRegion : region;
+      });
+    }, 2000);
+  };
+
   return (
     <View style={styles.container}>
+      {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
-        onRegionChangeComplete={(region) => setMapRegion(region)}
+        onRegionChangeComplete={handleRegionChange}
+        //handleRegionChange kohdan tilalle ylemmällä rivillä (rivi 107) voi vaihtaa (region) => setMapRegion(region), joka on uuden koodin versio. Nykyinen malli estää kartan/GPS:n nykimisen
         style={styles.map}
         showsUserLocation={true}
       >
-        {/* Käyttäjän sijaintimarkkeri */}
-        {userLocation && userLocation.coords && (
-          <Marker
-            coordinate={{
-              latitude: userLocation.latitude,
-              longitude: userLocation.longitude,
-            }}
-            title="Oma sijainti"
-          />
-        )}
-
         {/* Sadekartta (jos näkyvyys on päällä) */}
         {showRainMap && (
           <UrlTile
@@ -104,53 +120,57 @@ export default function MapDefaultView() {
             }}
           />
         )}
+                  {showWindMap && (
+            <UrlTile
+              urlTemplate={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+              zIndex={5}
+              style={{ opacity: 1 }}
+            />)},
+            {showTempMap && (
+              <UrlTile
+                urlTemplate={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+                zIndex={5}
+                style={{ opacity: 1 }}
+              />
+            )},
+            {showCloudMap && (
+              <UrlTile
+                urlTemplate={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+                zIndex={5}
+                style={{ opacity: 1 }}
+              />
+            )}
       </MapView>
 
-      {/* <View style={styles.overlay} /> */}
+      <View style={styles.overlay} />
 
-      {/* Nappulat */}
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={resetToUserLocation}>
-          {loadingUserLocation ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <>
-              <MaterialIcons name="my-location" size={20} color="white" />
-              <Text style={styles.buttonText}>Location</Text>
-            </>
-          )}
-        </Pressable>
-
-        <Pressable style={[styles.button, styles.resetButton]} onPress={resetMap}>
-          {loadingReset ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <>
-              <MaterialIcons name="zoom-out-map" size={20} color="white" />
-              <Text style={styles.buttonText}>Reset</Text>
-            </>
-          )}
-        </Pressable>
-
-        {/* Sadekartan nappula */}
-        <Pressable 
-          style={[styles.button, styles.rainButton]} 
-          onPress={() => {
-            console.log("Show Rain Toggled: ", !showRainMap); // Tarkista, että tila vaihtuu
-            setShowRainMap(!showRainMap);
-          }}
-        >
-          <MaterialIcons name="opacity" size={20} color="white" />
-          <Text style={styles.buttonText}>{showRainMap ? "Hide Rain" : "Show Rain"}</Text>
-        </Pressable>
+            
+        <FAB.Group
+          open={fabOpen}
+          icon={fabOpen ? 'close' : 'menu'}
+          backdropColor='rgba(255, 255, 255, 0.8)'
+          style={styles.FAB}
+          actions={[
+            { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
+            { icon: 'restore', label: 'Finland  ', onPress: resetMap },
+            { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
+            { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
+            { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
+            { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+          ]}
+          onStateChange={({ open }) => setFabOpen(open)}
+        />
       </View>
-    </View>
+   
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  FAB: {
+    color:""
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -179,16 +199,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
     elevation: 5,
-  },
-  resetButton: {
-    backgroundColor: '#ff4757',
-  },
-  rainButton: {
-    backgroundColor: '#00aaff',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    marginLeft: 5,
   },
 });
