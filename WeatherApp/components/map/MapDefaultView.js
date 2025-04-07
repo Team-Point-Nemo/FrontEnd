@@ -152,12 +152,42 @@ export default function MapDefaultView() {
         backdropColor='rgba(255, 255, 255, 0.8)'
         style={styles.FAB}
         actions={[
-          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
-          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
-          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
-          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
-          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+          {
+            icon: 'map-marker',
+            label: 'Location',
+            onPress: resetToUserLocation,
+            labelTextColor: 'black'
+          },
+          { 
+            icon: 'restore', 
+            label: 'Finland  ', 
+            onPress: resetMap,
+            labelTextColor: 'black' 
+          },
+          {
+            icon: 'weather-rainy',
+            label: showRainMap ? 'Hide Rain' : 'Show Rain',
+            onPress: () => setShowRainMap(!showRainMap),
+            labelTextColor: 'black'
+          },
+          {
+            icon: 'weather-windy',
+            label: showWindMap ? 'Hide Wind' : 'Show Wind',
+            onPress: () => setShowWindMap(!showWindMap),
+            labelTextColor: 'black'
+          },
+          { 
+            icon: 'thermometer', 
+            label: showTempMap ? 'Hide Temp' : 'Show Temp', 
+            onPress: () => setShowTempMap(!showTempMap),
+            labelTextColor: 'black'
+          },
+          { 
+            icon: 'weather-cloudy', 
+            label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', 
+            onPress: () => setShowCloudMap(!showCloudMap),
+            labelTextColor: 'black'
+           },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />
