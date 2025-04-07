@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.2.0",
@@ -31,7 +32,27 @@
     "weatherapp": "file:"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^13.2.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-expo": "^52.0.6",
+    "react-test-renderer": "^18.3.1"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-native|@expo(nent)?/.*|expo(nent)?|react-clone-referenced-element|expo-location|expo-linear-gradient)"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-expo"
+    ]
   },
   "private": true
 }
