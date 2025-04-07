@@ -3,7 +3,7 @@ export function getCurrentDate() {
     const currentDate = new Date();
 
     try {
-        return `${currentDate.getDate()}.${currentDate.getMonth() + 1 }.${currentDate.getFullYear()}`;
+        return `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`;
     } catch (err) {
         console.error("Error in getting date", err);
     }
@@ -36,10 +36,10 @@ export function setThemeByTime() {
         if (hours >= 18 || hours <= 5) {
             return (['#0E1013', '#1A1D23', '#2B303B']);
         } else if (hours >= 6 && hours <= 9) {
-            return(['#E67A0F', '#F3993F']);
+            return (['#E67A0F', '#F3993F']);
         } else {
             return (['#172F4F', '#3872BC', '#5187CD', '#6192D1']);
-            }
+        }
     } catch (err) {
         console.error("Error in getting theme", err);
     }

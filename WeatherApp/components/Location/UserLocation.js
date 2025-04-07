@@ -12,7 +12,7 @@ export async function UserLocation() {
         }
         try {
             let location = await Location.getCurrentPositionAsync({});    // Get location as object 'coords'.
-            return(location);
+            return (location);
         } catch (err) {
             console.error("Error in fetching 1 location: ", err);
             Alert.alert('Error in fetching location');

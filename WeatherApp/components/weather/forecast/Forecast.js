@@ -13,7 +13,7 @@ export default function Forecast({ location }) {
     return (
         <SafeAreaView style={styles.container}>
             <LinearGradient colors={setThemeByTime()} style={styles.background} />
-            <SegmentedButtons 
+            <SegmentedButtons
                 style={styles.buttonContainer}
                 value={value}
                 onValueChange={setValue}

@@ -14,33 +14,33 @@ export default function TabNavigator() {
 
   return (
     <Tab.Navigator
-    screenOptions={{
-      headerShown: false,   // Screen headers hidden
-    }}
-    tabBar={({ navigation, state, descriptors, insets }) => (
-      <BottomNavigation.Bar
-        navigationState={state}
-        safeAreaInsets={insets}   // Used to avoid Android nav bar
-        onTabPress={({ route }) => {
-           navigation.dispatch({
+      screenOptions={{
+        headerShown: false,   // Screen headers hidden
+      }}
+      tabBar={({ navigation, state, descriptors, insets }) => (
+        <BottomNavigation.Bar
+          navigationState={state}
+          safeAreaInsets={insets}   // Used to avoid Android nav bar
+          onTabPress={({ route }) => {
+            navigation.dispatch({
               ...CommonActions.navigate(route.name, route.params),
               target: state.key,
             });
-        }}
-        renderIcon={({ route, focused }) => {
-          const { options } = descriptors[route.key];
-          if (options.tabBarIcon) {
-            return options.tabBarIcon({ focused, size: 24 });
-          }
+          }}
+          renderIcon={({ route, focused }) => {
+            const { options } = descriptors[route.key];
+            if (options.tabBarIcon) {
+              return options.tabBarIcon({ focused, size: 24 });
+            }
 
-          return null;
-        }}
-        getLabelText={({ route }) => {
-          const { options } = descriptors[route.key];
-          return options.tabBarLabel;
-        }}
-      />
-    )}
+            return null;
+          }}
+          getLabelText={({ route }) => {
+            const { options } = descriptors[route.key];
+            return options.tabBarLabel;
+          }}
+        />
+      )}
     >
       <Tab.Screen
         name="Home"

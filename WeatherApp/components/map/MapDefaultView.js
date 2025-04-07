@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import { UserLocation } from '../Location/UserLocation';
-import { getRainTiles } from '../../api';
-
+import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
 
 export default function MapDefaultView() {
@@ -13,10 +12,12 @@ export default function MapDefaultView() {
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
   });
+
   const [userLocation, setUserLocation] = useState({
     latitude: '',
     longitude: '',
   });
+
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
@@ -102,41 +103,50 @@ export default function MapDefaultView() {
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
-        //handleRegionChange kohdan tilalle ylemmällä rivillä (rivi 107) voi vaihtaa (region) => setMapRegion(region), joka on uuden koodin versio. Nykyinen malli estää kartan/GPS:n nykimisen
+        // instead of handleRegionChange can use (region) => setMapRegion(region)
+        // current one prevents map/GPS flickering
         style={styles.map}
         showsUserLocation={true}
       >
-        {/* Sadekartta (jos näkyvyys on päällä) */}
+        {/* Show different weather layers on map when activated from menu */}
         {showRainMap && (
           <UrlTile
-            urlTemplate={getRainTiles()}
+            urlTemplate={getLayerTiles('precipitation_new')}
             zIndex={5}
             style={{ opacity: 1 }}
             onError={(e) => {
               console.error("Error loading rain map tile: ", e);
             }}
           />
-        )}
+        )},
         {showWindMap && (
           <UrlTile
-            urlTemplate={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            urlTemplate={getLayerTiles('wind_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-          />)}
-
+            onError={(e) => {
+              console.error("Error loading wind map tile: ", e);
+            }}
+          />
+        )},
         {showTempMap && (
           <UrlTile
-            urlTemplate={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            urlTemplate={getLayerTiles('temp_new')}
             zIndex={5}
             style={{ opacity: 1 }}
+            onError={(e) => {
+              console.error("Error loading temperature map tile: ", e);
+            }}
           />
-        )}
-
+        )},
         {showCloudMap && (
           <UrlTile
-            urlTemplate={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            urlTemplate={getLayerTiles('cloud_new')}
             zIndex={5}
             style={{ opacity: 1 }}
+            onError={(e) => {
+              console.error("Error loading cloud map tile: ", e);
+            }}
           />
         )}
       </MapView>
@@ -156,11 +166,11 @@ export default function MapDefaultView() {
             onPress: resetToUserLocation,
             labelTextColor: 'black'
           },
-          { 
-            icon: 'restore', 
-            label: 'Finland  ', 
+          {
+            icon: 'restore',
+            label: 'Finland  ',
             onPress: resetMap,
-            labelTextColor: 'black' 
+            labelTextColor: 'black'
           },
           {
             icon: 'weather-rainy',
@@ -174,18 +184,18 @@ export default function MapDefaultView() {
             onPress: () => setShowWindMap(!showWindMap),
             labelTextColor: 'black'
           },
-          { 
-            icon: 'thermometer', 
-            label: showTempMap ? 'Hide Temp' : 'Show Temp', 
+          {
+            icon: 'thermometer',
+            label: showTempMap ? 'Hide Temp' : 'Show Temp',
             onPress: () => setShowTempMap(!showTempMap),
             labelTextColor: 'black'
           },
-          { 
-            icon: 'weather-cloudy', 
-            label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', 
+          {
+            icon: 'weather-cloudy',
+            label: showCloudMap ? 'Hide Clouds' : 'Show Clouds',
             onPress: () => setShowCloudMap(!showCloudMap),
             labelTextColor: 'black'
-           },
+          },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
-import { Text, Searchbar, FAB  } from 'react-native-paper';
+import { Text, Searchbar, FAB } from 'react-native-paper';
 import { getCurrentWeatherInLocation } from '../../api';
 import { getCurrentDate, setImageByTime } from '../date/DateService';
 import { SearchCity } from '../Location/SearchCity';
@@ -26,9 +26,9 @@ export default function WeatherNow() {
     } else if (location.latitude && location.longitude) {  // Ensures, that location has value
       getWeather(location);
       getCity(location)
-      .then(cityName => {
-        setCity(cityName);
-      });
+        .then(cityName => {
+          setCity(cityName);
+        });
     }
   }, [location]);
 
@@ -44,7 +44,7 @@ export default function WeatherNow() {
         setWeather(null);
       }
     } catch (err) {
-        console.error("Error in fetching weather: ", err);
+      console.error("Error in fetching weather: ", err);
     }
   };
 
@@ -89,59 +89,59 @@ export default function WeatherNow() {
   return (
     <View>
       <View style={styles.flexContainer1}>
-        <ImageBackground 
-        source={setImageByTime()}
-        style={styles.image}>
+        <ImageBackground
+          source={setImageByTime()}
+          style={styles.image}>
           <SafeAreaView style={styles.image}>
-          <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
-          <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
-          {weather?.main && (   // Checks, that weather has values before rendering.
-          <View style={styles.weatherContainer}>
-            <View style={styles.columnLeft}>
-            <Text variant="displayLarge" style={styles.textWithShadow}>{Math.round(weather.main.temp)}°</Text>
-            {weather?.weather?.icon ? (
-                <Image 
-                  style={styles.weatherIcon}
-                  source={{ uri: `http://openweathermap.org/img/wn/${weather.weather.icon}.png` }}
-                />
-              ) : null}
-            </View>
-            <View style={styles.columnRight}>
-              <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {Math.round(weather.main.feels_like)}°</Text>
-              <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {Math.round(weather.wind.speed)} m/s</Text>
-            </View>
-          </View>
-        )}
-        </SafeAreaView>
+            <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
+            <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
+            {weather?.main && (   // Checks, that weather has values before rendering.
+              <View style={styles.weatherContainer}>
+                <View style={styles.columnLeft}>
+                  <Text variant="displayLarge" style={styles.textWithShadow}>{Math.round(weather.main.temp)}°</Text>
+                  {weather?.weather?.icon ? (
+                    <Image
+                      style={styles.weatherIcon}
+                      source={{ uri: `http://openweathermap.org/img/wn/${weather.weather.icon}.png` }}
+                    />
+                  ) : null}
+                </View>
+                <View style={styles.columnRight}>
+                  <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {Math.round(weather.main.feels_like)}°</Text>
+                  <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {Math.round(weather.wind.speed)} m/s</Text>
+                </View>
+              </View>
+            )}
+          </SafeAreaView>
         </ImageBackground>
         <View style={styles.locationContainer}>
-            <Searchbar
-              loading={searchLoading}
-              inputStyle={{ fontSize: 14 }}
-              elevation={3}
-              placeholder="Search city..."
-              onChangeText={setSearchQuery}
-              value={searchQuery}
-              onIconPress={handleSearchedLocation}
-              style={styles.searchbar}
-            />
-            <FAB
-              variant='surface'
-              icon='map-marker'
-              size={15}
-              style={styles.fab}
-              onPress={() => {
-                if (search) {
-                  getUserLocation();
-                }
-              }}
-            />
+          <Searchbar
+            loading={searchLoading}
+            inputStyle={{ fontSize: 14 }}
+            elevation={3}
+            placeholder="Search city..."
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+            onIconPress={handleSearchedLocation}
+            style={styles.searchbar}
+          />
+          <FAB
+            variant='surface'
+            icon='map-marker'
+            size={15}
+            style={styles.fab}
+            onPress={() => {
+              if (search) {
+                getUserLocation();
+              }
+            }}
+          />
         </View>
       </View>
       <View style={styles.flexContainer2}>
         <Forecast location={location} />
       </View>
-    <StatusBar style="auto" />
+      <StatusBar style="auto" />
     </View>
   );
 }

@@ -24,7 +24,7 @@ export default function ForecastForFiveDays({ location }) {
                     const date = item.dt_txt.split(" ")[0];     // YYYY-MM-DD
                     const hourData = item.dt_txt.split(" ")[1].slice(0, 5);     // HH:MM
 
-                    return{
+                    return {
                         date: date,
                         hour: hourData,
                         temp: Math.round(item.main.temp),
@@ -50,10 +50,9 @@ export default function ForecastForFiveDays({ location }) {
             .catch(err => console.error("Error in fetch: ", err))
     }
 
-
     return (
         <SafeAreaView style={styles.container}>
-            {dailyForecast && hourlyForecast ? ( 
+            {dailyForecast && hourlyForecast ? (
                 <ForecastFlatList5 dailyForecast={dailyForecast} hourlyForecast={hourlyForecast} />
             ) : (
                 <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
