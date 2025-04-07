@@ -5,6 +5,7 @@ import { BottomNavigation, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IndexScreen from "../screens/IndexScreen";
 import MapScreen from "../screens/MapScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 
 const Tab = createBottomTabNavigator();   // Returns React Native components, so preferably use capital letter on first one
 
@@ -58,6 +59,16 @@ export default function TabNavigator() {
           tabBarLabel: 'Map',
           tabBarIcon: ({ focused, size }) => {
             return <Icon name={focused ? "map" : "map-outline"} size={size} color={focused ? theme.colors.primary : theme.colors.onSurfaceVariant} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          tabBarLabel: 'Favorites',
+          tabBarIcon: ({ focused, size }) => {
+            return <Icon name={focused ? "heart" : "heart-outline"} size={size} color={focused ? theme.colors.primary : theme.colors.onSurfaceVariant} />
           },
         }}
       />
