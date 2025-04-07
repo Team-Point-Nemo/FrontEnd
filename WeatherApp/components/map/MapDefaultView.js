@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import { UserLocation } from '../Location/UserLocation';
 import { getRainTiles } from '../../api';
- 
+
 import { FAB } from 'react-native-paper';
 
 const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
@@ -26,7 +26,7 @@ export default function MapDefaultView() {
   const [showTempMap, setShowTempMap] = useState(false);
   const [showCloudMap, setShowCloudMap] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
-  
+
   const locationFetchTimeout = useRef(null);
 
   useEffect(() => {
@@ -101,7 +101,6 @@ export default function MapDefaultView() {
 
   return (
     <View style={styles.container}>
-      {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
@@ -120,48 +119,50 @@ export default function MapDefaultView() {
             }}
           />
         )}
-                  {showWindMap && (
-            <UrlTile
-              urlTemplate={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
-              zIndex={5}
-              style={{ opacity: 1 }}
-            />)},
-            {showTempMap && (
-              <UrlTile
-                urlTemplate={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
-                zIndex={5}
-                style={{ opacity: 1 }}
-              />
-            )},
-            {showCloudMap && (
-              <UrlTile
-                urlTemplate={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
-                zIndex={5}
-                style={{ opacity: 1 }}
-              />
-            )}
+        {showWindMap && (
+          <UrlTile
+            urlTemplate={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            zIndex={5}
+            style={{ opacity: 1 }}
+          />)}
+
+        {showTempMap && (
+          <UrlTile
+            urlTemplate={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            zIndex={5}
+            style={{ opacity: 1 }}
+          />
+        )}
+
+        {showCloudMap && (
+          <UrlTile
+            urlTemplate={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${EXPO_PUBLIC_WEATHER_API_KEY}`}
+            zIndex={5}
+            style={{ opacity: 1 }}
+          />
+        )}
       </MapView>
 
       <View style={styles.overlay} />
 
-            
-        <FAB.Group
-          open={fabOpen}
-          icon={fabOpen ? 'close' : 'menu'}
-          backdropColor='rgba(255, 255, 255, 0.8)'
-          style={styles.FAB}
-          actions={[
-            { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-            { icon: 'restore', label: 'Finland  ', onPress: resetMap },
-            { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
-            { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
-            { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
-            { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
-          ]}
-          onStateChange={({ open }) => setFabOpen(open)}
-        />
-      </View>
-   
+
+      <FAB.Group
+        open={fabOpen}
+        icon={fabOpen ? 'close' : 'menu'}
+        backdropColor='rgba(255, 255, 255, 0.8)'
+        style={styles.FAB}
+        actions={[
+          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
+          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
+          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
+          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
+          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
+          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+        ]}
+        onStateChange={({ open }) => setFabOpen(open)}
+      />
+    </View>
+
   );
 }
 
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   FAB: {
-    color:""
+    color: ""
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
