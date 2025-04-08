@@ -10,9 +10,7 @@ export function getCurrentWeatherInLocation(location) {
     });
 }
 
-//https://api.openweathermap.org/data/2.5/weather?lat=60.201774308597734&lon=24.933730683995112&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metric
-
-
+//https://api.openweathermap.org/data/2.5/weather?lat=60.201774308597734&lon=24.933730683995112&appid=b74779bdf87fc91c8f995e35e0437ec8&units=metri
 export function getCityCoords(city) {
     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
     .then(response => {
@@ -48,11 +46,6 @@ export function getLongTermForecast(location) {
 }
 
 
-// export function getRainTiles() {
-//     return `https://valora.2.rahtiapp.fi/{z}/{x}/{y}.png`;
-// }
-
 export function getLayerTiles(layer) {
     return `https://valora.2.rahtiapp.fi/tiles/${layer}/{z}/{x}/{y}.png`;
 }
-
