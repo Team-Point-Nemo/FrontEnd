@@ -176,10 +176,9 @@ const styles = StyleSheet.create({
   cityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 15
+    paddingBottom: 25
   },
   cityLeft: {
-    //  alignItems: 'center',
     alignItems: 'flex-end'
   },
   cityRigth: {
@@ -228,7 +227,6 @@ const styles = StyleSheet.create({
   locationContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
     marginBottom: 5,
     marginHorizontal: 30,
   },
