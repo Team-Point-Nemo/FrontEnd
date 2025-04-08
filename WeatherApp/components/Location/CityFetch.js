@@ -1,43 +1,19 @@
-import React, { useState, useEffect } from 'react';
+/* This file uses Expo Location and returns city according to location coordinates. */
+
 import * as Location from 'expo-location';
-import { Text, ActivityIndicator, Alert } from 'react-native';
 
-export default function CityFetch({ location }) {
+export async function getCity(location) {
+  try {
+    const address = await Location.reverseGeocodeAsync({
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
 
-  const [city, setCity] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (location.coords) {  // Ensures, that location.coords has a value
-      getCity(location);
+    if (address.length > 0) {
+      return (address[0].city || 'Location unknown');
     }
-  }, [location]);
-
-  const getCity = async (location) => {
-    try {
-      const address = await Location.reverseGeocodeAsync({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-
-      if (address.length > 0) {
-        const newCity = address[0].city || 'Location unknown';
-        setCity(newCity);
-      }
-    } catch (err) {
-        console.error("Error in fetching city: ", err);
-        Alert.alert('Error in fetching city');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+  } catch (err) {
+      console.error("Error in fetching city: ", err);
+      throw new Error('Error fetching city.');
   }
-
-  return (
-    <Text>Location: {city || 'Unknown'}</Text>
-  );
-
-}
+};

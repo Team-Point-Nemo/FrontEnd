@@ -1,30 +1,40 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import WeatherNow from "../components/weather/WeatherNow";
-import CitySearch from "../components/Location/CitySearch";
-import { useRoute } from "@react-navigation/native";
-import { useEffect } from "react";
+import { setThemeByTime } from "../components/date/DateService";
 
 export default function IndexScreen() {
-
-  const route = useRoute();
-  const { searchedCity, weather } = route.params || {};
-  console.log("Params received in index screen: ", route.params)
-
   return (
-    <SafeAreaView style={styles.container}>
-      {searchedCity && weather ? (
-        <CitySearch searchedCity={searchedCity} weather={weather} />
-      ) : (<WeatherNow />
-      )}
-    </SafeAreaView>
+    <View style={styles.container}>
+      <LinearGradient colors={setThemeByTime()} style={styles.background} />
+      <ScrollView style={{ flex: 1, width: "100%", height: "100%" }}>
+        <WeatherNow />
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  background: {
+    flex: 3,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "100%",
+  },
+  flexContainer1: {
+    flex: 1,
+    width: "100%",
+  },
+  flexContainer2: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
   },
 });
