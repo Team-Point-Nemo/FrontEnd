@@ -5,6 +5,8 @@ import { UserLocation } from '../Location/UserLocation';
 import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
 
+const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
+
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
     latitude: 65,   // Default (Finland)
