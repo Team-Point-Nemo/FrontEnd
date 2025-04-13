@@ -1,6 +1,7 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import WeatherNow from "../components/weather/WeatherNow";
+import NewWeatherNow from "../components/weather/NewWeatherNow";
 import { setThemeByTime } from "../components/date/DateService";
 
 export default function IndexScreen() {
@@ -8,7 +9,7 @@ export default function IndexScreen() {
     <View style={styles.container}>
       <LinearGradient colors={setThemeByTime()} style={styles.background} />
       <ScrollView style={{ flex: 1, width: "100%", height: "100%" }}>
-        <WeatherNow />
+        <NewWeatherNow />
       </ScrollView>
     </View>
   );

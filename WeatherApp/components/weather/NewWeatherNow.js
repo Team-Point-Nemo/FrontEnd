@@ -1,94 +1,48 @@
+import { useEffect, useState } from "react";
+import useWeather from "../../hooks/useWeather";
+import useUserLocation from "../../hooks/useUserLocation";
+import useCitySearch from "../../hooks/useCitySearch";
+import useCityName from "../../hooks/useCityName";
+import { getCurrentDate, setImageByTime } from "../date/DateService";
+import { Text, Searchbar, FAB } from "react-native-paper";
+import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from 'react-native';
-import { Text, Searchbar, FAB } from 'react-native-paper';
-import { getCurrentWeatherInLocation } from '../../api';
-import { getCurrentDate, setImageByTime } from '../date/DateService';
-import { SearchCity } from '../Location/SearchCity';
-import { getCity } from '../Location/CityFetch';
-import { UserLocation } from '../Location/UserLocation';
 
-import Forecast from './forecast/Forecast';
+export default function NewWeatherNow() {
+    const [location, setLocation] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [search, setSearch] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
 
-export default function WeatherNow() {
-  const [location, setLocation] = useState({
-    latitude: '',
-    longitude: '',
-  });
-  const [weather, setWeather] = useState({});
-  const [city, setCity] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [search, setSearch] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
+    const { location: userLocation, refetchLocation } = useUserLocation();
+    const { weather } = useWeather(location);
+    const { searchLocation, searchCity } = useCitySearch();
+    const { city } = useCityName(searchLocation || location);
 
-  useEffect(() => {
-    if (!location.latitude && !location.longitude) {
-      getUserLocation();  // Get the user's location on first render
-    } else if (location.latitude && location.longitude) {  // Ensures, that location has value
-      getWeather(location);
-      getCity(location)
-        .then(cityName => {
-          setCity(cityName);
-        });
-    }
-  }, [location]);
+    // set user location
+    useEffect(() => {
+        if (userLocation && !search) {
+            setLocation(searchLocation);
+        }
+    }, [userLocation]);
 
-  const getWeather = async (location) => {
-    try {
-      const data = await getCurrentWeatherInLocation(location);
-      if (data) {
-        setWeather(data);
-        console.log(weather);
-        console.log(data);
-      } else {
-        console.error("Weather data not found");
-        setWeather(null);
-      }
-    } catch (err) {
-      console.error("Error in fetching weather: ", err);
-    }
-  };
+    // set location from searched city
+    useEffect(() => {
+        if (searchLocation) {
+            setLocation(searchLocation);
+            setSearch(true);
+            setSearchQuery("");
+        }
+    }, [searchLocation]);
 
-  const getUserLocation = async () => {
-    try {
-      const userLocation = await UserLocation();
-      if (userLocation) {
-        setLocation({
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
-        });
-        setSearch(false);
-      } else {
-        console.error("Error in fetching user location");
-      }
-    } catch (err) {
-      console.error("Error in fetching user location: ", err);
-    }
-  };
+    const handleSearch = () => {
+        setSearchLoading(true);
+        searchCity(searchQuery); // calls the hook to get the coordinates
+        setSearchLoading(false)
+    };
 
-  const handleSearchedLocation = async () => {
-    setSearchLoading(true);
-    try {
-      const cityLocation = await SearchCity(searchQuery);
-      if (cityLocation) {
-        setLocation({
-          latitude: cityLocation.coord.lat,
-          longitude: cityLocation.coord.lon,
-        });
-        setSearch(true);
-        setSearchQuery('');
-      } else {
-        console.error("City location not found.");
-      }
-    } catch (err) {
-      console.error("Error in fetching location in searched city: ", err);
-    } finally {
-      setSearchLoading(false);
-    }
-  }
-
-  return (
-    <View>
+    return (
+        <View>
       <View style={styles.flexContainer1}>
         <ImageBackground
           source={setImageByTime()}
@@ -108,7 +62,7 @@ export default function WeatherNow() {
                   style={styles.fab}
                   onPress={() => {
                     if (search) {
-                      getUserLocation();
+                      setLocation(userLocation);
                     }
                   }}
                 />
@@ -143,14 +97,14 @@ export default function WeatherNow() {
             placeholder="Search city..."
             onChangeText={setSearchQuery}
             value={searchQuery}
-            onIconPress={handleSearchedLocation}
+            onIconPress={handleSearch}
             style={styles.searchbar}
           />
         </View>
 
       </View>
       <View style={styles.flexContainer2}>
-        <Forecast location={location} />
+        {/* <Forecast location={location} /> */}
       </View>
       <StatusBar style="auto" />
     </View>

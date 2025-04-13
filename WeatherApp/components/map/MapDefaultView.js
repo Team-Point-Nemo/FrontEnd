@@ -4,8 +4,7 @@ import MapView, { UrlTile } from 'react-native-maps';
 import { UserLocation } from '../Location/UserLocation';
 import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
-
-const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
+import useUserLocation from '../../hooks/useUserLocation';
 
 const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
@@ -17,11 +16,8 @@ export default function MapDefaultView() {
     longitudeDelta: 10.5,
   });
 
-  const [userLocation, setUserLocation] = useState({
-    latitude: '',
-    longitude: '',
-  });
-
+  const { location: userLocation } = useUserLocation();
+  
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
@@ -31,26 +27,6 @@ export default function MapDefaultView() {
   const [fabOpen, setFabOpen] = useState(false);
 
   const locationFetchTimeout = useRef(null);
-
-  useEffect(() => {
-    getUserLocation()
-  });
-
-  const getUserLocation = async () => {
-    try {
-      const location = await UserLocation();
-      if (location) {
-        setUserLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-      } else {
-        console.error("Error in fetching user location");
-      }
-    } catch (err) {
-      console.error("Error in fetching user location: ", err);
-    }
-  };
 
   const resetToUserLocation = () => {
     if (userLocation) {
