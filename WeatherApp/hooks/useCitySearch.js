@@ -29,8 +29,6 @@ export default function useCitySearch() {
         } catch (err) {
             console.error("Error in fetching searched city location: ", err);
             setSearchLocation(null)
-        } finally {
-            //setSearchLoading(false);
         }
     };
 

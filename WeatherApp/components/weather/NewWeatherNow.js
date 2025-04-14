@@ -14,17 +14,17 @@ export default function NewWeatherNow() {
     const [search, setSearch] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
 
-    const { location: userLocation, refetchLocation } = useUserLocation();
+    const { location: userLocation, loading } = useUserLocation();
     const { weather } = useWeather(location);
     const { searchLocation, searchCity } = useCitySearch();
-    const { city } = useCityName(searchLocation || location);
+    const { city } = useCityName(location);
 
     // set user location
     useEffect(() => {
         if (userLocation && !search) {
-            setLocation(searchLocation);
+            setLocation(userLocation);
         }
-    }, [userLocation]);
+    }, [userLocation, search]);
 
     // set location from searched city
     useEffect(() => {
@@ -32,10 +32,11 @@ export default function NewWeatherNow() {
             setLocation(searchLocation);
             setSearch(true);
             setSearchQuery("");
+            
         }
     }, [searchLocation]);
 
-    const handleSearch = () => {
+    const handleSearch = ()=> {
         setSearchLoading(true);
         searchCity(searchQuery); // calls the hook to get the coordinates
         setSearchLoading(false)
@@ -63,6 +64,7 @@ export default function NewWeatherNow() {
                   onPress={() => {
                     if (search) {
                       setLocation(userLocation);
+                      setSearch(false);
                     }
                   }}
                 />

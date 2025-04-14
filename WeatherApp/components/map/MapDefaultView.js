@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
-import { UserLocation } from '../Location/UserLocation';
 import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
-import useUserLocation from '../../hooks/useUserLocation';
+import useUserLocation from "../../hooks/useUserLocation";
 
 const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
@@ -14,10 +13,7 @@ export default function MapDefaultView() {
     longitude: 26,
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
-  });
-
-  const { location: userLocation } = useUserLocation();
-  
+  });  
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
@@ -25,8 +21,10 @@ export default function MapDefaultView() {
   const [showTempMap, setShowTempMap] = useState(false);
   const [showCloudMap, setShowCloudMap] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
-
+  
   const locationFetchTimeout = useRef(null);
+
+  const { location: userLocation } = useUserLocation();
 
   const resetToUserLocation = () => {
     if (userLocation) {

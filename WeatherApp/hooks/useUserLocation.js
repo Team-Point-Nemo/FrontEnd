@@ -1,5 +1,4 @@
 // Custom hook for fetching coordinates from users location
-
 import { useState, useEffect } from "react";
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
@@ -7,10 +6,12 @@ import { Alert } from 'react-native';
 export default function useUserLocation() {
 
     const [location, setLocation] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getUserLocation = async () => {
             try {
+                setLoading(true)
                 let { status } = await Location.requestForegroundPermissionsAsync();    // Checks if user has grant permissions for location.
                 if (status !== 'granted') {
                     Alert.alert('Location permissions denied');
@@ -34,5 +35,5 @@ export default function useUserLocation() {
         getUserLocation();
     }, []);
 
-    return { location };
+    return { location, loading };
 }

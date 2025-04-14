@@ -1,6 +1,5 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import WeatherNow from "../components/weather/WeatherNow";
 import NewWeatherNow from "../components/weather/NewWeatherNow";
 import { setThemeByTime } from "../components/date/DateService";
 
