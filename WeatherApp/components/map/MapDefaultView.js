@@ -96,7 +96,7 @@ export default function MapDefaultView() {
               console.error("Error loading rain map tile: ", e);
             }}
           />
-        )},
+        )}
         {showWindMap && (
           <UrlTile
             urlTemplate={getLayerTiles('wind_new')}
@@ -106,7 +106,7 @@ export default function MapDefaultView() {
               console.error("Error loading wind map tile: ", e);
             }}
           />
-        )},
+        )}
         {showTempMap && (
           <UrlTile
             urlTemplate={getLayerTiles('temp_new')}
