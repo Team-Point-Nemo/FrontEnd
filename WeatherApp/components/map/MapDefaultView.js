@@ -1,11 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
 import useUserLocation from "../../hooks/useUserLocation";
-
-const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
