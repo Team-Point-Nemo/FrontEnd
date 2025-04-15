@@ -46,7 +46,7 @@ export default function NewWeatherNow() {
                 {city ? (
                   <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
                   ) : (
-                  <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                  <ActivityIndicator animating={true} size="large" color={MD2Colors.white} />
                   )}
                 <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
               </View>
@@ -92,6 +92,7 @@ export default function NewWeatherNow() {
             onChangeText={setSearchQuery}
             value={searchQuery}
             onIconPress={handleSearch}
+            onSubmitEditing={handleSearch}
             style={styles.searchbar}
           />
         </View>

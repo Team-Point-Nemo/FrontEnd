@@ -28,7 +28,7 @@ export default function ForecastFor16Days({ location }) {
             {forecast ? (
                 <ForecastFlatList forecast={forecast} />
             ) : (
-                <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                <ActivityIndicator animating={true} size="large" color={MD2Colors.white} />
             )}
         </View>
     )
