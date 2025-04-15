@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#eee",
         marginTop: 10,
-        width: '80%',
+        width:'80%',
     },
     weatherIconHourly: {
         width: 40,
