@@ -39,7 +39,7 @@ export function getLongTermForecast(location) {
     //return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/forecast/daily?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${process.env.WEATHER_API_KEY}&units=metric`)
         .then(response => {
             if(!response.ok)
-                throw new Error(`Error in fetching forecast: ${response.statusText}`);
+                throw new Error(`Error in fetching forecast for 16 days: ${response.statusText}`);
 
             return response.json();
         })

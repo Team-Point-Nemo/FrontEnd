@@ -125,14 +125,14 @@ export default function MapDefaultView() {
             urlTemplate={getLayerTiles('wind_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-          />)},
+          />)}
         {showTempMap && (
           <UrlTile
             urlTemplate={getLayerTiles('temp_new')}
             zIndex={5}
             style={{ opacity: 1 }}
           />
-        )},
+        )}
         {showCloudMap && (
           <UrlTile
             urlTemplate={getLayerTiles('cloud_new')}
