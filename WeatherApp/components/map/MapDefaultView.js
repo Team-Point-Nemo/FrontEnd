@@ -3,9 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import useUserLocation from "../../hooks/useUserLocation";
 import { getLayerTiles } from '../../api';
-import { FAB } from 'react-native-paper';
+import { FAB, useTheme } from 'react-native-paper';
 
 export default function MapDefaultView() {
+  const Theme = useTheme();
+  const active = Theme.colors.primary;
+  const inactive = Theme.colors.tertiary;
+
   const [mapRegion, setMapRegion] = useState({
     latitude: 65,   // Default (Finland)
     longitude: 26,
@@ -120,15 +124,14 @@ export default function MapDefaultView() {
       <FAB.Group
         open={fabOpen}
         icon={fabOpen ? 'close' : 'menu'}
-        backdropColor='rgba(255, 255, 255, 0.8)'
-        style={styles.FAB}
+        backdropColor='rgba(255, 255, 255, 0.89)'
         actions={[
-          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
-          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
-          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
-          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
-          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+          { icon: 'map-marker', color: 'black', label: 'Location', labelTextColor: 'black', onPress: resetToUserLocation },
+          { icon: 'restore', color: 'black', label: 'Finland', labelTextColor: 'black', onPress: resetMap },
+          { icon: 'weather-rainy', color: showRainMap ? active : inactive, label: showRainMap ? 'Hide Rain' : 'Show Rain', labelTextColor: showRainMap ? active : inactive, onPress: () => setShowRainMap(!showRainMap) },
+          { icon: 'weather-windy', color: showWindMap ? active : inactive, label: showWindMap ? 'Hide Wind' : 'Show Wind', labelTextColor: showWindMap ? active : inactive, onPress: () => setShowWindMap(!showWindMap) },
+          { icon: 'thermometer', color: showTempMap ? active : inactive, label: showTempMap ? 'Hide Temp' : 'Show Temp', labelTextColor: showTempMap ? active : inactive, onPress: () => setShowTempMap(!showTempMap) },
+          { icon: 'weather-cloudy', color: showCloudMap ? active : inactive, label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', labelTextColor: showCloudMap ? active : inactive, onPress: () => setShowCloudMap(!showCloudMap) },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />
@@ -141,9 +144,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  FAB: {
-    color: ""
-  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(118, 119, 170, 0.09)',
@@ -153,23 +153,23 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    flexDirection: 'row',
-    gap: 10,
-    alignSelf: 'center',
-  },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#007bff',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 5,
-  },
+  // buttonContainer: {
+  //   position: 'absolute',
+  //   bottom: 20,
+  //   flexDirection: 'row',
+  //   gap: 10,
+  //   alignSelf: 'center',
+  // },
+  // button: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   backgroundColor: '#007bff',
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 15,
+  //   borderRadius: 10,
+  //   shadowColor: '#000',
+  //   shadowOpacity: 0.3,
+  //   shadowOffset: { width: 0, height: 2 },
+  //   elevation: 5,
+  // },
 });
