@@ -9,41 +9,30 @@ import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-na
 import { StatusBar } from 'expo-status-bar';
 
 export default function NewWeatherNow() {
-    const [location, setLocation] = useState(null);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [search, setSearch] = useState(false);
-    const [searchLoading, setSearchLoading] = useState(false);
+  const { location: userLocation, loading } = useUserLocation();
+  const { searchLocation, searchCity } = useCitySearch();
 
-    const { location: userLocation, loading } = useUserLocation();
-    const { weather } = useWeather(location);
-    const { searchLocation, searchCity } = useCitySearch();
-    const { city } = useCityName(location);
+  console.log("Location:", location)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [mode, setMode] = useState("user");
+  const [searchLoading, setSearchLoading] = useState(false);
 
-    // set user location
-    useEffect(() => {
-        if (userLocation && !search) {
-            setLocation(userLocation);
-        }
-    }, [userLocation, search]);
+  const location = mode == "user" ? userLocation : searchLocation;
 
-    // set location from searched city
-    useEffect(() => {
-        if (searchLocation) {
-            setLocation(searchLocation);
-            setSearch(true);
-            setSearchQuery("");
-            
-        }
-    }, [searchLocation]);
+  const { weather } = useWeather(location);
 
-    const handleSearch = ()=> {
-        setSearchLoading(true);
-        searchCity(searchQuery); // calls the hook to get the coordinates
-        setSearchLoading(false)
-    };
+  const { city } = useCityName(location);
 
-    return (
-        <View>
+
+  const handleSearch = async () => {
+    await searchCity(searchQuery); // calls the hook to get the coordinates
+    setMode("search")
+    // setSearch(true); tsekkaa nää viel!
+    setSearchQuery("");
+  };
+
+  return (
+    <View>
       <View style={styles.flexContainer1}>
         <ImageBackground
           source={setImageByTime()}
@@ -62,10 +51,7 @@ export default function NewWeatherNow() {
                   size={10}
                   style={styles.fab}
                   onPress={() => {
-                    if (search) {
-                      setLocation(userLocation);
-                      setSearch(false);
-                    }
+                    setMode("user");
                   }}
                 />
               </View>
