@@ -229,5 +229,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 5,
     marginHorizontal: 30,
+    marginTop: 20,
   },
 });
