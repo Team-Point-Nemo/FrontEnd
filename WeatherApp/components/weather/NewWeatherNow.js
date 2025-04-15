@@ -7,6 +7,8 @@ import { getCurrentDate, setImageByTime } from "../date/DateService";
 import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-native";
 import { StatusBar } from 'expo-status-bar';
+import Forecast from './forecast/Forecast';
+
 
 export default function NewWeatherNow() {
   const { location: userLocation, loading } = useUserLocation();
@@ -92,7 +94,7 @@ export default function NewWeatherNow() {
 
       </View>
       <View style={styles.flexContainer2}>
-        {/* <Forecast location={location} /> */}
+        <Forecast location={location} />
       </View>
       <StatusBar style="auto" />
     </View>

@@ -10,16 +10,16 @@ export function getCurrentWeatherInLocation(location) {
         });
 }
 
-
-// export function getCityCoords(city) {
-//     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error("Error in fetching city coordinates", response.statusText);
-//             }
-//             return response.json();
-//         })
-// }
+//tämä backendiin
+export function getCityCoords(city) {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error in fetching city coordinates", response.statusText);
+            }
+            return response.json();
+        })
+}
 
 // Weather data for 5 day / 3 hour forecast data: https://openweathermap.org/forecast5#data
 export function getForecastForFiveDays(location) {
