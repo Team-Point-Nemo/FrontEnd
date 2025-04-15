@@ -16,7 +16,7 @@ export default function FavoritesScreen() {
       onPress={() => handleCityPress('Helsinki')}
       style={styles.button}
       contentStyle={styles.buttonContent}
-      labelStyle={ styles.buttonLabel}
+      labelStyle={styles.buttonLabel}
       >
       Helsinki
     </Button>
