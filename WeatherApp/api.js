@@ -1,5 +1,7 @@
 /* Fetch calls from https://api.openweathermap.org */
 
+import { Alert } from "react-native";
+
 export function getCurrentWeatherInLocation(location) {
     return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/weather-now?lat=${location.latitude}&lon=${location.longitude}`)
         .then(response => {
@@ -15,6 +17,7 @@ export function getCityCoords(city) {
     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
         .then(response => {
             if (!response.ok) {
+                Alert.alert("City not found");
                 throw new Error("Error in fetching city coordinates", response.statusText);
             }
             return response.json();
