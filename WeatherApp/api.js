@@ -1,7 +1,7 @@
 /* Fetch calls from https://api.openweathermap.org */
 
 export function getCurrentWeatherInLocation(location) {
-    return fetch(`https://valora.2.rahtiapp.fi/weather-now?lat=${location.latitude}&lon=${location.longitude}`)
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/weather-now?lat=${location.latitude}&lon=${location.longitude}`)
         .then(response => {
             if (!response.ok)
                 throw new Error('Error in getting local weather', response.statusText);
@@ -23,7 +23,7 @@ export function getCurrentWeatherInLocation(location) {
 
 // Weather data for 5 day / 3 hour forecast data: https://openweathermap.org/forecast5#data
 export function getForecastForFiveDays(location) {
-    return fetch(`https://valora.2.rahtiapp.fi/forecast5?lat=${location.latitude}&lon=${location.longitude}`)
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/forecast5?lat=${location.latitude}&lon=${location.longitude}`)
         .then(response => {
             if (!response.ok)
                 throw new Error("Error in fetching forecast for five days", response.statusText)
@@ -34,7 +34,7 @@ export function getForecastForFiveDays(location) {
 
 // Forecast for 16 days: https://openweathermap.org/forecast16
 export function getLongTermForecast(location) {
-    return fetch(`https://valora.2.rahtiapp.fi/forecast16?lat=${location.latitude}&lon=${location.longitude}`)
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/forecast16?lat=${location.latitude}&lon=${location.longitude}`)
         .then(response => {
             if (!response.ok)
                 throw new Error(`Error in fetching forecast: ${response.statusText}`);
@@ -45,5 +45,5 @@ export function getLongTermForecast(location) {
 
 
 export function getLayerTiles(layer) {
-    return `https://valora.2.rahtiapp.fi/tiles/${layer}/{z}/{x}/{y}.png`;
+    return `${process.env.EXPO_PUBLIC_BACKEND_URL}/tiles/${layer}/{z}/{x}/{y}.png`;
 }
