@@ -11,7 +11,7 @@ export default function ForecastForFiveDays({ location }) {
     const [hourlyForecast, setHourlyForecast] = useState(null);
 
     useEffect(() => {
-        if (location.latitude && location.longitude) {
+        if (location?.latitude && location?.longitude) {
             handleFetch();
         }
     }, [location]);     // Ensures that location is downloaded before the fetch

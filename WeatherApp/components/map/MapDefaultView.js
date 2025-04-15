@@ -25,26 +25,6 @@ export default function MapDefaultView() {
 
   const locationFetchTimeout = useRef(null);
 
-  useEffect(() => {
-    getUserLocation()
-  });
-
-  const getUserLocation = async () => {
-    try {
-      const location = await UserLocation();
-      if (location) {
-        setUserLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-      } else {
-        console.error("Error in fetching user location");
-      }
-    } catch (err) {
-      console.error("Error in fetching user location: ", err);
-    }
-  };
-
   const resetToUserLocation = () => {
     if (userLocation) {
       setLoadingUserLocation(true);
