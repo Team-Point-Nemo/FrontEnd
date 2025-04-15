@@ -12,9 +12,9 @@ export function getCurrentWeatherInLocation(location) {
         });
 }
 
-//tämä backendiin
 export function getCityCoords(city) {
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
+    //https://api.openweathermap.org/data/2.5/weather?q=Helsinki&appid=1d08ae50364dc99048fb1f8d65e3c758&units=metric
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/city?city=${city}`)
         .then(response => {
             if (!response.ok) {
                 Alert.alert("City not found");
