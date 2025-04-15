@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useWeather from "../../hooks/useWeather";
 import useUserLocation from "../../hooks/useUserLocation";
 import useCitySearch from "../../hooks/useCitySearch";
 import useCityName from "../../hooks/useCityName";
+import Forecast from './forecast/Forecast';
 import { getCurrentDate, setImageByTime } from "../date/DateService";
 import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import Forecast from './forecast/Forecast';
-
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function NewWeatherNow() {
+
   const { location: userLocation, loading } = useUserLocation();
   const { searchLocation, searchCity } = useCitySearch();
 
-  console.log("Location:", location)
   const [searchQuery, setSearchQuery] = useState("");
   const [mode, setMode] = useState("user");
   const [searchLoading, setSearchLoading] = useState(false);
@@ -27,7 +27,7 @@ export default function NewWeatherNow() {
 
 
   const handleSearch = async () => {
-    await searchCity(searchQuery); // calls the hook to get the coordinates
+    await searchCity(searchQuery); // Calls the hook to get the coordinates
     setMode("search")
     // setSearch(true); tsekkaa nää viel!
     setSearchQuery("");
@@ -43,7 +43,11 @@ export default function NewWeatherNow() {
           <SafeAreaView style={styles.image}>
             <View style={styles.cityContainer}>
               <View style={styles.cityLeft}>
-                <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
+                {city ? (
+                  <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
+                ) : (
+                  <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                )}
                 <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
               </View>
               <View style={styles.cityRigth}>
@@ -174,5 +178,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 5,
     marginHorizontal: 30,
+    marginTop: 20,
   },
 });

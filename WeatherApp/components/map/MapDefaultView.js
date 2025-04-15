@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
+import useUserLocation from "../../hooks/useUserLocation";
 import { getLayerTiles } from '../../api';
 import { FAB } from 'react-native-paper';
-import useUserLocation from "../../hooks/useUserLocation";
-
-const EXPO_PUBLIC_WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
@@ -13,7 +11,10 @@ export default function MapDefaultView() {
     longitude: 26,
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
-  });  
+  });
+
+  const { location: userLocation } = useUserLocation();
+
   const [loadingUserLocation, setLoadingUserLocation] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
@@ -21,10 +22,28 @@ export default function MapDefaultView() {
   const [showTempMap, setShowTempMap] = useState(false);
   const [showCloudMap, setShowCloudMap] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
-  
+
   const locationFetchTimeout = useRef(null);
 
-  const { location: userLocation } = useUserLocation();
+  useEffect(() => {
+    getUserLocation()
+  });
+
+  const getUserLocation = async () => {
+    try {
+      const location = await UserLocation();
+      if (location) {
+        setUserLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } else {
+        console.error("Error in fetching user location");
+      }
+    } catch (err) {
+      console.error("Error in fetching user location: ", err);
+    }
+  };
 
   const resetToUserLocation = () => {
     if (userLocation) {
@@ -75,26 +94,22 @@ export default function MapDefaultView() {
       });
     }, 2000);
   };
-
   return (
     <View style={styles.container}>
+      {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
-        // instead of handleRegionChange can use (region) => setMapRegion(region)
-        // current one prevents map/GPS flickering
+        //handleRegionChange kohdan tilalle ylemmällä rivillä (rivi 107) voi vaihtaa (region) => setMapRegion(region), joka on uuden koodin versio. Nykyinen malli estää kartan/GPS:n nykimisen
         style={styles.map}
         showsUserLocation={true}
       >
-        {/* Show different weather layers on map when activated from menu */}
+        {/* Sadekartta (jos näkyvyys on päällä) */}
         {showRainMap && (
           <UrlTile
             urlTemplate={getLayerTiles('precipitation_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-            onError={(e) => {
-              console.error("Error loading rain map tile: ", e);
-            }}
           />
         )}
         {showWindMap && (
@@ -102,9 +117,6 @@ export default function MapDefaultView() {
             urlTemplate={getLayerTiles('wind_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-            onError={(e) => {
-              console.error("Error loading wind map tile: ", e);
-            }}
           />
         )}
         {showTempMap && (
@@ -112,25 +124,18 @@ export default function MapDefaultView() {
             urlTemplate={getLayerTiles('temp_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-            onError={(e) => {
-              console.error("Error loading temperature map tile: ", e);
-            }}
           />
-        )},
+        )}
         {showCloudMap && (
           <UrlTile
             urlTemplate={getLayerTiles('cloud_new')}
             zIndex={5}
             style={{ opacity: 1 }}
-            onError={(e) => {
-              console.error("Error loading cloud map tile: ", e);
-            }}
           />
         )}
       </MapView>
 
       <View style={styles.overlay} />
-
 
       <FAB.Group
         open={fabOpen}
@@ -138,42 +143,12 @@ export default function MapDefaultView() {
         backdropColor='rgba(255, 255, 255, 0.8)'
         style={styles.FAB}
         actions={[
-          {
-            icon: 'map-marker',
-            label: 'Location',
-            onPress: resetToUserLocation,
-            labelTextColor: 'black'
-          },
-          {
-            icon: 'restore',
-            label: 'Finland  ',
-            onPress: resetMap,
-            labelTextColor: 'black'
-          },
-          {
-            icon: 'weather-rainy',
-            label: showRainMap ? 'Hide Rain' : 'Show Rain',
-            onPress: () => setShowRainMap(!showRainMap),
-            labelTextColor: 'black'
-          },
-          {
-            icon: 'weather-windy',
-            label: showWindMap ? 'Hide Wind' : 'Show Wind',
-            onPress: () => setShowWindMap(!showWindMap),
-            labelTextColor: 'black'
-          },
-          {
-            icon: 'thermometer',
-            label: showTempMap ? 'Hide Temp' : 'Show Temp',
-            onPress: () => setShowTempMap(!showTempMap),
-            labelTextColor: 'black'
-          },
-          {
-            icon: 'weather-cloudy',
-            label: showCloudMap ? 'Hide Clouds' : 'Show Clouds',
-            onPress: () => setShowCloudMap(!showCloudMap),
-            labelTextColor: 'black'
-          },
+          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
+          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
+          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
+          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
+          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
+          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />
