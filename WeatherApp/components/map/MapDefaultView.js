@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import useUserLocation from "../../hooks/useUserLocation";

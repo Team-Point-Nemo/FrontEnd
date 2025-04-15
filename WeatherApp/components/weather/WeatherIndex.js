@@ -45,9 +45,9 @@ export default function NewWeatherNow() {
               <View style={styles.cityLeft}>
                 {city ? (
                   <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
-                ) : (
+                  ) : (
                   <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
-                )}
+                  )}
                 <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
               </View>
               <View style={styles.cityRigth}>
