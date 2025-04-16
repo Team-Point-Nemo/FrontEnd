@@ -92,6 +92,7 @@ export default function NewWeatherNow() {
             onChangeText={setSearchQuery}
             value={searchQuery}
             onIconPress={handleSearch}
+            onSubmitEditing={handleSearch}
             style={styles.searchbar}
           />
         </View>
