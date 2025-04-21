@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
 export default function useCityName(location) {
-    const [city, setCity] = useState('');
+    const [city, setCity] = useState(null);
 
     useEffect(() => {
         if (!location?.latitude || !location?.longitude) {

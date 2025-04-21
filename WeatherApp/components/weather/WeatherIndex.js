@@ -10,7 +10,7 @@ import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-na
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
-export default function NewWeatherNow() {
+export default function WeatherIndex() {
 
   const { location: userLocation, loading } = useUserLocation();
   const { searchLocation, searchCity } = useCitySearch();
@@ -29,7 +29,6 @@ export default function NewWeatherNow() {
   const handleSearch = async () => {
     await searchCity(searchQuery); // Calls the hook to get the coordinates
     setMode("search")
-    // setSearch(true); tsekkaa nää viel!
     setSearchQuery("");
   };
 
