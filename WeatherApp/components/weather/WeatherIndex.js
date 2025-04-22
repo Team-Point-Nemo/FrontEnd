@@ -10,6 +10,7 @@ import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function NewWeatherNow() {
 
