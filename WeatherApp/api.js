@@ -1,5 +1,4 @@
 /* Fetch calls from https://api.openweathermap.org */
-
 import { Alert } from "react-native";
 
 export function getCurrentWeatherInLocation(location) {
@@ -12,9 +11,8 @@ export function getCurrentWeatherInLocation(location) {
         });
 }
 
-//tämä backendiin
 export function getCityCoords(city) {
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/city?city=${city}`)
         .then(response => {
             if (!response.ok) {
                 Alert.alert("City not found");
@@ -45,7 +43,6 @@ export function getLongTermForecast(location) {
             return response.json();
         })
 }
-
 
 export function getLayerTiles(layer) {
     return `${process.env.EXPO_PUBLIC_BACKEND_URL}/tiles/${layer}/{z}/{x}/{y}.png`;
