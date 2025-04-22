@@ -37,7 +37,7 @@ export default function NewWeatherNow() {
     setSearchQuery("");
   };
 
-  const handleRecentCitySelect = async () => {
+  const handleRecentCitySelect = async (city) => {
     await searchCity(city)
     await updateRecentCities(city)
     setMode("search")
