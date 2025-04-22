@@ -55,6 +55,9 @@ export default function NewWeatherNow() {
             <ImageBackground
               source={setImageByTime()}
               style={styles.image}>
+                <View style={styles.favoriteRight}>
+                  <FavoriteIconButton location={location} weather={weather} city={city} />
+                </View>
 
               <SafeAreaView style={styles.image}>
                 <View style={styles.cityContainer}>
@@ -229,4 +232,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  favoriteRight: {
+    position: 'absolute',
+    right: 10,
+    top: 30,
+  }
 });
