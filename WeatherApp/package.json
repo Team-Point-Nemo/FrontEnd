@@ -35,7 +35,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@testing-library/react-native": "^13.2.0"
+    "@testing-library/react-native": "^13.2.0",
+    "eslint-plugin-testing-library": "^7.1.1"
   },
   "jest": {
     "preset": "jest-expo",
@@ -54,4 +55,3 @@
   },
   "private": true
 }
-

@@ -58,14 +58,22 @@ export default function WeatherIndex() {
                   onPress={() => {
                     setMode("user");
                   }}
+                  testID='location-button'
                 />
               </View>
             </View>
+            
 
             {weather?.main && (   // Checks, that weather has values before rendering.
               <View style={styles.weatherContainer}>
                 <View style={styles.columnLeft}>
-                  <Text variant="displayLarge" style={styles.textWithShadow}>{Math.round(weather.main.temp)}°</Text>
+                  <Text 
+                  variant="displayLarge" 
+                  style={styles.textWithShadow}
+                  testID="temp"
+                  >
+                    {Math.round(weather.main.temp)}°
+                    </Text>
                   {weather?.weather?.icon ? (
                     <Image
                       style={styles.weatherIcon}

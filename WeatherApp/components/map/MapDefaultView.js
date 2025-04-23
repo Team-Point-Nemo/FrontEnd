@@ -80,7 +80,6 @@ export default function MapDefaultView() {
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
-        //handleRegionChange kohdan tilalle ylemmällä rivillä (rivi 107) voi vaihtaa (region) => setMapRegion(region), joka on uuden koodin versio. Nykyinen malli estää kartan/GPS:n nykimisen
         style={styles.map}
         showsUserLocation={true}
       >
@@ -119,6 +118,7 @@ export default function MapDefaultView() {
 
       <FAB.Group
         open={fabOpen}
+        testID='map-menu'
         icon={fabOpen ? 'close' : 'menu'}
         backdropColor='rgba(255, 255, 255, 0.8)'
         style={styles.FAB}
