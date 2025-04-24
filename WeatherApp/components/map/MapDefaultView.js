@@ -74,17 +74,18 @@ export default function MapDefaultView() {
       });
     }, 2000);
   };
+
   return (
     <View style={styles.container}>
       {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
-        //handleRegionChange kohdan tilalle ylemmällä rivillä (rivi 107) voi vaihtaa (region) => setMapRegion(region), joka on uuden koodin versio. Nykyinen malli estää kartan/GPS:n nykimisen
+        // (region) => setMapRegion(region)
         style={styles.map}
         showsUserLocation={true}
       >
-        {/* Sadekartta (jos näkyvyys on päällä) */}
+        {/* Weather layers on map */}
         {showRainMap && (
           <UrlTile
             urlTemplate={getLayerTiles('precipitation_new')}
@@ -120,15 +121,15 @@ export default function MapDefaultView() {
       <FAB.Group
         open={fabOpen}
         icon={fabOpen ? 'close' : 'menu'}
-        backdropColor='rgba(255, 255, 255, 0.8)'
+        backdropColor='rgba(255, 255, 255, 0.75)'
         style={styles.FAB}
         actions={[
-          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation },
-          { icon: 'restore', label: 'Finland  ', onPress: resetMap },
-          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap) },
-          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap) },
-          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap) },
-          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap) },
+          { icon: 'map-marker', label: 'Location', onPress: resetToUserLocation, labelStyle: { color: 'black' } },
+          { icon: 'restore', label: 'Finland  ', onPress: resetMap, labelStyle: { color: 'black' } },
+          { icon: 'weather-rainy', label: showRainMap ? 'Hide Rain' : 'Show Rain', onPress: () => setShowRainMap(!showRainMap), labelStyle: { color: 'black' } },
+          { icon: 'weather-windy', label: showWindMap ? 'Hide Wind' : 'Show Wind', onPress: () => setShowWindMap(!showWindMap), labelStyle: { color: 'black' } },
+          { icon: 'thermometer', label: showTempMap ? 'Hide Temp' : 'Show Temp', onPress: () => setShowTempMap(!showTempMap), labelStyle: { color: 'black' } },
+          { icon: 'weather-cloudy', label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', onPress: () => setShowCloudMap(!showCloudMap), labelStyle: { color: 'black' } },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />

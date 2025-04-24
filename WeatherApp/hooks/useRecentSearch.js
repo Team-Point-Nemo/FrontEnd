@@ -32,11 +32,6 @@ export default function useRecentSearch() {
         }
     }
 
-    const dismisCityList = () => {
-        setIsSearchFocused(false);
-        Keyboard.dismiss();
-    }
-
-    return { recentCities, updateRecentCities, dismisCityList }
+    return { recentCities, updateRecentCities }
 
 } 
