@@ -1,13 +1,13 @@
 # WeatherApp
 
-We are building a weather app as part of the Software Project 2 course. The app allows users to view both current and future weather forecasts. Users can check real-time weather conditions, hourly forecasts, and even receive weather alerts for their location.
+We are building a weather app as part of the Software Project 2 course. The app allows users to view both current and future weather forecasts. Users can check real-time weather conditions with visualized view over map, detailed five day forecast and daily summaries for 16 days. Weather data is available for both user location and city search.
 
 ## Technologies
 
 ### Frontend:
 - **React Native**: A popular framework for building cross-platform mobile applications using JavaScript.
 - **Expo**: A set of tools and services to develop and deploy React Native applications.
-- **Tailwind CSS**: A utility-first CSS framework for styling the application.
+- **React Native Paper**: An open-source UI library for styling the application.
 - **OpenWeatherMap API**: Provides weather data, including real-time weather and forecasts.
 
 ### Version Control:
@@ -25,7 +25,7 @@ We are building a weather app as part of the Software Project 2 course. The app 
 - **Weather Forecast**: View forecasts for the upcoming days, including detailed information on temperature, rain, and other factors.
 - **Location-based Weather**: Automatically detects the user's location and shows weather data specific to that location.
 - **Multi-location Support**: Add and view weather forecasts for multiple cities or locations.
-- **Weather Alerts**: Receive notifications or alerts for severe weather conditions (e.g., thunderstorms, hurricanes).
+- **Weather Conditions on Map**: Select different meteorological data overlays on map.
 - **Favorites-section** : Save your favorite locations to later view them quickly.
 
 ## How to Get Started
