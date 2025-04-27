@@ -1,28 +1,38 @@
 import React from "react";
-import { View, FlatList, StyleSheet, SafeAreaView } from "react-native";
-import { Text, IconButton } from "react-native-paper";
+import { View, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
+import { Text } from "react-native-paper";
 import FavoriteIconButton from "./FavoriteIconButton";
 import { useFavorites } from "./FavoritesContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function FavoritesList() {
 
   const { favorites } = useFavorites();
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text variant="displayMedium" style={styles.header}>Favorites</Text>
+  const navigation = useNavigation();
 
+  const handleItemPress = (item) => {
+    navigation.navigate('Home', { selectedFavorite: item })
+  }
+
+  return (
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <Text variant="displayMedium" style={styles.header}>Favorites</Text>
         <FlatList
           data={favorites}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => (
             <View style={styles.listItem}>
-              <Text style={styles.cityName}>{item}</Text>
+              <TouchableOpacity onPress={() => handleItemPress(item)}>
+                <Text style={styles.cityName}>{item}</Text>
+              </TouchableOpacity>
               <FavoriteIconButton iconColor="#932" city={item} />
             </View>
           )}
         />
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 }
 

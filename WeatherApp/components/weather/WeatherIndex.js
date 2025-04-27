@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import useWeather from "../../hooks/useWeather";
 import useUserLocation from "../../hooks/useUserLocation";
 import useCitySearch from "../../hooks/useCitySearch";
@@ -11,26 +12,27 @@ import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacit
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
-import { useFavorites } from "../favorites/FavoritesContext";
 
 export default function WeatherIndex() {
-
-  const { location: userLocation, loading } = useUserLocation();
-  const { searchLocation, searchCity } = useCitySearch();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [mode, setMode] = useState("user");
   const [searchLoading, setSearchLoading] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
+  const { location: userLocation, loading } = useUserLocation();
+  const { searchLocation, searchCity } = useCitySearch();
   const location = mode == "user" ? userLocation : searchLocation;
-
+  
   const { weather } = useWeather(location);
 
   const { city } = useCityName(location);
 
   const { recentCities, updateRecentCities } = useRecentSearch();
 
+  const route = useRoute();
+  const { selectedFavorite } = route.params || {};
+  
   const handleSearch = () => {
     searchCity(searchQuery); // Calls the hook to get the coordinates
     updateRecentCities(searchQuery)
@@ -38,7 +40,7 @@ export default function WeatherIndex() {
     setMode("search")
     dismissCityList()
   };
-
+  
   const handleRecentCitySelect = (city) => {
     searchCity(city)
     updateRecentCities(city)
@@ -46,13 +48,19 @@ export default function WeatherIndex() {
     setMode("search")
     dismissCityList()
   };
-
+  
   const dismissCityList = () => {
     setIsSearchFocused(false)
     Keyboard.dismiss();
   };
-
-
+  
+  useEffect(() => {
+    if(selectedFavorite) {
+      setMode("search")
+      searchCity(selectedFavorite)
+    }
+  }, [selectedFavorite])
+  
   return (
     <TouchableWithoutFeedback onPress={dismissCityList}>
       <View style={{ flex: 1 }}>
