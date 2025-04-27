@@ -5,15 +5,16 @@ import FavoriteIconButton from "./FavoriteIconButton";
 import { useFavorites } from "./FavoritesContext";
 
 export default function FavoritesList(){
+  
     const { favorites } = useFavorites();
 
     return (
         <FlatList
         data={favorites}
-        keyExtractor={(item, index) => item.name + index}
+        keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <Text style={styles.cityName}>{item.name}</Text>
+            <Text style={styles.cityName}>{item}</Text>
             <FavoriteIconButton city={item} />
           </View>
         )}

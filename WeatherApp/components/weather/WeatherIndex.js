@@ -11,6 +11,7 @@ import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacit
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
+import { useFavorites } from "../favorites/FavoritesContext";
 
 export default function NewWeatherNow() {
 
@@ -29,6 +30,8 @@ export default function NewWeatherNow() {
   const { city } = useCityName(location);
 
   const { recentCities, updateRecentCities, dismisCityList } = useRecentSearch();
+
+  const { saveFavorite, deleteFavorite, isFavorite } = useFavorites();
 
   const handleSearch = async () => {
     await searchCity(searchQuery); // Calls the hook to get the coordinates
@@ -56,7 +59,7 @@ export default function NewWeatherNow() {
               source={setImageByTime()}
               style={styles.image}>
                 <View style={styles.favoriteRight}>
-                  <FavoriteIconButton location={location} weather={weather} city={city} />
+                  <FavoriteIconButton city={city} />
                 </View>
 
               <SafeAreaView style={styles.image}>

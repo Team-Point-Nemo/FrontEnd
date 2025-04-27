@@ -9,8 +9,8 @@ export const FavoritesProvider = ({ children }) => {
     useEffect(() => {
       const loadFavorites = async () => {
         try {
-          const saved = await AsyncStorage.getItem('favorites');
-          const parsed = saved ? JSON.parse(saved) : [];
+          const savedFavorites = await AsyncStorage.getItem('favorites');
+          const parsed = savedFavorites ? JSON.parse(savedFavorites) : [];
       console.log("Loaded from storage:", parsed); 
       setFavorites(parsed);
         } catch (e) {
@@ -21,23 +21,23 @@ export const FavoritesProvider = ({ children }) => {
     }, []);
   
     const saveFavorite = async (city) => {
-      const exists = favorites.some(item => item.name === city.name);
+      const exists = favorites.some(item => item === city);
       if (!exists) {
-        const updated = [...favorites, city];
-        console.log("Updated favorites:", updated);
-        setFavorites(updated);
-        await AsyncStorage.setItem('favorites', JSON.stringify(updated));
+        const updatedFavorites = [...favorites, city];
+        console.log("Updated favorites:", updatedFavorites);
+        setFavorites(updatedFavorites);
+        await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       }
     };
   
     const deleteFavorite = async (city) => {
-      const updated = favorites.filter(item => item.name !== city.name);
-      setFavorites(updated);
-      await AsyncStorage.setItem('favorites', JSON.stringify(updated));
+      const updatedFavorites = favorites.filter(item => item !== city);
+      setFavorites(updatedFavorites);
+      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     };
   
     const isFavorite = (city) => {
-      return favorites.some(item => item.name === city.name);
+      return favorites.some(item => item === city);
     };
   
     return (
