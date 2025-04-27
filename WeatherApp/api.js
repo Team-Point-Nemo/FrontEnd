@@ -1,5 +1,4 @@
 /* Fetch calls from https://api.openweathermap.org */
-
 import { Alert } from "react-native";
 
 export function getCurrentWeatherInLocation(location) {
@@ -44,7 +43,6 @@ export function getLongTermForecast(location) {
             return response.json();
         })
 }
-
 
 export function getLayerTiles(layer) {
     return `${process.env.EXPO_PUBLIC_BACKEND_URL}/tiles/${layer}/{z}/{x}/{y}.png`;

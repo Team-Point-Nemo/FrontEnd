@@ -7,13 +7,13 @@ import useRecentSearch from "../../hooks/useRecentSearch";
 import Forecast from './forecast/Forecast';
 import { getCurrentDate, setImageByTime } from "../date/DateService";
 import { Text, Searchbar, FAB } from "react-native-paper";
-import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Keyboard } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
 import { useFavorites } from "../favorites/FavoritesContext";
 
-export default function NewWeatherNow() {
+export default function WeatherIndex() {
 
   const { location: userLocation, loading } = useUserLocation();
   const { searchLocation, searchCity } = useCitySearch();
@@ -29,39 +29,43 @@ export default function NewWeatherNow() {
 
   const { city } = useCityName(location);
 
-  const { recentCities, updateRecentCities, dismisCityList } = useRecentSearch();
+  const { recentCities, updateRecentCities } = useRecentSearch();
 
-  const { saveFavorite, deleteFavorite, isFavorite } = useFavorites();
-
-  const handleSearch = async () => {
-    await searchCity(searchQuery); // Calls the hook to get the coordinates
-    await updateRecentCities(searchQuery)
-    setMode("search")
-    // setSearch(true); tsekkaa nää viel!
+  const handleSearch = () => {
+    searchCity(searchQuery); // Calls the hook to get the coordinates
+    updateRecentCities(searchQuery)
     setSearchQuery("");
+    setMode("search")
+    dismissCityList()
   };
 
-  const handleRecentCitySelect = async () => {
-    await searchCity(city)
-    await updateRecentCities(city)
-    setMode("search")
+  const handleRecentCitySelect = (city) => {
+    searchCity(city)
+    updateRecentCities(city)
     setSearchQuery("")
+    setMode("search")
+    dismissCityList()
+  };
+
+  const dismissCityList = () => {
     setIsSearchFocused(false)
-  }
+    Keyboard.dismiss();
+  };
 
 
   return (
-    <View style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={dismisCityList}>
+    <TouchableWithoutFeedback onPress={dismissCityList}>
+      <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.flexContainer1}>
             <ImageBackground
               source={setImageByTime()}
               style={styles.image}>
                 <View style={styles.favoriteRight}>
-                  <FavoriteIconButton city={city} />
+                  <FavoriteIconButton city={city} iconColor="#fff"/>
                 </View>
 
+              {/* City name, date and weather */}
               <SafeAreaView style={styles.image}>
                 <View style={styles.cityContainer}>
                   <View style={styles.cityLeft}>
@@ -105,21 +109,24 @@ export default function NewWeatherNow() {
               </SafeAreaView>
             </ImageBackground>
 
+            {/* Search city */}
             <View style={styles.locationContainer}>
               <Searchbar
                 loading={searchLoading}
-                inputStyle={{ fontSize: 14 }}
+                inputStyle={{ fontSize: 16 }}
                 elevation={3}
                 placeholder="Search city..."
+                placeholderTextColor='#333'
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 onIconPress={handleSearch}
                 onSubmitEditing={handleSearch}
                 style={styles.searchbar}
                 onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
               />
             </View>
+            
+            {/* List for recently searched cities */}
             {isSearchFocused && recentCities.length > 0 && (
               <View style={styles.recentCitiesList}>
                 {recentCities.map((item, index) => (
@@ -128,7 +135,7 @@ export default function NewWeatherNow() {
                     style={styles.recentCityItem}
                     onPress={() => handleRecentCitySelect(item)}
                   >
-                  <Text style={styles.recentCityText}>{item}</Text>
+                    <Text style={styles.recentCityText}>{item}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -138,9 +145,9 @@ export default function NewWeatherNow() {
             <Forecast location={location} />
           </View>
         </ScrollView>
-      </TouchableWithoutFeedback>
-      <StatusBar style="auto" />
-    </View>
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   cityRigth: {
-    marginLeft: 20
+    marginLeft: 35
   },
   columnLeft: {
     flex: 1,

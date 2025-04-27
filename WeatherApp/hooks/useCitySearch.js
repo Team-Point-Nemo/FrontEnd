@@ -24,6 +24,7 @@ export default function useCitySearch() {
                     longitude: cityCoords.coord.lon,
                 });
             } else {
+                Alert.alert("City location not found");
                 console.error("City location not found.");
                 setSearchLocation(null);
             }
