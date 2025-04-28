@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import useWeather from "../../hooks/useWeather";
 import useUserLocation from "../../hooks/useUserLocation";
 import useCitySearch from "../../hooks/useCitySearch";
@@ -10,25 +11,28 @@ import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Keyboard } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function WeatherIndex() {
-
-  const { location: userLocation, loading } = useUserLocation();
-  const { searchLocation, searchCity } = useCitySearch();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [mode, setMode] = useState("user");
   const [searchLoading, setSearchLoading] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
+  const { location: userLocation, loading } = useUserLocation();
+  const { searchLocation, searchCity } = useCitySearch();
   const location = mode == "user" ? userLocation : searchLocation;
-
+  
   const { weather } = useWeather(location);
 
   const { city } = useCityName(location);
 
   const { recentCities, updateRecentCities } = useRecentSearch();
 
+  const route = useRoute();
+  const { selectedFavorite } = route.params || {};
+  
   const handleSearch = async () => {
     const success = await searchCity(searchQuery); // Calls the hook to get the coordinates
     if (success) {
@@ -48,13 +52,19 @@ export default function WeatherIndex() {
     setSearchQuery("")
     setMode("search")
   };
-
+  
   const dismissCityList = () => {
     setIsSearchFocused(false)
     Keyboard.dismiss();
   };
-
-
+  
+  useEffect(() => {
+    if(selectedFavorite) {
+      setMode("search")
+      searchCity(selectedFavorite)
+    }
+  }, [selectedFavorite])
+  
   return (
     <TouchableWithoutFeedback onPress={dismissCityList}>
       <View style={{ flex: 1 }}>
@@ -63,8 +73,11 @@ export default function WeatherIndex() {
             <ImageBackground
               source={setImageByTime()}
               style={styles.image}>
+                <View style={styles.favoriteRight}>
+                  <FavoriteIconButton city={city} iconColor="#fff"/>
+                </View>
 
-              {/* City name and main weather */}
+              {/* City name, date and weather */}
               <SafeAreaView style={styles.image}>
                 <View style={styles.cityContainer}>
                   <View style={styles.cityLeft}>
@@ -112,9 +125,10 @@ export default function WeatherIndex() {
             <View style={styles.locationContainer}>
               <Searchbar
                 loading={searchLoading}
-                inputStyle={{ fontSize: 14 }}
+                inputStyle={{ fontSize: 16 }}
                 elevation={3}
                 placeholder="Search city..."
+                placeholderTextColor='#333'
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 onIconPress={handleSearch}
@@ -175,7 +189,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   cityRigth: {
-    marginLeft: 20
+    marginLeft: 35
   },
   columnLeft: {
     flex: 1,
@@ -240,4 +254,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  favoriteRight: {
+    position: 'absolute',
+    right: 10,
+    top: 30,
+  }
 });

@@ -1,14 +1,17 @@
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from './navigation/TabNavigator';
+import { FavoritesProvider } from './components/favorites/FavoritesContext';
 
 export default function App() {
   return (
+    <FavoritesProvider>
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <TabNavigator />
       </NavigationContainer>
     </PaperProvider>
+    </FavoritesProvider>
   );
 };
 
