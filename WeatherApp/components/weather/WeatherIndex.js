@@ -79,6 +79,7 @@ export default function WeatherIndex() {
 
               {/* City name, date and weather */}
               <SafeAreaView style={styles.image}>
+            
                 <View style={styles.cityContainer}>
                   <View style={styles.cityLeft}>
                     {city ? (

@@ -23,14 +23,17 @@ export default function useCitySearch() {
                     latitude: cityCoords.coord.lat,
                     longitude: cityCoords.coord.lon,
                 });
+            return true;
             } else {
                 Alert.alert("City location not found");
                 console.error("City location not found.");
                 setSearchLocation(null);
+                return false;
             }
         } catch (err) {
             console.error("Error in fetching searched city location: ", err);
             setSearchLocation(null);
+            return false;
         }
     };
 
