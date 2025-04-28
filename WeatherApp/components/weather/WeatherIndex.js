@@ -33,20 +33,24 @@ export default function WeatherIndex() {
   const route = useRoute();
   const { selectedFavorite } = route.params || {};
   
-  const handleSearch = () => {
-    searchCity(searchQuery); // Calls the hook to get the coordinates
-    updateRecentCities(searchQuery)
+  const handleSearch = async () => {
+    const success = await searchCity(searchQuery); // Calls the hook to get the coordinates
+    if (success) {
+      await updateRecentCities(searchQuery)
+    }
+    dismissCityList()
     setSearchQuery("");
     setMode("search")
-    dismissCityList()
   };
   
-  const handleRecentCitySelect = (city) => {
-    searchCity(city)
-    updateRecentCities(city)
+  const handleRecentCitySelect = async (city) => {
+    const success = await searchCity(city)
+    if (success) {
+      await updateRecentCities(city)
+    }
+    dismissCityList()
     setSearchQuery("")
     setMode("search")
-    dismissCityList()
   };
   
   const dismissCityList = () => {
