@@ -12,8 +12,10 @@ export default function useRecentSearch() {
                 if (savedCities) {
                     setRecentCities(JSON.parse(savedCities));
                 }
+                return true
             } catch (err) {
                 console.error("Error loading recent cities from AsyncStorage:", err);
+                return false
             }
         };
         loadRecentCities();
@@ -25,9 +27,11 @@ export default function useRecentSearch() {
             const updatedCities = [city, ...recentCities.filter(c => c !== city)].slice(0, 5);
             setRecentCities(updatedCities);
             await AsyncStorage.setItem('recentCities', JSON.stringify(updatedCities));
-            return updatedCities
+            return updatedCities;
+            return true;
         } catch (err) {
             console.log("Error updating recent cities from AsyncStorage: ", err)
+            return false;
         }
     }
 
