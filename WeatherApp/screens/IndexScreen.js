@@ -28,13 +28,4 @@ const styles = StyleSheet.create({
     top: 0,
     height: "100%",
   },
-  flexContainer1: {
-    flex: 1,
-    width: "100%",
-  },
-  flexContainer2: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-  },
 });

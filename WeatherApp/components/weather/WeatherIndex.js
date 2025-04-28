@@ -68,7 +68,6 @@ export default function WeatherIndex() {
   return (
     <TouchableWithoutFeedback onPress={dismissCityList}>
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.flexContainer1}>
             <ImageBackground
               source={setImageByTime()}
@@ -157,7 +156,6 @@ export default function WeatherIndex() {
           <View style={styles.flexContainer2}>
             <Forecast location={location} />
           </View>
-        </ScrollView>
         <StatusBar style="auto" />
       </View>
     </TouchableWithoutFeedback>
