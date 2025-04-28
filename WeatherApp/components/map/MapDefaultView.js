@@ -11,8 +11,7 @@ export default function MapDefaultView() {
   const inactive = Theme.colors.tertiary;
 
   const [mapRegion, setMapRegion] = useState({
-    // Default (Finland)
-    latitude: 65,
+    latitude: 65,   // Default (Finland)
     longitude: 26,
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
@@ -20,8 +19,6 @@ export default function MapDefaultView() {
 
   const { location: userLocation } = useUserLocation();
 
-  const [loadingUserLocation, setLoadingUserLocation] = useState(false);
-  const [loadingReset, setLoadingReset] = useState(false);
   const [showRainMap, setShowRainMap] = useState(false);
   const [showWindMap, setShowWindMap] = useState(false);
   const [showTempMap, setShowTempMap] = useState(false);
@@ -32,7 +29,6 @@ export default function MapDefaultView() {
 
   const resetToUserLocation = () => {
     if (userLocation) {
-      setLoadingUserLocation(true);
       try {
         setMapRegion({
           latitude: userLocation.latitude,
@@ -42,14 +38,11 @@ export default function MapDefaultView() {
         });
       } catch (err) {
         console.error("Error: ", err);
-      } finally {
-        setLoadingUserLocation(false);
       }
     }
   };
 
   const resetMap = () => {
-    setLoadingReset(true);
     try {
       setMapRegion({
         latitude: 65,
@@ -59,8 +52,6 @@ export default function MapDefaultView() {
       });
     } catch (err) {
       console.error("Error: ", err);
-    } finally {
-      setLoadingReset(false);
     }
   };
 
@@ -79,7 +70,6 @@ export default function MapDefaultView() {
       });
     }, 2000);
   };
-
   return (
     <View style={styles.container}>
       <MapView
@@ -88,7 +78,7 @@ export default function MapDefaultView() {
         style={styles.map}
         showsUserLocation={true}
       >
-        {/* Weather layers on map */}
+        {/* Radar Tiles */}
         {showRainMap && (
           <UrlTile
             urlTemplate={getLayerTiles('precipitation_new')}
@@ -143,9 +133,6 @@ export default function MapDefaultView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  FAB: {
-    color: ""
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
