@@ -10,7 +10,7 @@ import { getCurrentDate, setImageByTime } from "../date/DateService";
 import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Keyboard } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, IconButton } from 'react-native-paper';
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function WeatherIndex() {
@@ -127,7 +127,7 @@ export default function WeatherIndex() {
                 inputStyle={{ fontSize: 16 }}
                 elevation={3}
                 placeholder="Search city..."
-                placeholderTextColor='#333'
+                placeholderTextColor='rgb(114, 152, 190)'
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 onIconPress={handleSearch}
@@ -140,6 +140,11 @@ export default function WeatherIndex() {
             {/* List for recently searched cities */}
             {isSearchFocused && recentCities.length > 0 && (
               <View style={styles.recentCitiesList}>
+                <IconButton 
+                icon="close"
+                size={20}
+                style={styles.close}
+                />
                 {recentCities.map((item, index) => (
                   <TouchableOpacity
                     key={index}
@@ -258,5 +263,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 43,
+  },
+  close: {
+    alignSelf: "flex-end",
+    marginBottom: '-20',
   }
 });
