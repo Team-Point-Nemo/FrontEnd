@@ -1,6 +1,6 @@
 import React from "react";
 import { View, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
-import { Text } from "react-native-paper";
+import { Text , useTheme} from "react-native-paper";
 import FavoriteIconButton from "./FavoriteIconButton";
 import { useFavorites } from "./FavoritesContext";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function FavoritesList() {
 
   const { favorites } = useFavorites();
+
+  const theme = useTheme();
 
   const navigation = useNavigation();
 
@@ -22,6 +24,7 @@ export default function FavoritesList() {
         <FlatList
           data={favorites}
           keyExtractor={(item, index) => item + index}
+          scrollEnabled= {false}
           renderItem={({ item }) => (
             <View style={styles.listItem}>
               <TouchableOpacity onPress={() => handleItemPress(item)}>
