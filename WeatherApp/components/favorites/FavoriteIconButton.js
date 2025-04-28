@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IconButton, MD3Colors } from 'react-native-paper';
 import { useFavorites } from "./FavoritesContext";
 
-export default function FavoriteIconButton ({ city, iconColor }) {
+export default function FavoriteIconButton ({ city }) {
 
     const { saveFavorite, deleteFavorite, isFavorite } = useFavorites();
     const favorite = isFavorite(city);
@@ -18,7 +18,7 @@ export default function FavoriteIconButton ({ city, iconColor }) {
     return (
         <IconButton
             icon={favorite ? "cards-heart" : "cards-heart-outline"}
-            iconColor={iconColor}
+            iconColor={'#fff'}
             size={30}
             onPress={handlePress}
         />

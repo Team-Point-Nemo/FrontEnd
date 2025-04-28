@@ -27,7 +27,7 @@ export default function FavoritesList() {
             <TouchableOpacity onPress={() => handleItemPress(item)} style={{ width: '70%' }}>
               <Text variant="titleLarge" style={styles.textWithShadow}>{item}</Text>
             </TouchableOpacity>
-            <FavoriteIconButton iconColor="white" city={item} />
+            <FavoriteIconButton city={item} />
           </View>
         )}
       />
