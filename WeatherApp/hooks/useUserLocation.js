@@ -1,4 +1,5 @@
 // Custom hook for fetching coordinates from users location
+
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
