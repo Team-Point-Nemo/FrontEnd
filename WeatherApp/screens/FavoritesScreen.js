@@ -5,7 +5,7 @@ import { Text } from "react-native-paper";
 export default function FavoritesScreen() {
   return (
     <View>
-      <Text>Favorites</Text>
+      <Text testID="favorites">Favorites</Text>
     </View>
   );
 }

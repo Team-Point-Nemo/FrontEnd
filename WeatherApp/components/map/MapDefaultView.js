@@ -75,10 +75,11 @@ export default function MapDefaultView() {
     }, 2000);
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID='map'>
       {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
+        testID='map-view'
         onRegionChangeComplete={handleRegionChange}
         style={styles.map}
         showsUserLocation={true}

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, renderHook, waitFor, act } from '@testing-library/react-native';
+import { renderHook, waitFor, act } from '@testing-library/react-native';
 import { expect } from '@jest/globals';
 import useCityName from '../hooks/useCityName';
 import useUserLocation from '../hooks/useUserLocation';
@@ -16,94 +16,96 @@ jest.mock('expo-location', () => ({
 jest.mock('../api', () => ({
     getCurrentWeatherInLocation: jest.fn(),
     getCityCoords: jest.fn(),
-  }));
+}));
 
+describe('Hooks', () => {
+    //useUserLocation
+    test('should return the location of the user', async () => {
 
-//useUserLocation
-test('Returns location of the user', async () => {
+        Location.requestForegroundPermissionsAsync.mockResolvedValue({
+            status: 'granted',
+        });
 
-    Location.requestForegroundPermissionsAsync.mockResolvedValue({
-        status: 'granted',
+        Location.getCurrentPositionAsync.mockResolvedValue({
+            coords: {
+                latitude: 60.1011,
+                longitude: 24.5618,
+            },
+        });
+
+        const { result } = renderHook(() => useUserLocation());
+
+        await waitFor(() => {
+            expect(result.current.location).toEqual({
+                latitude: 60.1011,
+                longitude: 24.5618,
+            })
+        })
+
+        expect(result.current.loading).toBe(false);
     });
 
-    Location.getCurrentPositionAsync.mockResolvedValue({
-        coords: {
-            latitude: 60.1011,
-            longitude: 24.5618,
-        },
-    });
 
-    const { result } = renderHook(() => useUserLocation());
+    //useCityName
+    test('should return city name for a given location', async () => {
 
-    await waitFor(() => {
-        expect(result.current.location).toEqual({
+        Location.reverseGeocodeAsync.mockResolvedValue([{
+            city: 'Helsinki',
+        }])
+
+        const location = {
             latitude: 60.1011,
-            longitude: 24.5618,
+            longitude: 24.5618
+        };
+
+        const { result } = renderHook(() => useCityName(location));
+
+        await waitFor(() => {
+            expect(result.current.city).toBe('Helsinki');
         })
     })
 
-    expect(result.current.loading).toBe(false);
-});
+    //useWeather
+    test('should return weather for a given location', async () => {
+        const mockWeather = {
+            temp: 15,
+            feels_like: 13,
+            wind: "3 m/s",
+        }
 
+        api.getCurrentWeatherInLocation.mockResolvedValue(mockWeather);
 
-//useCityName
-test('Returns city name for a given location', async () => {
+        const location = {
+            latitude: 60.1011,
+            longitude: 24.5618
+        }
 
-    Location.reverseGeocodeAsync.mockResolvedValue([{
-        city: 'Helsinki',
-    }])
+        const { result } = renderHook(() => useWeather(location));
 
-    const location = { 
-        latitude: 60.1011, 
-        longitude: 24.5618 
-    };
+        await waitFor(() => {
+            expect(result.current.weather).toEqual(mockWeather);
+        });
+    });
 
-    const { result } = renderHook(() => useCityName(location));
+    //useCitySearch
+    test('should return searched location for the given city', async () => {
+        api.getCityCoords.mockResolvedValue({
+            coord: {
+                lat: 60.1011,
+                lon: 24.5618
+            },
+        });
 
-    await waitFor(() => {
-        expect(result.current.city).toBe('Helsinki');
+        const { result } = renderHook(() => useCitySearch());
+
+        await act(async () => {
+            await result.current.searchCity('Helsinki');
+        });
+
+        expect(result.current.searchLocation).toEqual({
+            latitude: 60.1011,
+            longitude: 24.5618
+        });
     })
-})
 
-//useWeather
-test('Returns weather for a given location', async() => {
-    const mockWeather = {
-        temp: 15,
-        feels_like: 13,
-        wind: "3 m/s",
-    }
-
-    api.getCurrentWeatherInLocation.mockResolvedValue(mockWeather);
-
-    const location = {
-        latitude: 60.1011, 
-        longitude: 24.5618 
-    }
-
-    const { result } = renderHook(() => useWeather(location));
-
-    await waitFor(() => {
-        expect(result.current.weather).toEqual(mockWeather);
-    });
-});
-
-//useCitySearch
-test('Returns searched location for the given city', async () => {
-    api.getCityCoords.mockResolvedValue({
-        coord:{
-            lat: 60.1011, 
-            lon: 24.5618 
-        },
-    });
-
-    const { result } = renderHook(() => useCitySearch());
-
-    await act(async () => {
-        await result.current.searchCity('Helsinki');
-      });
-
-    expect(result.current.searchLocation).toEqual({
-        latitude: 60.1011, 
-        longitude: 24.5618 
-    });
 });

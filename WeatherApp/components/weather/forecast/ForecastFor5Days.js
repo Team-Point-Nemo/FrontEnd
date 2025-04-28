@@ -55,7 +55,7 @@ export default function ForecastForFiveDays({ location }) {
             {dailyForecast && hourlyForecast ? ( 
                 <ForecastFlatList5 dailyForecast={dailyForecast} hourlyForecast={hourlyForecast} />
             ) : (
-                <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                <ActivityIndicator testID="activityIndicator" animating={true} size="large" color={MD2Colors.black} />
             )}
         </SafeAreaView>
     )

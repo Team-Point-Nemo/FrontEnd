@@ -13,7 +13,7 @@ export function getCurrentWeatherInLocation(location) {
 }
 
 export function getCityCoords(city) {
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/data/2.5/weather?q=${city}&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}&units=metric`)
+    return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/city?city=${city}`)
         .then(response => {
             if (!response.ok) {
                 Alert.alert("City not found");
@@ -22,6 +22,7 @@ export function getCityCoords(city) {
             return response.json();
         })
 }
+
 
 // Weather data for 5 day / 3 hour forecast data: https://openweathermap.org/forecast5#data
 export function getForecastForFiveDays(location) {
@@ -39,7 +40,7 @@ export function getLongTermForecast(location) {
     return fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/forecast16?lat=${location.latitude}&lon=${location.longitude}`)
         .then(response => {
             if (!response.ok)
-                throw new Error(`Error in fetching forecast: ${response.statusText}`);
+                throw new Error("Error in fetching forecast: ",response.statusText );
 
             return response.json();
         })

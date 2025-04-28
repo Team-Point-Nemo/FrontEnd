@@ -56,10 +56,12 @@ export default function TabNavigator() {
         name="Map"
         component={MapScreen}
         options={{
+          tabBarButtonTestID: 'map',
           tabBarLabel: 'Map',
           tabBarIcon: ({ focused, size }) => {
             return <Icon name={focused ? "map" : "map-outline"} size={size} color={focused ? theme.colors.primary : theme.colors.onSurfaceVariant} />
           },
+          
         }}
       />
       <Tab.Screen
@@ -67,9 +69,11 @@ export default function TabNavigator() {
         component={FavoritesScreen}
         options={{
           tabBarLabel: 'Favorites',
+          tabBarAccessibilityLabel: 'Favorites', 
           tabBarIcon: ({ focused, size }) => {
             return <Icon name={focused ? "heart" : "heart-outline"} size={size} color={focused ? theme.colors.primary : theme.colors.onSurfaceVariant} />
           },
+          tabBarButtonTestID: 'favorites',
         }}
       />
     </Tab.Navigator>

@@ -4,8 +4,9 @@ import useWeather from "../hooks/useWeather";
 
 jest.mock('../hooks/useWeather');
 
-describe('WeatherIndex temperature, feels like and wind', () => {
-      it('Displays no weather when weather.main is null', () => {
+describe('Displays weather from WeatherIndex on the IndexScreen', () => {
+
+      test('should display no weather when weather.main is null', () => {
         useWeather.mockReturnValue({}); 
 
         const { queryByTestId } = render(<WeatherIndex />);
@@ -13,7 +14,8 @@ describe('WeatherIndex temperature, feels like and wind', () => {
         expect(queryByTestId('temp')).toBeNull();
       });
 
-    it('Displays weather on the IndexScreen including temperature, feels like and wind', async () => {
+    test('should display weather on the screen including temperature, feels like and wind', async () => {
+
         const mockWeather = {
             main:
             {
@@ -38,7 +40,6 @@ describe('WeatherIndex temperature, feels like and wind', () => {
         const { getByTestId, getByText } = render(<WeatherIndex location={location} />);
 
         await waitFor(() =>
-
         expect(getByTestId('temp')).toHaveTextContent('7°'));
         expect(getByText('Feels like: 5°')).toBeTruthy();
         expect(getByText('Wind speed: 2 m/s')).toBeTruthy();

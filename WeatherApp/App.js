@@ -4,9 +4,9 @@ import TabNavigator from './navigation/TabNavigator';
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <TabNavigator />
+    <PaperProvider theme={theme} testID="paperProvider">
+      <NavigationContainer testID="navigationContainer">
+        <TabNavigator testID/>
       </NavigationContainer>
     </PaperProvider>
   );
