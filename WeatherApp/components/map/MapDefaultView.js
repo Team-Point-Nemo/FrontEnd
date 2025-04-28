@@ -7,7 +7,8 @@ import { FAB } from 'react-native-paper';
 
 export default function MapDefaultView() {
   const [mapRegion, setMapRegion] = useState({
-    latitude: 65,   // Default (Finland)
+    // Default (Finland)
+    latitude: 65,
     longitude: 26,
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
@@ -77,11 +78,9 @@ export default function MapDefaultView() {
 
   return (
     <View style={styles.container}>
-      {/* <UserLocation onLocationFetched={handleLocationFetched} /> */}
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
-        // (region) => setMapRegion(region)
         style={styles.map}
         showsUserLocation={true}
       >
