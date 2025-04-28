@@ -73,7 +73,7 @@ export default function WeatherIndex() {
               source={setImageByTime()}
               style={styles.image}>
                 <View style={styles.favoriteRight}>
-                  <FavoriteIconButton city={city} iconColor="#fff" />
+                  <FavoriteIconButton city={city} />
                 </View>
 
               {/* City name, date and weather */}
