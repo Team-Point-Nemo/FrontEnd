@@ -16,18 +16,18 @@ export default function FavoritesList() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text variant="displayMedium" style={styles.header}>Favorites</Text>
+    <SafeAreaView>
+      <Text variant="displayMedium" style={styles.headerWithShadow}>Favorite Places</Text>
       <FlatList
         data={favorites}
         keyExtractor={(item, index) => item + index}
         scrollEnabled= {false}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <TouchableOpacity onPress={() => handleItemPress(item)}>
-              <Text style={styles.cityName}>{item}</Text>
+            <TouchableOpacity onPress={() => handleItemPress(item)} style={{ width: '70%' }}>
+              <Text variant="titleLarge" style={styles.textWithShadow}>{item}</Text>
             </TouchableOpacity>
-            <FavoriteIconButton iconColor="#932" city={item} />
+            <FavoriteIconButton iconColor="white" city={item} />
           </View>
         )}
       />
@@ -36,28 +36,33 @@ export default function FavoritesList() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    padding: 50,
+  listItem: {
+    width: '90%',
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderColor: "white",
   },
-  header: {
-    color: '#333',
-    alignSelf: 'center',
+  textWithShadow: {
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
     marginTop: 30,
     marginBottom: 30,
   },
-  listItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+  headerWithShadow: {
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    alignSelf: 'center',
+    marginTop: 50,
+    marginBottom: 30,
   },
-  cityName: {
-    fontSize: 18,
-    color: "#333",
-  },
-
 });

@@ -78,7 +78,6 @@ export default function WeatherIndex() {
 
               {/* City name, date and weather */}
               <SafeAreaView style={styles.image}>
-            
                 <View style={styles.cityContainer}>
                   <View style={styles.cityLeft}>
                     {city ? (
@@ -88,7 +87,7 @@ export default function WeatherIndex() {
                     )}
                     <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
                   </View>
-                  <View style={styles.cityRigth}>
+                  <View style={styles.cityRight}>
                     <FAB
                       variant='surface'
                       icon='map-marker'
@@ -187,7 +186,7 @@ const styles = StyleSheet.create({
   cityLeft: {
     alignItems: 'flex-end'
   },
-  cityRigth: {
+  cityRight: {
     marginLeft: 35
   },
   columnLeft: {
