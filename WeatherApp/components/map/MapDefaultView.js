@@ -4,6 +4,7 @@ import MapView, { UrlTile } from 'react-native-maps';
 import useUserLocation from "../../hooks/useUserLocation";
 import { getLayerTiles } from '../../api';
 import { FAB, useTheme } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MapDefaultView() {
   const Theme = useTheme();
@@ -71,7 +72,7 @@ export default function MapDefaultView() {
     }, 2000);
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MapView
         region={mapRegion}
         onRegionChangeComplete={handleRegionChange}
@@ -125,7 +126,7 @@ export default function MapDefaultView() {
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />
-    </View>
+    </SafeAreaView>
 
   );
 }
