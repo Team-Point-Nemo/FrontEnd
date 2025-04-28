@@ -10,7 +10,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ScrollView,
   Keyboard,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -167,7 +166,9 @@ export default function WeatherIndex() {
                   style={styles.recentCityItem}
                   onPress={() => handleRecentCitySelect(item)}
                 >
-                  <Text style={styles.recentCityText}>{item}</Text>
+                  <Text variant="titleMedium" style={styles.recentCityText}>
+                    {item}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -181,7 +182,6 @@ export default function WeatherIndex() {
     </TouchableWithoutFeedback>
   );
 }
-
 const styles = StyleSheet.create({
   flexContainer1: {
     flex: 1,
@@ -259,19 +259,21 @@ const styles = StyleSheet.create({
   },
   recentCitiesList: {
     marginTop: 10,
-    marginHorizontal: 30,
-    backgroundColor: "white",
-    borderRadius: 10,
-    paddingVertical: 10,
+    marginHorizontal: 50,
+    backgroundColor: "rgb(205, 229, 255)",
+    borderRadius: 5,
+    marginTop: -1,
   },
   recentCityItem: {
+    width: "90%",
+    alignSelf: "center",
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "rgb(114, 152, 190)",
   },
   recentCityText: {
     fontSize: 16,
-    color: "#333",
+    color: "rgb(0, 64, 101)",
   },
   favoriteRight: {
     position: "absolute",

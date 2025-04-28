@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
       width: 1,
       height: 1,
     },
-    alignSelf: "center",
-    marginTop: 50,
+    alignSelf: 'center',
+    marginTop: 80,
     marginBottom: 30,
   },
 });
