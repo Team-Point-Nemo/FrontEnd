@@ -71,6 +71,7 @@ export default function MapDefaultView() {
       });
     }, 2000);
   };
+  
   return (
     <SafeAreaView style={styles.container}>
       <MapView
