@@ -1,19 +1,22 @@
-import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import {
+  MD3LightTheme as DefaultTheme,
+  PaperProvider,
+} from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigator from './navigation/TabNavigator';
-import { FavoritesProvider } from './components/favorites/FavoritesContext';
+import TabNavigator from "./navigation/TabNavigator";
+import { FavoritesProvider } from "./components/favorites/FavoritesContext";
 
 export default function App() {
   return (
     <FavoritesProvider>
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <TabNavigator />
-      </NavigationContainer>
-    </PaperProvider>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <TabNavigator />
+        </NavigationContainer>
+      </PaperProvider>
     </FavoritesProvider>
   );
-};
+}
 
 const theme = {
   ...DefaultTheme,
@@ -53,12 +56,12 @@ const theme = {
       level2: "rgb(232, 240, 247)",
       level3: "rgb(224, 235, 244)",
       level4: "rgb(222, 234, 243)",
-      level5: "rgb(217, 231, 241)"
+      level5: "rgb(217, 231, 241)",
     },
     surfaceDisabled: "rgba(26, 28, 30, 0.12)",
     onSurfaceDisabled: "rgba(26, 28, 30, 0.38)",
     backdrop: "rgba(43, 49, 55, 0.4)",
     backgroundContainer: "rgb(212, 227, 255)",
-    onBackgroundContainer: "rgb(0, 28, 58)"
+    onBackgroundContainer: "rgb(0, 28, 58)",
   },
 };

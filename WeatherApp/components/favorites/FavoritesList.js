@@ -1,31 +1,43 @@
 import React from "react";
-import { View, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { Text } from "react-native-paper";
-import FavoriteIconButton from "./FavoriteIconButton";
 import { useFavorites } from "./FavoritesContext";
 import { useNavigation } from "@react-navigation/native";
+import FavoriteIconButton from "./FavoriteIconButton";
 
 export default function FavoritesList() {
-
   const { favorites } = useFavorites();
 
   const navigation = useNavigation();
 
   const handleItemPress = (item) => {
-    navigation.navigate('Home', { selectedFavorite: item })
-  }
+    navigation.navigate("Home", { selectedFavorite: item });
+  };
 
   return (
     <SafeAreaView>
-      <Text variant="displayMedium" style={styles.headerWithShadow}>Favorite Places</Text>
+      <Text variant="displayMedium" style={styles.headerWithShadow}>
+        Favorite Places
+      </Text>
       <FlatList
         data={favorites}
         keyExtractor={(item, index) => item + index}
-        scrollEnabled= {false}
+        scrollEnabled={false}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <TouchableOpacity onPress={() => handleItemPress(item)} style={{ width: '70%' }}>
-              <Text variant="titleLarge" style={styles.textWithShadow}>{item}</Text>
+            <TouchableOpacity
+              onPress={() => handleItemPress(item)}
+              style={{ width: "70%" }}
+            >
+              <Text variant="titleLarge" style={styles.textWithShadow}>
+                {item}
+              </Text>
             </TouchableOpacity>
             <FavoriteIconButton city={item} />
           </View>
@@ -37,7 +49,7 @@ export default function FavoritesList() {
 
 const styles = StyleSheet.create({
   listItem: {
-    width: '90%',
+    width: "90%",
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
@@ -50,7 +62,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowOffset: {
       width: 1,
-      height: 1
+      height: 1,
     },
     marginTop: 30,
     marginBottom: 30,
@@ -59,9 +71,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowOffset: {
       width: 1,
-      height: 1
+      height: 1,
     },
-    alignSelf: 'center',
+    alignSelf: "center",
     marginTop: 50,
     marginBottom: 30,
   },
