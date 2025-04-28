@@ -23,6 +23,7 @@ export default function useUserLocation() {
                 })
             } catch (err) {
                 console.error("Error in fetching location: ", err);
+                Alert.alert('Error in fetching location');
             } finally {
                 setLoading(false);
             }
