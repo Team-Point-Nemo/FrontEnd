@@ -74,7 +74,7 @@ export default function WeatherIndex() {
               source={setImageByTime()}
               style={styles.image}>
                 <View style={styles.favoriteRight}>
-                  <FavoriteIconButton city={city} iconColor="#fff"/>
+                  <FavoriteIconButton city={city} iconColor="#fff" />
                 </View>
 
               {/* City name, date and weather */}
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   favoriteRight: {
     position: 'absolute',
-    right: 10,
-    top: 30,
+    right: 20,
+    top: 43,
   }
 });
