@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
-import MapView, { UrlTile } from 'react-native-maps';
+import React, { useState, useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import MapView, { UrlTile } from "react-native-maps";
+import { getLayerTiles } from "../../api";
+import { FAB, useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import useUserLocation from "../../hooks/useUserLocation";
-import { getLayerTiles } from '../../api';
-import { FAB, useTheme } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MapDefaultView() {
   const Theme = useTheme();
@@ -12,7 +12,7 @@ export default function MapDefaultView() {
   const inactive = Theme.colors.tertiary;
 
   const [mapRegion, setMapRegion] = useState({
-    latitude: 65,   // Default (Finland)
+    latitude: 65, // Default (Finland)
     longitude: 26,
     latitudeDelta: 10.5,
     longitudeDelta: 10.5,
@@ -83,28 +83,28 @@ export default function MapDefaultView() {
         {/* Radar Tiles */}
         {showRainMap && (
           <UrlTile
-            urlTemplate={getLayerTiles('precipitation_new')}
+            urlTemplate={getLayerTiles("precipitation_new")}
             zIndex={5}
             style={{ opacity: 1 }}
           />
         )}
         {showWindMap && (
           <UrlTile
-            urlTemplate={getLayerTiles('wind_new')}
+            urlTemplate={getLayerTiles("wind_new")}
             zIndex={5}
             style={{ opacity: 1 }}
           />
         )}
         {showTempMap && (
           <UrlTile
-            urlTemplate={getLayerTiles('temp_new')}
+            urlTemplate={getLayerTiles("temp_new")}
             zIndex={5}
             style={{ opacity: 1 }}
           />
         )}
         {showCloudMap && (
           <UrlTile
-            urlTemplate={getLayerTiles('cloud_new')}
+            urlTemplate={getLayerTiles("cloud_new")}
             zIndex={5}
             style={{ opacity: 1 }}
           />
@@ -115,20 +115,55 @@ export default function MapDefaultView() {
 
       <FAB.Group
         open={fabOpen}
-        icon={fabOpen ? 'close' : 'menu'}
-        backdropColor='rgba(255, 255, 255, 0.89)'
+        icon={fabOpen ? "close" : "menu"}
+        backdropColor="rgba(255, 255, 255, 0.89)"
         actions={[
-          { icon: 'map-marker', color: 'black', label: 'Location', labelTextColor: 'black', onPress: resetToUserLocation },
-          { icon: 'restore', color: 'black', label: 'Finland', labelTextColor: 'black', onPress: resetMap },
-          { icon: 'weather-rainy', color: showRainMap ? active : inactive, label: showRainMap ? 'Hide Rain' : 'Show Rain', labelTextColor: showRainMap ? active : inactive, onPress: () => setShowRainMap(!showRainMap) },
-          { icon: 'weather-windy', color: showWindMap ? active : inactive, label: showWindMap ? 'Hide Wind' : 'Show Wind', labelTextColor: showWindMap ? active : inactive, onPress: () => setShowWindMap(!showWindMap) },
-          { icon: 'thermometer', color: showTempMap ? active : inactive, label: showTempMap ? 'Hide Temp' : 'Show Temp', labelTextColor: showTempMap ? active : inactive, onPress: () => setShowTempMap(!showTempMap) },
-          { icon: 'weather-cloudy', color: showCloudMap ? active : inactive, label: showCloudMap ? 'Hide Clouds' : 'Show Clouds', labelTextColor: showCloudMap ? active : inactive, onPress: () => setShowCloudMap(!showCloudMap) },
+          {
+            icon: "map-marker",
+            color: "black",
+            label: "Location",
+            labelTextColor: "black",
+            onPress: resetToUserLocation,
+          },
+          {
+            icon: "restore",
+            color: "black",
+            label: "Finland",
+            labelTextColor: "black",
+            onPress: resetMap,
+          },
+          {
+            icon: "weather-rainy",
+            color: showRainMap ? active : inactive,
+            label: showRainMap ? "Hide Rain" : "Show Rain",
+            labelTextColor: showRainMap ? active : inactive,
+            onPress: () => setShowRainMap(!showRainMap),
+          },
+          {
+            icon: "weather-windy",
+            color: showWindMap ? active : inactive,
+            label: showWindMap ? "Hide Wind" : "Show Wind",
+            labelTextColor: showWindMap ? active : inactive,
+            onPress: () => setShowWindMap(!showWindMap),
+          },
+          {
+            icon: "thermometer",
+            color: showTempMap ? active : inactive,
+            label: showTempMap ? "Hide Temp" : "Show Temp",
+            labelTextColor: showTempMap ? active : inactive,
+            onPress: () => setShowTempMap(!showTempMap),
+          },
+          {
+            icon: "weather-cloudy",
+            color: showCloudMap ? active : inactive,
+            label: showCloudMap ? "Hide Clouds" : "Show Clouds",
+            labelTextColor: showCloudMap ? active : inactive,
+            onPress: () => setShowCloudMap(!showCloudMap),
+          },
         ]}
         onStateChange={({ open }) => setFabOpen(open)}
       />
     </SafeAreaView>
-
   );
 }
 
@@ -138,9 +173,9 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(118, 119, 170, 0.09)',
-    zIndex: 0,  // Overlay is over map, but under buttons
-    pointerEvents: 'none', // Allows user interaction with map
+    backgroundColor: "rgba(118, 119, 170, 0.09)",
+    zIndex: 0, // Overlay is over map, but under buttons
+    pointerEvents: "none", // Allows user interaction with map
   },
   map: {
     flex: 1,

@@ -1,26 +1,34 @@
 import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
+import { getCurrentDate, setImageByTime } from "../date/DateService";
+import { Text, Searchbar, FAB } from "react-native-paper";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, IconButton } from "react-native-paper";
 import useWeather from "../../hooks/useWeather";
 import useUserLocation from "../../hooks/useUserLocation";
 import useCitySearch from "../../hooks/useCitySearch";
 import useCityName from "../../hooks/useCityName";
 import useRecentSearch from "../../hooks/useRecentSearch";
-import Forecast from './forecast/Forecast';
-import { getCurrentDate, setImageByTime } from "../date/DateService";
-import { Text, Searchbar, FAB } from "react-native-paper";
-import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Keyboard } from "react-native";
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, IconButton } from 'react-native-paper';
+import Forecast from "./forecast/Forecast";
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function WeatherIndex() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [mode, setMode] = useState("user");
-  const [searchLoading, setSearchLoading] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-  const { location: userLocation, loading } = useUserLocation();
+  const { location: userLocation } = useUserLocation();
   const { searchLocation, searchCity } = useCitySearch();
   const location = mode == "user" ? userLocation : searchLocation;
   
@@ -123,7 +131,6 @@ export default function WeatherIndex() {
             {/* Search city */}
             <View style={styles.locationContainer}>
               <Searchbar
-                loading={searchLoading}
                 inputStyle={{ fontSize: 16 }}
                 elevation={3}
                 placeholder="Search city..."
