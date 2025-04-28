@@ -1,7 +1,7 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import WeatherIndex from "../components/weather/WeatherIndex";
 import { setThemeByTime } from "../components/date/DateService";
+import WeatherIndex from "../components/weather/WeatherIndex";
 
 export default function IndexScreen() {
   return (
@@ -27,14 +27,5 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     height: "100%",
-  },
-  flexContainer1: {
-    flex: 1,
-    width: "100%",
-  },
-  flexContainer2: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
   },
 });

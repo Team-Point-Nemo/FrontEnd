@@ -1,18 +1,34 @@
-# WeatherApp 
+# WeatherApp
 
-We are making a weather app for the course Software Project 2. The user can see the current and future weather.
+We are building a weather app as part of the Software Project 2 course. The app allows users to view both current and future weather forecasts. Users can check real-time weather conditions with visualized view over map, detailed five day forecast and daily summaries for 16 days. Weather data is available for both user location and city search.
 
 ## Technologies
 
-We will be using React Native to make a mobile app. For project management and version control, we will use Github and Git.
+### Frontend:
+- **React Native**: A popular framework for building cross-platform mobile applications using JavaScript.
+- **Expo**: A set of tools and services to develop and deploy React Native applications.
+- **React Native Paper**: An open-source UI library for styling the application.
+- **OpenWeatherMap API**: Provides weather data, including real-time weather and forecasts.
 
-The coding languages on Front end will be JavaScript and Tailwind.
+### Version Control:
+- **Git**: Version control system to track changes in the project.
+- **GitHub**: For hosting and collaborating on the codebase.
 
-For testing, we will use Expo Go. We will be testing the app both manually and using unit tests.
+### Testing:
+- **Expo Go**: Used for running and testing the app on mobile devices.
+- **Jest**: For unit and integration testing of the app's components.
+- **React Native Testing Library**: Provides utility functions for testing React Native components.
 
-Additionally, we will practise using branches in Git.
+## Features
 
-## How to get started
+- **Real-time Weather**: Displays the current weather conditions, including temperature, humidity, wind speed, and more.
+- **Weather Forecast**: View forecasts for the upcoming days, including detailed information on temperature, rain, and other factors.
+- **Location-based Weather**: Automatically detects the user's location and shows weather data specific to that location.
+- **Multi-location Support**: Add and view weather forecasts for multiple cities or locations.
+- **Weather Conditions on Map**: Select different meteorological data overlays on map.
+- **Favorites-section** : Save your favorite locations to later view them quickly.
+
+## How to Get Started
 
 Clone repository 
 ```bash
@@ -29,7 +45,6 @@ Start expo
 ```bash
 npx expo start --tunnel
 ```
-
 
 ## Creators
 

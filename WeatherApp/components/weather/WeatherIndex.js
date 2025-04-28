@@ -1,115 +1,175 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRoute } from "@react-navigation/native";
+import { getCurrentDate, setImageByTime } from "../date/DateService";
+import { Text, Searchbar, FAB } from "react-native-paper";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, IconButton } from "react-native-paper";
 import useWeather from "../../hooks/useWeather";
 import useUserLocation from "../../hooks/useUserLocation";
 import useCitySearch from "../../hooks/useCitySearch";
 import useCityName from "../../hooks/useCityName";
-import Forecast from './forecast/Forecast';
-import { getCurrentDate, setImageByTime } from "../date/DateService";
-import { Text, Searchbar, FAB } from "react-native-paper";
-import { StyleSheet, SafeAreaView, Image, View, ImageBackground } from "react-native";
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import useRecentSearch from "../../hooks/useRecentSearch";
+import Forecast from "./forecast/Forecast";
+import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function WeatherIndex() {
 
-  const { location: userLocation, loading } = useUserLocation();
-  const { searchLocation, searchCity } = useCitySearch();
-
   const [searchQuery, setSearchQuery] = useState("");
   const [mode, setMode] = useState("user");
-  const [searchLoading, setSearchLoading] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
+  const { location: userLocation } = useUserLocation();
+  const { searchLocation, searchCity } = useCitySearch();
   const location = mode == "user" ? userLocation : searchLocation;
-
+  
   const { weather } = useWeather(location);
 
   const { city } = useCityName(location);
 
+  const { recentCities, updateRecentCities } = useRecentSearch();
 
+  const route = useRoute();
+  const { selectedFavorite } = route.params || {};
+  
   const handleSearch = async () => {
-    await searchCity(searchQuery); // Calls the hook to get the coordinates
-    setMode("search")
+    const success = await searchCity(searchQuery); // Calls the hook to get the coordinates
+    if (success) {
+      await updateRecentCities(searchQuery)
+    }
+    dismissCityList()
     setSearchQuery("");
+    setMode("search")
   };
-
+  
+  const handleRecentCitySelect = async (city) => {
+    const success = await searchCity(city)
+    if (success) {
+      await updateRecentCities(city)
+    }
+    dismissCityList()
+    setSearchQuery("")
+    setMode("search")
+  };
+  
+  const dismissCityList = () => {
+    setIsSearchFocused(false)
+    Keyboard.dismiss();
+  };
+  
+  useEffect(() => {
+    if(selectedFavorite) {
+      setMode("search")
+      searchCity(selectedFavorite)
+    }
+  }, [selectedFavorite])
+  
   return (
-    <View>
-      <View style={styles.flexContainer1}>
-        <ImageBackground
-          source={setImageByTime()}
-          style={styles.image}>
+    <TouchableWithoutFeedback onPress={dismissCityList}>
+      <View style={{ flex: 1 }}>
+          <View style={styles.flexContainer1}>
+            <ImageBackground
+              source={setImageByTime()}
+              style={styles.image}>
+                <View style={styles.favoriteRight}>
+                  <FavoriteIconButton city={city} />
+                </View>
 
-          <SafeAreaView style={styles.image}>
-            <View style={styles.cityContainer}>
-              <View style={styles.cityLeft}>
-                {city ? (
-                  <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
-                  ) : (
-                  <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
-                  )}
-                <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
-              </View>
-              <View style={styles.cityRigth}>
-                <FAB
-                  variant='surface'
-                  icon='map-marker'
-                  size={10}
-                  style={styles.fab}
-                  onPress={() => {
-                    setMode("user");
-                  }}
-                  testID='location-button'
-                />
-              </View>
+              {/* City name, date and weather */}
+              <SafeAreaView style={styles.image}>
+                <View style={styles.cityContainer}>
+                  <View style={styles.cityLeft}>
+                    {city ? (
+                      <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
+                    ) : (
+                      <ActivityIndicator animating={true} size="large" color='white' />
+                    )}
+                    <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
+                  </View>
+                  <View style={styles.cityRight}>
+                    <FAB
+                      variant='surface'
+                      icon='map-marker'
+                      size={10}
+                      style={styles.fab}
+                      onPress={() => {
+                        setMode("user");
+                      }}
+                    />
+                  </View>
+                </View>
+
+                {weather?.main && (   // Checks, that weather has values before rendering.
+                  <View style={styles.weatherContainer}>
+                    <View style={styles.columnLeft}>
+                      <Text variant="displayLarge" style={styles.textWithShadow}>{Math.round(weather.main.temp)}°</Text>
+                      {weather?.weather?.icon ? (
+                        <Image
+                          style={styles.weatherIcon}
+                          source={{ uri: `http://openweathermap.org/img/wn/${weather.weather.icon}.png` }}
+                        />
+                      ) : null}
+                    </View>
+                    <View style={styles.columnRight}>
+                      <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {Math.round(weather.main.feels_like)}°</Text>
+                      <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {Math.round(weather.wind.speed)} m/s</Text>
+                    </View>
+                  </View>
+                )}
+              </SafeAreaView>
+            </ImageBackground>
+
+            {/* Search city */}
+            <View style={styles.locationContainer}>
+              <Searchbar
+                inputStyle={{ fontSize: 16 }}
+                elevation={3}
+                placeholder="Search city..."
+                placeholderTextColor='rgb(114, 152, 190)'
+                onChangeText={setSearchQuery}
+                value={searchQuery}
+                onIconPress={handleSearch}
+                onSubmitEditing={handleSearch}
+                style={styles.searchbar}
+                onFocus={() => setIsSearchFocused(true)}
+              />
             </View>
             
-
-            {weather?.main && (   // Checks, that weather has values before rendering.
-              <View style={styles.weatherContainer}>
-                <View style={styles.columnLeft}>
-                  <Text 
-                  variant="displayLarge" 
-                  style={styles.textWithShadow}
-                  testID="temp"
+            {/* List for recently searched cities */}
+            {isSearchFocused && recentCities.length > 0 && (
+              <View style={styles.recentCitiesList}>
+                <IconButton 
+                icon="close"
+                size={20}
+                style={styles.close}
+                />
+                {recentCities.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.recentCityItem}
+                    onPress={() => handleRecentCitySelect(item)}
                   >
-                    {Math.round(weather.main.temp)}°
-                    </Text>
-                  {weather?.weather?.icon ? (
-                    <Image
-                      style={styles.weatherIcon}
-                      source={{ uri: `http://openweathermap.org/img/wn/${weather.weather.icon}.png` }}
-                    />
-                  ) : null}
-                </View>
-                <View style={styles.columnRight}>
-                  <Text variant="titleMedium" style={styles.textWithShadow}>Feels like: {Math.round(weather.main.feels_like)}°</Text>
-                  <Text variant="titleMedium" style={styles.textWithShadow}>Wind speed: {Math.round(weather.wind.speed)} m/s</Text>
-                </View>
+                    <Text variant="titleMedium" style={styles.recentCityText}>{item}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             )}
-          </SafeAreaView>
-        </ImageBackground>
-
-        <View style={styles.locationContainer}>
-          <Searchbar
-            loading={searchLoading}
-            inputStyle={{ fontSize: 14 }}
-            elevation={3}
-            placeholder="Search city..."
-            onChangeText={setSearchQuery}
-            value={searchQuery}
-            onIconPress={handleSearch}
-            onSubmitEditing={handleSearch}
-            style={styles.searchbar}
-          />
-        </View>
-
+          </View>
+          <View style={styles.flexContainer2}>
+            <Forecast location={location} />
+          </View>
+        <StatusBar style="auto" />
       </View>
-      <View style={styles.flexContainer2}>
-        <Forecast location={location} />
-      </View>
-      <StatusBar style="auto" />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -138,8 +198,8 @@ const styles = StyleSheet.create({
   cityLeft: {
     alignItems: 'flex-end'
   },
-  cityRigth: {
-    marginLeft: 20
+  cityRight: {
+    marginLeft: 35
   },
   columnLeft: {
     flex: 1,
@@ -151,8 +211,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fab: {
-    width: '50',
-    height: '50',
+    width: 50,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -188,4 +248,31 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 20,
   },
+  recentCitiesList: {
+    marginTop: 10,
+    marginHorizontal: 50,
+    backgroundColor: 'rgb(205, 229, 255)',
+    borderRadius: 5,
+    marginTop: -1,
+  },
+  recentCityItem: {
+    width: '90%',
+    alignSelf: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(114, 152, 190)',
+  },
+  recentCityText: {
+    fontSize: 16,
+    color: 'rgb(0, 64, 101)',
+  },
+  favoriteRight: {
+    position: 'absolute',
+    right: 20,
+    top: 43,
+  },
+  close: {
+    alignSelf: "flex-end",
+    marginBottom: '-20',
+  }
 });
