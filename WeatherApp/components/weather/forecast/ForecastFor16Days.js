@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { getLongTermForecast } from "../../../api";
 import ForecastFlatList from "./ForecastFlatList16days";
 import { mapForecastData } from "./DataEdit";
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
 export default function ForecastFor16Days({ location }) {
     const [forecast, setForecast] = useState(null);
@@ -28,7 +28,7 @@ export default function ForecastFor16Days({ location }) {
             {forecast ? (
                 <ForecastFlatList forecast={forecast} />
             ) : (
-                <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                <ActivityIndicator animating={true} size="large" color='white' />
             )}
         </View>
     )

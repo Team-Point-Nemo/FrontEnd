@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { getForecastForFiveDays } from "../../../api";
 import { useEffect, useState } from "react";
 import ForecastFlatList5 from "./ForecastFlatList5days";
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ForecastForFiveDays({ location }) {
@@ -55,7 +55,7 @@ export default function ForecastForFiveDays({ location }) {
             {dailyForecast && hourlyForecast ? ( 
                 <ForecastFlatList5 dailyForecast={dailyForecast} hourlyForecast={hourlyForecast} />
             ) : (
-                <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                <ActivityIndicator animating={true} size="large" color='white' />
             )}
         </SafeAreaView>
     )

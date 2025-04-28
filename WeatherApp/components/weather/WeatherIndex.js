@@ -10,7 +10,7 @@ import { getCurrentDate, setImageByTime } from "../date/DateService";
 import { Text, Searchbar, FAB } from "react-native-paper";
 import { StyleSheet, SafeAreaView, Image, View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Keyboard } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import FavoriteIconButton from "../favorites/FavoriteIconButton";
 
 export default function WeatherIndex() {
@@ -84,7 +84,7 @@ export default function WeatherIndex() {
                     {city ? (
                       <Text variant="displayMedium" style={styles.textWithShadow}>{city}</Text>
                     ) : (
-                      <ActivityIndicator animating={true} size="large" color={MD2Colors.black} />
+                      <ActivityIndicator animating={true} size="large" color='white' />
                     )}
                     <Text variant="titleLarge" style={styles.textWithShadow}>{getCurrentDate()}</Text>
                   </View>
