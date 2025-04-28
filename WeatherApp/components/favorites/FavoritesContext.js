@@ -23,7 +23,6 @@ export const FavoritesProvider = ({ children }) => {
       const exists = favorites.some(item => item === city);
       if (!exists) {
         const updatedFavorites = [...favorites, city];
-        console.log("Updated favorites:", updatedFavorites);
         setFavorites(updatedFavorites);
         await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       }

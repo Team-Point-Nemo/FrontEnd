@@ -28,7 +28,6 @@ export default function useRecentSearch() {
             setRecentCities(updatedCities);
             await AsyncStorage.setItem('recentCities', JSON.stringify(updatedCities));
             return updatedCities;
-            return true;
         } catch (err) {
             console.log("Error updating recent cities from AsyncStorage: ", err)
             return false;
