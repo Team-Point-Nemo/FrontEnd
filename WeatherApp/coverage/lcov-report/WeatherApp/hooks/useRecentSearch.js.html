@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">52.38% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>11/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">52.38% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>11/21</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -106,88 +106,88 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >useRecentSearch(</span>) {
+export default function useRecentSearch() {
+  const [recentCities, setRecentCities] = useState([]);
 &nbsp;
-    const [recentCities, setRecentCities] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-        const loadRecentCities = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            try {</span>
-                const savedCities = <span class="cstat-no" title="statement not covered" >await AsyncStorage.getItem('recentCities');</span>
-<span class="cstat-no" title="statement not covered" >                if (savedCities) {</span>
-<span class="cstat-no" title="statement not covered" >                    setRecentCities(JSON.parse(savedCities));</span>
-                }
-<span class="cstat-no" title="statement not covered" >                return true</span>
-            } catch (err) {
-<span class="cstat-no" title="statement not covered" >                console.error("Error loading recent cities from AsyncStorage:", err);</span>
-<span class="cstat-no" title="statement not covered" >                return false</span>
-            }
-        };
-<span class="cstat-no" title="statement not covered" >        loadRecentCities();</span>
-    }, []);
-&nbsp;
-&nbsp;
-    const updateRecentCities = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const updatedCities = <span class="cstat-no" title="statement not covered" >[city, ...recentCities.filter(<span class="fstat-no" title="function not covered" >c </span>=&gt; <span class="cstat-no" title="statement not covered" >c !== city)</span>].slice(0, 5);</span>
-<span class="cstat-no" title="statement not covered" >            setRecentCities(updatedCities);</span>
-<span class="cstat-no" title="statement not covered" >            await AsyncStorage.setItem('recentCities', JSON.stringify(updatedCities));</span>
-<span class="cstat-no" title="statement not covered" >            return updatedCities;</span>
-<span class="cstat-no" title="statement not covered" >            return true;</span>
-        } catch (err) {
-<span class="cstat-no" title="statement not covered" >            console.log("Error updating recent cities from AsyncStorage: ", err)</span>
-<span class="cstat-no" title="statement not covered" >            return false;</span>
+  useEffect(() =&gt; {
+    const loadRecentCities = async () =&gt; {
+      try {
+        const savedCities = await AsyncStorage.getItem("recentCities");
+        if (savedCities) {
+          setRecentCities(JSON.parse(savedCities));
         }
+        return true;
+      } catch (err) {
+<span class="cstat-no" title="statement not covered" >        console.error("Error loading recent cities from AsyncStorage:", err);</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+    };
+    loadRecentCities();
+  }, []);
+&nbsp;
+  const updateRecentCities = <span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const updatedCities = <span class="cstat-no" title="statement not covered" >[</span>
+        city,
+        ...recentCities.filter(<span class="fstat-no" title="function not covered" >(c</span>) =&gt; <span class="cstat-no" title="statement not covered" >c !== city)</span>,
+      ].slice(0, 5);
+<span class="cstat-no" title="statement not covered" >      setRecentCities(updatedCities);</span>
+<span class="cstat-no" title="statement not covered" >      await AsyncStorage.setItem("recentCities", JSON.stringify(updatedCities));</span>
+<span class="cstat-no" title="statement not covered" >      return updatedCities;</span>
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      console.log("Error updating recent cities from AsyncStorage: ", err);</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
     }
+  };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return { recentCities, updateRecentCities }</span>
-&nbsp;
-} </pre></td></tr></table></pre>
+  return { recentCities, updateRecentCities };
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-28T08:45:53.130Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

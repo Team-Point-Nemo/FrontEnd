@@ -116,7 +116,14 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,7 +134,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,10 +152,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,63 +177,65 @@
 import { Text } from "react-native-paper";
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >ForecastFlatList(</span>{ forecast }) {
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
-        &lt;View style={styles.container}&gt;
-            &lt;FlatList
-                scrollEnabled={false}
-                data={forecast}
-                renderItem={<span class="fstat-no" title="function not covered" >({</span> item }) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;View style={styles.daily}&gt;</span>
-                        &lt;Text variant="titleSmall"&gt;{item.dt}&lt;/Text&gt;
-                        &lt;View&gt;
-                            &lt;Text variant="titleSmall"&gt;Temp&lt;/Text&gt;
-                            &lt;Text variant="titleSmall"&gt;{item.tempDay} °C&lt;/Text&gt;
-                        &lt;/View&gt;
-                        &lt;View&gt;
-                            &lt;Text variant="titleSmall"&gt;Feels like&lt;/Text&gt;
-                            &lt;Text variant="titleSmall"&gt;{item.feelsLikeDay} °C&lt;/Text&gt;
-                        &lt;/View&gt;
-                        &lt;Text variant="titleSmall"&gt;{item.wind} m/s&lt;/Text&gt;
-                        &lt;Image
-                            style={styles.weatherIcon}
-                            source={{ uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png` }}
-                        /&gt;
-                    &lt;/View&gt;
-                )}
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;View style={styles.container}&gt;
+      &lt;FlatList
+        scrollEnabled={false}
+        data={forecast}
+        renderItem={<span class="fstat-no" title="function not covered" >({</span> item }) =&gt; (
+<span class="cstat-no" title="statement not covered" >          &lt;View style={styles.daily}&gt;</span>
+            &lt;Text variant="titleSmall"&gt;{item.dt}&lt;/Text&gt;
+            &lt;View&gt;
+              &lt;Text variant="titleSmall"&gt;Temp&lt;/Text&gt;
+              &lt;Text variant="titleSmall"&gt;{item.tempDay} °C&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;View&gt;
+              &lt;Text variant="titleSmall"&gt;Feels like&lt;/Text&gt;
+              &lt;Text variant="titleSmall"&gt;{item.feelsLikeDay} °C&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;Text variant="titleSmall"&gt;{item.wind} m/s&lt;/Text&gt;
+            &lt;Image
+              style={styles.weatherIcon}
+              source={{
+                uri: `http://openweathermap.org/img/wn/${item.weatherIcon}.png`,
+              }}
             /&gt;
-        &lt;/View&gt;
-    )
+          &lt;/View&gt;
+        )}
+      /&gt;
+    &lt;/View&gt;
+  );
 }
 &nbsp;
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: -5,
-    },
-    daily: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 10,
-        margin: 10,
-        marginTop: -6,
-        borderRadius: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: "white",
-    },
-    weatherIcon: {
-        width: 50,
-        height: 50,
-    }
-})</pre></td></tr></table></pre>
+  container: {
+    flex: 1,
+    marginTop: -5,
+  },
+  daily: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    margin: 10,
+    marginTop: -6,
+    borderRadius: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "white",
+  },
+  weatherIcon: {
+    width: 50,
+    height: 50,
+  },
+});
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T16:51:05.328Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

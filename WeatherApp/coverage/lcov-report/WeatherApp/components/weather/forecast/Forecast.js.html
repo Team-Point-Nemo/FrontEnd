@@ -107,7 +107,22 @@
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -117,9 +132,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,12 +149,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,56 +161,60 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { SegmentedButtons } from 'react-native-paper';
+import { SegmentedButtons } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import { setThemeByTime } from "../../date/DateService";
 import ForecastFor16Days from "./ForecastFor16Days";
 import ForecastForFiveDays from "./ForecastFor5Days";
-import { setThemeByTime } from "../../date/DateService";
 &nbsp;
 export default function Forecast({ location }) {
+  const [value, setValue] = useState("5");
 &nbsp;
-    const [value, setValue] = useState('5');
-&nbsp;
-    return (
-        &lt;SafeAreaView style={styles.container}&gt;
-            &lt;LinearGradient colors={setThemeByTime()} style={styles.background} /&gt;
-            &lt;SegmentedButtons 
-                style={styles.buttonContainer}
-                value={value}
-                onValueChange={setValue}
-                buttons={[
-                    {
-                        value: '5',
-                        label: '5 Days',
-                    },
-                    {
-                        value: '16',
-                        label: '16 Days'
-                    },
-                ]}
-            /&gt;
-            {value === '16' ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;ForecastFor16Days location={location} /&gt; </span>: &lt;ForecastForFiveDays location={location} /&gt;}
-        &lt;/SafeAreaView&gt;
-    )
+  return (
+    &lt;SafeAreaView style={styles.container}&gt;
+      &lt;LinearGradient colors={setThemeByTime()} style={styles.background} /&gt;
+      &lt;SegmentedButtons
+        style={styles.buttonContainer}
+        value={value}
+        onValueChange={setValue}
+        buttons={[
+          {
+            value: "5",
+            label: "5 Days",
+          },
+          {
+            value: "16",
+            label: "16 Days",
+          },
+        ]}
+      /&gt;
+      {value === "16" ? (
+<span class="branch-0 cbranch-no" title="branch not covered" >        &lt;ForecastFor16Days location={location} /&gt;</span>
+      ) : (
+        &lt;ForecastForFiveDays location={location} /&gt;
+      )}
+    &lt;/SafeAreaView&gt;
+  );
 }
 &nbsp;
 const styles = StyleSheet.create({
-    buttonContainer: {
-        padding: 20,
-    },
-    container: {
-        flex: 1,
-        width: '95%',
-        marginBottom: 50,
-    },
-})</pre></td></tr></table></pre>
+  buttonContainer: {
+    padding: 20,
+  },
+  container: {
+    flex: 1,
+    width: "95%",
+    marginBottom: 50,
+  },
+});
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T16:51:05.328Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

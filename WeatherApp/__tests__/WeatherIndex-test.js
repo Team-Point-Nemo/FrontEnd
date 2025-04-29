@@ -1,45 +1,78 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
-import { useTheme } from 'react-native-paper';
-import WeatherIndex from '../components/weather/WeatherIndex';
+import { Provider } from 'react-native-paper';
 import Forecast from '../components/weather/forecast/Forecast';
-import App from '../App';
-import TabNavigator from '../navigation/TabNavigator';
-import { NavigationContainer } from '@react-navigation/native';
+import WeatherIndex from '../components/weather/WeatherIndex';
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useRoute: jest.fn().mockReturnValue({ params: {} }),
+  useNavigation: jest.fn().mockReturnValue({ navigate: jest.fn() }),
+}));
+
+jest.mock('../components/favorites/FavoritesContext', () => ({
+  useFavorites: jest.fn().mockReturnValue({
+    saveFavorite: jest.fn(),
+    deleteFavorite: jest.fn(),
+    isFavorite: jest.fn().mockReturnValue(false),
+  }),
+}));
 
 describe('Components displayed on the IndexScreen', () => {
 
-    test('should render the current day', () => {
-        const { getByText } = render(<WeatherIndex />);
-        const currentDate = new Date();
-        const formattedCurrentDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`;
-        
-        getByText(formattedCurrentDate);
-    })
+  test('should display the current day', () => {
 
-    test('should display location button on the screen', () => {
-        const { getByTestId } = render(<WeatherIndex />);
-        const button = getByTestId('location-button');
+    const { getByText } = render(
+      <Provider>
+        <WeatherIndex />
+      </Provider>
+    );
 
-        expect(button).toBeTruthy();
+    const currentDate = new Date();
+    const formattedCurrentDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`;
+    getByText(formattedCurrentDate);
+  })
 
-    })
+  test('should display location button on the screen', () => {
 
-    test('should display searchbar on the screen', () => {
-        const { getByPlaceholderText } = render(<WeatherIndex />);
-        const searchbar = getByPlaceholderText("Search city...")
-        expect(searchbar).toBeTruthy();
-    })
+    const { getByTestId } = render(
+      <Provider>
+        <WeatherIndex />
+      </Provider>
+    );
+    const button = getByTestId('locationButton');
+
+    expect(button).toBeTruthy();
+
+  })
+
+  test('should display searchbar on the screen', () => {
+
+    const { getByPlaceholderText } = render(
+      <Provider>
+        <WeatherIndex />
+      </Provider>
+    );
+    const searchbar = getByPlaceholderText("Search city...")
+    
+    expect(searchbar).toBeTruthy();
+  })
 
 
-    test('should display segmented buttons including options for 5 and 16 days on the screen', () => {
-        const { getByText } = render(<Forecast />);
-        const fiveDaysButton = getByText('5 Days');
-        const sixteenDaysButton = getByText('16 Days');
+  test('should display segmented buttons including options for 5 and 16 days on the screen', () => {
 
-        expect(fiveDaysButton).toBeTruthy();
-        expect(sixteenDaysButton).toBeTruthy();
+    const { getByText } = render(<Forecast />);
 
-    })
+    const fiveDaysButton = getByText('5 Days');
+    const sixteenDaysButton = getByText('16 Days');
+
+    expect(fiveDaysButton).toBeTruthy();
+    expect(sixteenDaysButton).toBeTruthy();
+
+  })
 });
 
 

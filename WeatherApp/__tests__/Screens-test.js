@@ -1,18 +1,36 @@
-/*
-Docs:
-    React-native-maps mocking for testing:
-    https://dev.to/cecheverri4/google-maps-geolocation-and-unit-test-on-react-native-4eim
-*/
-
 import { render, screen } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import IndexScreen from '../screens/IndexScreen';
+import Map from '../screens/MapScreen';
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'), //has navigationContainer etc.
+  useRoute: jest.fn().mockReturnValue({ params: {} }),
+  useNavigation: jest.fn().mockReturnValue({ navigate: jest.fn() }),
+}));
+
+jest.mock('../components/favorites/FavoritesContext', () => ({
+  useFavorites: jest.fn().mockReturnValue({
+    saveFavorite: jest.fn(),
+    deleteFavorite: jest.fn(),
+    isFavorite: jest.fn().mockReturnValue(false),
+  }),
+}));
 
 describe('Screens', () => {
 
-  test ('Renders IndexScreen', () => {
-    const { getByText } = render(<IndexScreen />)
+  test('should render IndexScreen', () => {
+
+    const { getByText } = render(
+      <Provider>
+        <IndexScreen />
+      </Provider>
+    )
 
     const currentDate = new Date();
     const formattedCurrentDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`;
@@ -20,42 +38,16 @@ describe('Screens', () => {
     expect(getByText(formattedCurrentDate)).toBeTruthy();
   });
 
-  test('Renders FavoritesScreen', async () => {
+  test('should render FavoritesScreen', async () => {
 
-    render(<FavoritesScreen />);
+    const { getByText } = render(
+      <Provider>
+        <FavoritesScreen />
+      </Provider>
+    )
 
-    expect(screen.getByText('Favorites')).toBeTruthy();
+    expect(getByText('Favorite Places')).toBeTruthy();
   });
 
 
 });
-  // jest.mock('react-native-maps', () => {
-    //   const React = require('react');
-    //   const { View } = require('react-native');
-    //   class MockMapView extends React.Component {
-    //     render() {
-    //       const { testID, children, ...props } = this.props;
-    //       return (
-    //         <View {...{ ...props, testID }}>
-    //           {children}
-    //         </View>
-    //       );
-    //     }
-    //   }
-    //   const mockMapTypes = {
-    //     STANDARD: 0,
-    //     SATELLITE: 1,
-    //     HYBRID: 2,
-    //     TERRAIN: 3,
-    //     NONE: 4,
-    //     MUTEDSTANDARD: 5,
-    //   };
-
-    //   return {
-    //     __esModule: true,
-    //     default: MockMapView,
-    //     MAP_TYPES: mockMapTypes,
-    //     PROVIDER_DEFAULT: 'default',
-    //     PROVIDER_GOOGLE: 'google',
-    //   };
-    // });

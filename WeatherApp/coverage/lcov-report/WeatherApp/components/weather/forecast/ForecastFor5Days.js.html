@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">35% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/21</span>
+                <span class='fraction'>7/20</span>
             </div>
         
             
@@ -138,21 +138,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,7 +164,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -177,12 +174,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,85 +189,89 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { StyleSheet } from "react-native";
 import { getForecastForFiveDays } from "../../../api";
 import { useEffect, useState } from "react";
-import ForecastFlatList5 from "./ForecastFlatList5days";
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ForecastFlatList5 from "./ForecastFlatList5days";
 &nbsp;
 export default function ForecastForFiveDays({ location }) {
+  const [dailyForecast, setDailyForecast] = useState(null);
+  const [hourlyForecast, setHourlyForecast] = useState(null);
 &nbsp;
-    const [dailyForecast, setDailyForecast] = useState(null)
-    const [hourlyForecast, setHourlyForecast] = useState(null);
-&nbsp;
-    useEffect(() =&gt; {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (location?.latitude &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >location?.longitude)</span> {
-<span class="cstat-no" title="statement not covered" >            handleFetch();</span>
-        }
-    }, [location]);     // Ensures that location is downloaded before the fetch
-&nbsp;
-    const handleFetch = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >        getForecastForFiveDays(location)</span>
-            .then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; {
-                const hourlyData = <span class="cstat-no" title="statement not covered" >data.list.map(<span class="fstat-no" title="function not covered" >it</span>em =&gt; {</span>
-&nbsp;
-                    const date = <span class="cstat-no" title="statement not covered" >item.dt_txt.split(" ")[0];</span>     // YYYY-MM-DD
-                    const hourData = <span class="cstat-no" title="statement not covered" >item.dt_txt.split(" ")[1].slice(0, 5);</span>     // HH:MM
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                    return{</span>
-                        date: date,
-                        hour: hourData,
-                        temp: Math.round(item.main.temp),
-                        feelsLike: Math.round(item.main.feels_like),
-                        weatherIcon: item.weather[0].icon,
-                        wind: Math.round(item.wind.speed),
-                    }
-                })
-<span class="cstat-no" title="statement not covered" >                setHourlyForecast(hourlyData);</span>
-&nbsp;
-&nbsp;
-                const dailyData = <span class="cstat-no" title="statement not covered" >hourlyData</span>
-                    .filter(<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item.hour === "15:00")</span>
-                    .map(<span class="fstat-no" title="function not covered" >it</span>em =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-                        ...item
-                    }))
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                setDailyForecast(dailyData);</span>
-&nbsp;
-                const today = <span class="cstat-no" title="statement not covered" >hourlyData</span>
-                    .filter(<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item.hour === "18:00")</span>
-            })
-            .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; <span class="cstat-no" title="statement not covered" >console.error("Error in fetch: ", err))</span>
+  useEffect(() =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (location?.latitude &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >location?.longitude)</span> {
+<span class="cstat-no" title="statement not covered" >      handleFetch();</span>
     }
+  }, [location]); // Ensures that location is downloaded before the fetch
 &nbsp;
-    return (
-        &lt;SafeAreaView style={styles.container}&gt;
-            {dailyForecast &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >hourlyForecast </span>? ( 
-<span class="branch-0 cbranch-no" title="branch not covered" >                &lt;ForecastFlatList5 dailyForecast={dailyForecast} hourlyForecast={hourlyForecast} /&gt;</span>
-            ) : (
-                &lt;ActivityIndicator animating={true} size="large" color={MD2Colors.black} /&gt;
-            )}
-        &lt;/SafeAreaView&gt;
-    )
+  const handleFetch = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >    getForecastForFiveDays(location)</span>
+      .then(<span class="fstat-no" title="function not covered" >(d</span>ata) =&gt; {
+        const hourlyData = <span class="cstat-no" title="statement not covered" >data.list.map(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {</span>
+          const date = <span class="cstat-no" title="statement not covered" >item.dt_txt.split(" ")[0];</span> // YYYY-MM-DD
+          const hourData = <span class="cstat-no" title="statement not covered" >item.dt_txt.split(" ")[1].slice(0, 5);</span> // HH:MM
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          return {</span>
+            date: date,
+            hour: hourData,
+            temp: Math.round(item.main.temp),
+            feelsLike: Math.round(item.main.feels_like),
+            weatherIcon: item.weather[0].icon,
+            wind: Math.round(item.wind.speed),
+          };
+        });
+<span class="cstat-no" title="statement not covered" >        setHourlyForecast(hourlyData);</span>
+&nbsp;
+        const dailyData = <span class="cstat-no" title="statement not covered" >hourlyData</span>
+          .filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.hour === "15:00")</span>
+          .map(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+            ...item,
+          }));
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        setDailyForecast(dailyData);</span>
+&nbsp;
+        const today = <span class="cstat-no" title="statement not covered" >hourlyData.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.hour === "18:00")</span>;</span>
+      })
+      .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; <span class="cstat-no" title="statement not covered" >console.error("Error in fetch: ", err))</span>;
+  };
+&nbsp;
+  return (
+    &lt;SafeAreaView style={styles.container}&gt;
+      {dailyForecast &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >hourlyForecast </span>? (
+<span class="branch-0 cbranch-no" title="branch not covered" >        &lt;ForecastFlatList5</span>
+          dailyForecast={dailyForecast}
+          hourlyForecast={hourlyForecast}
+        /&gt;
+      ) : (
+        &lt;ActivityIndicator animating={true} size="large" color="white" /&gt;
+      )}
+    &lt;/SafeAreaView&gt;
+  );
 }
 &nbsp;
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-})</pre></td></tr></table></pre>
+  container: {
+    flex: 1,
+  },
+});
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T16:51:05.328Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

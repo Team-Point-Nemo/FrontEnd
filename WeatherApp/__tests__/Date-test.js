@@ -1,61 +1,54 @@
 import { setImageByTime } from "../components/date/DateService";
 import { setThemeByTime } from "../components/date/DateService";
 import { mapForecastData } from "../components/weather/forecast/DataEdit";
+import { getCurrentDate } from "../components/date/DateService";
 
-describe('setImageByTime', () => {
+beforeEach(() => {
+    jest.useFakeTimers();
+});
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
+afterEach(() => {
+    jest.useRealTimers();
+});
 
-    afterEach(() => {
-        jest.useRealTimers();
-    });
+describe('DateService - setImageByTime', () => {
 
     test('should return a galaxy image for the night', () => {
-        jest.setSystemTime(new Date(2024, 4, 27, 19, 0));
+        jest.setSystemTime(new Date(2025, 4, 27, 19, 0));
         const result = setImageByTime();
         expect(result).toBe(require("../assets/galaxy.jpg"));
     })
 
     test('should return a sunrise image for the morning', () => {
-        jest.setSystemTime(new Date(2024, 4, 27, 8, 0));
+        jest.setSystemTime(new Date(2025, 4, 27, 8, 0));
         const result = setImageByTime();
         expect(result).toBe(require("../assets/sunrise.jpg"));
     })
 
     test('should return a cloudy image for the day', () => {
-        jest.setSystemTime(new Date(2024, 4, 27, 12, 0));
+        jest.setSystemTime(new Date(2025, 4, 27, 12, 0));
         const result = setImageByTime();
         expect(result).toBe(require("../assets/cloudy.jpg"));
     })
 
 })
 
-describe(' setThemeByTime', () => {
-
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
-    });
+describe('DateService - setThemeByTime', () => {
 
     test('should return dark theme for the night times', () => {
-        jest.setSystemTime(new Date(2024, 3, 27, 19, 23));
+        jest.setSystemTime(new Date(2025, 3, 27, 19, 23));
         const result = setThemeByTime();
         expect(result).toEqual(['#0E1013', '#1A1D23', '#2B303B']);
     })
 
     test('should return morning colors for the morning times', () => {
-        jest.setSystemTime(new Date(2024, 3, 27, 19, 8));
+        jest.setSystemTime(new Date(2025, 3, 27, 19, 8));
         const result = setThemeByTime();
         expect(result).toEqual(['#0E1013', '#1A1D23', '#2B303B']);
     })
 
     test('should return day colors for the day times', () => {
-        jest.setSystemTime(new Date(2024, 3, 27, 19, 12));
+        jest.setSystemTime(new Date(2025, 3, 27, 19, 12));
         const result = setThemeByTime();
         expect(result).toEqual(['#0E1013', '#1A1D23', '#2B303B']);
     })
@@ -63,7 +56,7 @@ describe(' setThemeByTime', () => {
 
 })
 
-describe('Map forecast data', () => {
+describe('DataEdit - Map forecast data', () => {
     test('should return mapped forecast data for 16 days', () => {
 
         const mockData = {
@@ -105,5 +98,22 @@ describe('Map forecast data', () => {
         ])
     })
 
+
+})
+
+describe('DateService - getCurrentDate', () => {
+
+    test('should return current date in format eg. 1.1.2024', () => {
+
+        const currentDate = new Date();
+
+        const mockDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1
+            }.${currentDate.getFullYear()}`;
+
+        const result = getCurrentDate();
+
+        expect(result).toBe(mockDate);
+
+    })
 
 })

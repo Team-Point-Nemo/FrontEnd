@@ -39,6 +39,7 @@ export default function WeatherIndex() {
   const { recentCities, updateRecentCities } = useRecentSearch();
 
   const route = useRoute();
+  
   const { selectedFavorite } = route.params || {};
   
   const handleSearch = async () => {
@@ -104,6 +105,7 @@ export default function WeatherIndex() {
                       onPress={() => {
                         setMode("user");
                       }}
+                      testID='locationButton'
                     />
                   </View>
                 </View>

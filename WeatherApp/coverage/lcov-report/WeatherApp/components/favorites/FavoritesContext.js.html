@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/31</span>
+                <span class='fraction'>0/29</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>0/25</span>
             </div>
         
             
@@ -127,7 +127,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -135,7 +134,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -163,64 +161,66 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { createContext, useContext, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createContext, useContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 &nbsp;
 const FavoritesContext = <span class="cstat-no" title="statement not covered" >createContext();</span>
 &nbsp;
 export const FavoritesProvider = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> children }) =&gt; {</span>
-    const [favorites, setFavorites] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
-  
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-      const loadFavorites = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        try {</span>
-          const savedFavorites = <span class="cstat-no" title="statement not covered" >await AsyncStorage.getItem('favorites');</span>
-          const parsed = <span class="cstat-no" title="statement not covered" >savedFavorites ? JSON.parse(savedFavorites) : [];</span>
-<span class="cstat-no" title="statement not covered" >      console.log("Loaded from storage:", parsed); </span>
-<span class="cstat-no" title="statement not covered" >      setFavorites(parsed);</span>
-        } catch (e) {
-<span class="cstat-no" title="statement not covered" >          console.error('Error loading favorites:', e);</span>
-        }
-      };
-<span class="cstat-no" title="statement not covered" >      loadFavorites();</span>
-    }, []);
-  
-    const saveFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {</span>
-      const exists = <span class="cstat-no" title="statement not covered" >favorites.some(<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item === city)</span>;</span>
-<span class="cstat-no" title="statement not covered" >      if (!exists) {</span>
-        const updatedFavorites = <span class="cstat-no" title="statement not covered" >[...favorites, city];</span>
-<span class="cstat-no" title="statement not covered" >        console.log("Updated favorites:", updatedFavorites);</span>
-<span class="cstat-no" title="statement not covered" >        setFavorites(updatedFavorites);</span>
-<span class="cstat-no" title="statement not covered" >        await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));</span>
+  const [favorites, setFavorites] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+    const loadFavorites = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      try {</span>
+        const savedFavorites = <span class="cstat-no" title="statement not covered" >await AsyncStorage.getItem("favorites");</span>
+        const parsed = <span class="cstat-no" title="statement not covered" >savedFavorites ? JSON.parse(savedFavorites) : [];</span>
+<span class="cstat-no" title="statement not covered" >        setFavorites(parsed);</span>
+      } catch (e) {
+<span class="cstat-no" title="statement not covered" >        console.error("Error loading favorites:", e);</span>
       }
     };
-  
-    const deleteFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {</span>
-      const updatedFavorites = <span class="cstat-no" title="statement not covered" >favorites.filter(<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item !== city)</span>;</span>
+<span class="cstat-no" title="statement not covered" >    loadFavorites();</span>
+  }, []);
+&nbsp;
+  const saveFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {</span>
+    const exists = <span class="cstat-no" title="statement not covered" >favorites.some(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item === city)</span>;</span>
+<span class="cstat-no" title="statement not covered" >    if (!exists) {</span>
+      const updatedFavorites = <span class="cstat-no" title="statement not covered" >[...favorites, city];</span>
 <span class="cstat-no" title="statement not covered" >      setFavorites(updatedFavorites);</span>
-<span class="cstat-no" title="statement not covered" >      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));</span>
-    };
-  
-    const isFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>ity) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      return favorites.some(<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item === city)</span>;</span>
-    };
-  
-<span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;FavoritesContext.Provider
-        value={{ favorites, saveFavorite, deleteFavorite, isFavorite }}&gt;
-        {children}
-      &lt;/FavoritesContext.Provider&gt;
-    );
+<span class="cstat-no" title="statement not covered" >      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));</span>
+    }
   };
-  
-  export const useFavorites = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >useContext(FavoritesContext);</span></span></pre></td></tr></table></pre>
+&nbsp;
+  const deleteFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (city) =&gt; {</span>
+    const updatedFavorites = <span class="cstat-no" title="statement not covered" >favorites.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item !== city)</span>;</span>
+<span class="cstat-no" title="statement not covered" >    setFavorites(updatedFavorites);</span>
+<span class="cstat-no" title="statement not covered" >    await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));</span>
+  };
+&nbsp;
+  const isFavorite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>ity) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return favorites.some(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item === city)</span>;</span>
+  };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;FavoritesContext.Provider
+      value={{ favorites, saveFavorite, deleteFavorite, isFavorite }}
+    &gt;
+      {children}
+    &lt;/FavoritesContext.Provider&gt;
+  );
+};
+&nbsp;
+export const useFavorites = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >useContext(FavoritesContext);</span></span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-28T08:45:53.130Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

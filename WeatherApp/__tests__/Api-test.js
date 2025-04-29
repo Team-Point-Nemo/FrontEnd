@@ -1,25 +1,32 @@
 /* Testing for file api.js that includes api requests to the backend */
 
 /* Docs:
- global.fetch = https://www.browserstack.com/guide/jest-mock-fetch-requests
+    global.fetch = https://www.browserstack.com/guide/jest-mock-fetch-requests
 */
 
-import { getCurrentWeatherInLocation, getCityCoords, getForecastForFiveDays, getLongTermForecast, getLayerTiles } from "../api";
+import {
+    getCurrentWeatherInLocation,
+    getCityCoords,
+    getForecastForFiveDays,
+    getLongTermForecast,
+    getLayerTiles
+}
+    from "../api";
 import { Alert } from "react-native";
+
+beforeEach(() => {
+    global.fetch = jest.fn();
+    jest.spyOn(Alert, 'alert');
+
+});
+
+afterEach(() => {
+    jest.resetAllMocks();
+});
 
 describe('getCurrentWeatherInLocation', () => {
 
-    beforeEach(() => {
-        global.fetch = jest.fn();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
     test('should fetch weather from correct URL and return data', async () => {
-
-        process.env.EXPO_PUBLIC_BACKEND_URL = 'https://valora.2.rahtiapp.fi';
 
         const mockData = {
             main: {
@@ -41,7 +48,7 @@ describe('getCurrentWeatherInLocation', () => {
         const result = await getCurrentWeatherInLocation(location);
 
         expect(global.fetch).toHaveBeenCalledWith(
-            `${process.env.EXPO_PUBLIC_BACKEND_URL}/weather-now?lat=60.1011&lon=24.5618`
+            `https://valora.2.rahtiapp.fi/weather-now?lat=60.1011&lon=24.5618`
         );
         expect(result).toEqual(mockData);
     });
@@ -63,18 +70,8 @@ describe('getCurrentWeatherInLocation', () => {
 });
 
 describe('getCityCoords', () => {
-    beforeEach(() => {
-        global.fetch = jest.fn();
-        jest.spyOn(Alert, 'alert');
-
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
 
     test('should fetch weather from correct URL and return data', async () => {
-        process.env.EXPO_PUBLIC_BACKEND_URL = 'https://valora.2.rahtiapp.fi';
 
         const mockData = {
             main: {
@@ -93,7 +90,7 @@ describe('getCityCoords', () => {
         const result = await getCityCoords(city);
 
         expect(global.fetch).toHaveBeenCalledWith(
-            `${process.env.EXPO_PUBLIC_BACKEND_URL}/city?city=${city}`
+            `https://valora.2.rahtiapp.fi/city?city=${city}`
         );
         expect(result).toEqual(mockData);
     })
@@ -113,16 +110,8 @@ describe('getCityCoords', () => {
 })
 
 describe('getForecastForFiveDays()', () => {
-    beforeEach(() => {
-        global.fetch = jest.fn();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
 
     test('should fetch weather from correct URL and return data', async () => {
-        process.env.EXPO_PUBLIC_BACKEND_URL = 'https://valora.2.rahtiapp.fi';
 
         const mockData = {
             main: {
@@ -141,17 +130,16 @@ describe('getForecastForFiveDays()', () => {
             longitude: 24.5618
         };
 
-
-
         const result = await getForecastForFiveDays(location);
 
         expect(global.fetch).toHaveBeenCalledWith(
-            `${process.env.EXPO_PUBLIC_BACKEND_URL}/forecast5?lat=${location.latitude}&lon=${location.longitude}`
+            `https://valora.2.rahtiapp.fi/forecast5?lat=${location.latitude}&lon=${location.longitude}`
         );
         expect(result).toEqual(mockData);
     })
 
     test('should throw an error when response is not ok', async () => {
+
         global.fetch.mockResolvedValueOnce({
             ok: false,
             statusText: 'Server Error'
@@ -169,16 +157,7 @@ describe('getForecastForFiveDays()', () => {
 
 describe('getLongTermForecast()', () => {
 
-    beforeEach(() => {
-        global.fetch = jest.fn();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
     test('should fetch weather from correct URL and return data', async () => {
-        process.env.EXPO_PUBLIC_BACKEND_URL = 'https://valora.2.rahtiapp.fi';
 
         const mockData = {
             main: {
@@ -200,7 +179,7 @@ describe('getLongTermForecast()', () => {
         const result = await getLongTermForecast(location);
 
         expect(global.fetch).toHaveBeenCalledWith(
-            `${process.env.EXPO_PUBLIC_BACKEND_URL}/forecast16?lat=${location.latitude}&lon=${location.longitude}`
+            `https://valora.2.rahtiapp.fi/forecast16?lat=${location.latitude}&lon=${location.longitude}`
         );
         expect(result).toEqual(mockData);
     })
@@ -225,10 +204,8 @@ describe('getLayerTiles', () => {
 
     test('should return correct URL for given layer', () => {
 
-        process.env.EXPO_PUBLIC_BACKEND_URL = 'https://valora.2.rahtiapp.fi';
-
         const layer = 'rain';
-        const url = `${process.env.EXPO_PUBLIC_BACKEND_URL}/tiles/${layer}/{z}/{x}/{y}.png`;
+        const url = `https://valora.2.rahtiapp.fi/tiles/${layer}/{z}/{x}/{y}.png`;
 
         const result = getLayerTiles(layer);
 

@@ -6,6 +6,12 @@ import * as Location from 'expo-location';
 import * as api from '../api';
 import useWeather from '../hooks/useWeather';
 import useCitySearch from '../hooks/useCitySearch';
+import useRecentSearch from '../hooks/useRecentSearch';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+    require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
 
 jest.mock('expo-location', () => ({
     requestForegroundPermissionsAsync: jest.fn(),
@@ -19,8 +25,8 @@ jest.mock('../api', () => ({
 }));
 
 describe('Hooks', () => {
-    //useUserLocation
-    test('should return the location of the user', async () => {
+
+    test('useUserLocation should return the location of the user', async () => {
 
         Location.requestForegroundPermissionsAsync.mockResolvedValue({
             status: 'granted',
@@ -46,8 +52,8 @@ describe('Hooks', () => {
     });
 
 
-    //useCityName
-    test('should return city name for a given location', async () => {
+
+    test('useCityName should return city name for given location', async () => {
 
         Location.reverseGeocodeAsync.mockResolvedValue([{
             city: 'Helsinki',
@@ -65,8 +71,8 @@ describe('Hooks', () => {
         })
     })
 
-    //useWeather
-    test('should return weather for a given location', async () => {
+    test('useWeather should return weather for given location', async () => {
+        
         const mockWeather = {
             temp: 15,
             feels_like: 13,
@@ -87,8 +93,8 @@ describe('Hooks', () => {
         });
     });
 
-    //useCitySearch
-    test('should return searched location for the given city', async () => {
+    test('useCitySearch should return searched location for the given city', async () => {
+        
         api.getCityCoords.mockResolvedValue({
             coord: {
                 lat: 60.1011,
@@ -107,5 +113,18 @@ describe('Hooks', () => {
             longitude: 24.5618
         });
     })
+
+    test('useRecentSearch should load recent searched cities from AsyncStorage', async () => {
+
+        const mockCities = JSON.stringify(['Helsinki', 'Espoo']);
+        AsyncStorage.getItem.mockResolvedValue(mockCities);
+
+        const { result } = renderHook(() => useRecentSearch());
+
+        await waitFor(() => 
+            expect(result.current.recentCities).toEqual(['Helsinki', 'Espoo']));
+
+    })
+
 
 });

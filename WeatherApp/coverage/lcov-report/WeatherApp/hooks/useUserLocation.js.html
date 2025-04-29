@@ -98,22 +98,20 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -124,52 +122,51 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Custom hook for fetching coordinates from users location
 &nbsp;
 import { useState, useEffect } from "react";
-import * as Location from 'expo-location';
-import { Alert } from 'react-native';
+import * as Location from "expo-location";
+import { Alert } from "react-native";
 &nbsp;
 export default function useUserLocation() {
+  const [location, setLocation] = useState(null);
+  const [loading, setLoading] = useState(true);
 &nbsp;
-    const [location, setLocation] = useState(null);
-    const [loading, setLoading] = useState(true);
+  useEffect(() =&gt; {
+    const getUserLocation = async () =&gt; {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync(); // Checks if user has grant permissions for location.
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (status !== "granted") {
+<span class="cstat-no" title="statement not covered" >          Alert.alert("Location permissions denied");</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+        let location = await Location.getCurrentPositionAsync({}); // Get location as object 'coords'.
+        setLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } catch (err) {
+        console.error("Error in fetching location: ", err);
+        Alert.alert("Error in fetching location");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUserLocation();
+  }, []);
 &nbsp;
-    useEffect(() =&gt; {
-        const getUserLocation = async () =&gt; {
-            try {
-                let { status } = await Location.requestForegroundPermissionsAsync();    // Checks if user has grant permissions for location.
-                <span class="missing-if-branch" title="if path not taken" >I</span>if (status !== 'granted') {
-<span class="cstat-no" title="statement not covered" >                    Alert.alert('Location permissions denied');</span>
-<span class="cstat-no" title="statement not covered" >                    return;</span>
-                }
-                let location = await Location.getCurrentPositionAsync({});    // Get location as object 'coords'.
-                setLocation({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                })
-            } catch (err) {
-                console.error("Error in fetching location: ", err);
-                Alert.alert('Error in fetching location');
-            } finally {
-                setLoading(false);
-            }
-        };
-        getUserLocation();
-    }, []);
-&nbsp;
-    return { location, loading };
+  return { location, loading };
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -178,7 +175,7 @@ export default function useUserLocation() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T16:51:05.328Z
+                at 2025-04-29T10:48:45.223Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

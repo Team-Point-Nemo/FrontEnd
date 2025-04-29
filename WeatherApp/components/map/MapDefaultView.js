@@ -76,7 +76,7 @@ export default function MapDefaultView() {
     <SafeAreaView style={styles.container}>
       <MapView
         region={mapRegion}
-        testID='map-view'
+        testID='map'
         onRegionChangeComplete={handleRegionChange}
         style={styles.map}
         showsUserLocation={true}
@@ -117,7 +117,7 @@ export default function MapDefaultView() {
       <FAB.Group
         open={fabOpen}
         icon={fabOpen ? "close" : "menu"}
-        testID='map-menu'
+        testID='fabMap'
         backdropColor="rgba(255, 255, 255, 0.89)"
         actions={[
           {
