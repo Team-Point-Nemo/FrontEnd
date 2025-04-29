@@ -1,6 +1,6 @@
 # WeatherApp
 
-We are building a weather app as part of the Software Project 2 course. The app allows users to view both current and future weather forecasts. Users can check real-time weather conditions with visualized view over map, detailed five day forecast and daily summaries for 16 days. Weather data is available for both user location and city search.
+We built a weather app as part of the Software Project 2 course, the further development of the application has come to a halt. The app allows users to view both current and future weather forecasts. Users can check real-time weather conditions with visualized view over map, detailed five day forecast and daily summaries for 16 days. Weather data is available for both user location and city search.
 
 ## Technologies
 
@@ -29,6 +29,8 @@ We are building a weather app as part of the Software Project 2 course. The app 
 - **Favorites-section** : Save your favorite locations to later view them quickly.
 
 ## How to Get Started
+
+Getting the backend repository is not required. To run this app, you'll only need to follow the next steps:
 
 Clone repository 
 ```bash
@@ -59,4 +61,4 @@ Virolainen Jukka - Jukalekvi
 Wong Huang - Tiriele
 
 #### Link to the project's backend repository
-https://github.com/Team-Point-Nemo/BackEnd
+If you're interested on the backend side, you can see it here https://github.com/Team-Point-Nemo/BackEnd 
