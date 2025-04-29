@@ -30,7 +30,7 @@ We built a weather app as part of the Software Project 2 course, the further dev
 
 ## How to Get Started
 
-Getting the backend repository is not required. To run this app, you'll only need to follow the next steps:
+Getting the Backend repository is not required. To run this app, you'll only need to follow the next steps:
 
 Clone repository 
 ```bash
@@ -60,5 +60,5 @@ Virolainen Jukka - Jukalekvi
 
 Wong Huang - Tiriele
 
-#### Link to the project's backend repository
-If you're interested on the backend side, you can see it here https://github.com/Team-Point-Nemo/BackEnd 
+#### Link to the project's Backend repository
+If you're interested on the Backend side, you can see it here https://github.com/Team-Point-Nemo/BackEnd 
