@@ -1,7 +1,5 @@
 ## Ohjelmistoprojekti 2:n sääsovelluksen frontendin testausta Jestilla ja React Native Testing Librarylla
 
-## Testaus
-
 Seminaarityön tavoitteena on testata Ohjelmistoprojekti 2 -kurssilla toteutetun sääsovelluksen koodia Jest-kirjaston avulla. Työssä keskitytään sovelluksen toiminnallisuuden varmistamiseen sekä käyttöliittymän luotettavuuden parantamiseen. Tavoitteena on syventää ymmärrystä testauksen merkityksestä frontend -kehityksessä, oppia luomaan laadukkaita testejä ja perehtyä Jest-kirjaston sekä React Native Testing kirjaston käyttöön.
 
 Testit löytyvät WeatherApp sovelluksen frontend repositorista jest-haarasta.
