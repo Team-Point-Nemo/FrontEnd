@@ -82,7 +82,7 @@ These tests were left out due to functionality issues.
 
 #### Lopulliset testitulokset
 
-![suoritetut testit](image.png)
+![Testitulokset](https://github.com/user-attachments/assets/604e5a81-9e4a-4516-87ce-1f165ddcaa57)
 
 ### Yhteenveto
 
