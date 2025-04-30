@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1745923725305" clover="3.2.0">
-  <project timestamp="1745923725305" name="All files">
+<coverage generated="1745993162119" clover="3.2.0">
+  <project timestamp="1745993162120" name="All files">
     <metrics statements="326" coveredstatements="154" conditionals="153" coveredconditionals="56" methods="107" coveredmethods="45" elements="586" coveredelements="255" complexity="0" loc="326" ncloc="326" packages="9" files="26" classes="26"/>
     <package name="WeatherApp">
       <metrics statements="22" coveredstatements="18" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="9"/>
@@ -53,8 +53,8 @@
         <line num="20" count="15" type="cond" truecount="4" falsecount="0"/>
         <line num="21" count="1" type="stmt"/>
         <line num="22" count="14" type="cond" truecount="4" falsecount="0"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="25" count="13" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="34" count="19" type="stmt"/>
         <line num="35" count="19" type="stmt"/>
@@ -62,8 +62,8 @@
         <line num="38" count="19" type="cond" truecount="4" falsecount="0"/>
         <line num="39" count="3" type="stmt"/>
         <line num="40" count="16" type="cond" truecount="3" falsecount="1"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="43" count="16" type="stmt"/>
+        <line num="41" count="16" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
       </file>
     </package>
